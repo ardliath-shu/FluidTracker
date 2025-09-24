@@ -6,7 +6,7 @@ import FluidTargetForm from "@/app/components/FluidTargetForm";
 
 const BottlePage = () => {
   const defaultFluidTarget = 2500;
-  const [fluidTarget, setFluidTarget] = useState(0);
+  const [fluidTarget, setFluidTarget] = useState(defaultFluidTarget);
   const [allowTargetChange, setAllowTargetChange] = useState(true);
 
   // TODO: get fluidTarget from db.
