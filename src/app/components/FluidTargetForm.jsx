@@ -1,11 +1,4 @@
 const FluidTargetForm = ({ currentTarget, setTarget, canSubmit }) => {
-  const handleTargetChange = (event) => {
-    console.log("handleTargetChange")
-    const newTarget = event.target.value
-    console.log(newTarget)
-    setTarget(newTarget)
-  }
-
   return (
     <div>
       <div>
@@ -20,7 +13,8 @@ const FluidTargetForm = ({ currentTarget, setTarget, canSubmit }) => {
               id="fluid target input"
               value={currentTarget}
               step={50}
-              onChange={handleTargetChange}
+              // onChange={handleTargetChange}
+              onChange={(event) => setTarget(parseInt(event.target.value))}
             />
           </div>
           <div>
