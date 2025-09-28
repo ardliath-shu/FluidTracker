@@ -9,10 +9,10 @@ export default function LoginPage() {
 			<h1>Login</h1>
 			<hr />
 			<p>Please enter your details to log in.</p>
-			<form className="form">
+			<form className="form" action="./">
 				<div className="form-floating">
-					<input type="email" id="email" placeholder="Email" required />
-					<label htmlFor="email">Email</label>
+					<input type="text" id="username" placeholder="Username" required />
+					<label htmlFor="username">Username</label>
 				</div>
 				<div className="form-floating">
 					<input type="password" id="password" placeholder="Password" required />

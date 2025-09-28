@@ -56,7 +56,7 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
             <div className="sidebar-bottom">
                 <hr />
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <a href="#"><i className="fa fa-fw fa-sign-out-alt"></i> Logout</a>
+                    <a href="login"><i className="fa fa-fw fa-sign-out-alt"></i> Logout</a>
 
                     <a href="#" title="Toggle dark mode" onClick={handleToggleDarkMode}><i className="fa fa-fw fa-circle-half-stroke"></i></a>
                 </div>

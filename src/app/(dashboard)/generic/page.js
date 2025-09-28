@@ -34,11 +34,10 @@ export default function pageDemo() {
 
             <Card colour="orange" icon="fa-code" title="Code Reference">
                 <div className='center'>
-                    <i className='fa fa-fw fa-2x fa-info-circle blue'></i>
+                    
+                    <p><i className='fa fa-fw fa-info-circle blue'></i> Icons used are from FontAwesome and a reference for the free icons is <Link href="https://fontawesome.com/search?ic=free&o=r" target="_blank">here</Link>.</p>
                     <hr className='mini' />
-                    <p>Icons used are from FontAwesome and a reference for the free icons is <Link href="https://fontawesome.com/search?ic=free&o=r" target="_blank">here</Link>.</p>
-                    <hr className='mini' />
-                    <p>Colours available for elements with class/className .card or &lt;i&gt; elements are (ask me for others):</p>
+                    <p>Colours available for elements with class/className .card, .btn or &lt;i&gt; elements are (ask me for others):</p>
                     <pre><code>{`red, blue, green, yellow, purple, orange, pink`}</code></pre>
                 </div>
                 <hr />
