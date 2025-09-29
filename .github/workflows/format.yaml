@@ -1,8 +1,8 @@
 name: Check the linting and formatting of the codebase
 on:
-  pull_request:
-    branches:
-      - main
+  - push
+  - pull_request
+
 jobs:
   test:
     name: Lint and Format
