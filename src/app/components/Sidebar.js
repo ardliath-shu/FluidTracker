@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import Link from "next/link";
 
 const prefix = "../../../../"; // Hack to return to home from nested cms/insert etc
 const links = [
@@ -44,9 +45,9 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
                 <ul>
                     {links.map(link => (
                         <li key={link.name}>
-                            <a href={link.href}>
+                            <Link href={link.href}>
                                 <i className={`fa fa-fw ${link.icon}`}></i> {link.name}
-                            </a>
+                            </Link>
                         </li>
                     ))}
                 </ul>
@@ -56,16 +57,16 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
             <div className="sidebar-bottom">
                 <hr />
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <a href="login"><i className="fa fa-fw fa-sign-out-alt"></i> Logout</a>
+                    <Link href="login"><i className="fa fa-fw fa-sign-out-alt"></i> Logout</Link>
 
-                    <a href="#" title="Toggle dark mode" onClick={handleToggleDarkMode}><i className="fa fa-fw fa-circle-half-stroke"></i></a>
+                    <Link href="#" title="Toggle dark mode" onClick={handleToggleDarkMode}><i className="fa fa-fw fa-circle-half-stroke"></i></Link>
                 </div>
             </div>
 
             {/* Floating reopen button (desktop only) */}
             {isCollapsed && (
                 <button className="show-sidebar-btn" onClick={onReopen}>
-                    &#9776;
+                    &#9776;  {/* burger menu icon */}
                 </button>
             )}
         </aside>

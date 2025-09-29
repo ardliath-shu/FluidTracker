@@ -91,7 +91,7 @@ h1, h2, h3, h4, h5 {
 	height: calc(100dvh - 50px);
 	position: fixed;
 	top: 50px; /* below navbar */
-	left: -240px; /* hidden off-screen */
+	right: -240px; /* hidden off-screen */
 	display: flex; /* enable flexbox */
 	flex-direction: column; /* stack items vertically */
 	justify-content: space-between; /* push bottom section down */
@@ -101,7 +101,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .sidebar.open {
-	left: 0;
+	right: 0;
 }
 
 .sidebar h5 {
@@ -602,11 +602,12 @@ body.dark-mode {
 		overflow: hidden;
 	}
 
-	/* show reopen button on desktop */
+	/* show reopen button on desktop 
 	.show-sidebar-btn {
-		/* display: block !important; */
+		 display: block !important; 
 	}
-
+	*/
+	
 	.extra {
 		width: 350px;
 		/* border-left: 1px solid #ccc; */
@@ -619,7 +620,11 @@ body.dark-mode {
 	}
 
 	.navbar .burger {
-		/* display: none; hide burger on desktop */
+		display: none; /* hide burger on desktop */
+	}
+
+	.sidebar .close-btn{
+		display: none; /* hide close button on desktop */
 	}
 }
 

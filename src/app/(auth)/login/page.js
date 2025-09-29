@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 // Meta Data
 export const metadata = {
 	title: 'Log In',
@@ -21,7 +23,7 @@ export default function LoginPage() {
 				<button type="submit" className="btn">Log In</button>
 			</form>
 			<hr />
-			<p>Don't have an account? <a href="/register">Register</a></p>
+			<p>Don&apos;t have an account? <Link href="/register">Register</Link></p>
 		</div>
 	);
 }

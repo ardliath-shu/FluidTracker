@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 // Meta Data
 export const metadata = {
     title: 'Register',
@@ -33,7 +35,7 @@ export default function RegisterPage() {
 				<button type="submit" className="btn">Register</button>
             </form>
 			<hr/>
-			<p>Already have an account? <a href="/login">Log In</a></p>
+			<p>Already have an account? <Link href="/login">Log In</Link></p>
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import '@/app/global.css';
 import { Roboto } from 'next/font/google';
 
-const roboto = Roboto({ weight: ['400', '700'], subsets: ['latin'] });
+const roboto = Roboto({ weight: ['400', '700'], subsets: ['latin'], preload: false, });
 
 export default function RootLayout({ children }) {
   return (
