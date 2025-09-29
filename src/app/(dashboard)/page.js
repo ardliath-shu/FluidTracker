@@ -5,7 +5,6 @@ import Bottle from "@/app/components/Bottle";
 import FluidTargetForm from "@/app/components/FluidTargetForm";
 
 export default function Home() {
-
   const defaultFluidTarget = 2500; // ml
   const [fluidTarget, setFluidTarget] = useState(defaultFluidTarget);
   const [fluidLeft, setFluidLeft] = useState(defaultFluidTarget);
@@ -19,7 +18,7 @@ export default function Home() {
   };
 
   const handleSetFluidTarget = (target) => {
-    setFluidLeft(target)
+    setFluidLeft(target);
     setFluidTarget(target);
   };
 
@@ -37,26 +36,26 @@ export default function Home() {
 
   return (
     <>
-    <div>
-      <h2>Welcome to Fluid Tracker</h2>
-      <hr />
-      <section>
-        {allowTargetChange && (
-          <FluidTargetForm
-            currentTarget={fluidTarget ? fluidTarget : defaultFluidTarget}
-            setTarget={handleSetFluidTarget}
-            canSubmit={handleSetAllowTargetChange}
+      <div>
+        <h2>Welcome to Fluid Tracker</h2>
+        <hr />
+        <section>
+          {allowTargetChange && (
+            <FluidTargetForm
+              currentTarget={fluidTarget ? fluidTarget : defaultFluidTarget}
+              setTarget={handleSetFluidTarget}
+              canSubmit={handleSetAllowTargetChange}
+            />
+          )}
+          <Bottle
+            target={fluidTarget}
+            currentFluid={fluidLeft}
+            changeFluidAmount={handleSetFluidLeft}
           />
-        )}
-        <Bottle
-          target={fluidTarget}
-          currentFluid={fluidLeft}
-          changeFluidAmount={handleSetFluidLeft}
-        />
-      </section>
-    </div>
+        </section>
+      </div>
 
-    <ExtraMenu />
+      <ExtraMenu />
     </>
   );
 }
