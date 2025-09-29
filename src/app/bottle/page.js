@@ -18,7 +18,7 @@ const BottlePage = () => {
   };
 
   const handleSetFluidTarget = (target) => {
-    setFluidLeft(target)
+    setFluidLeft(target);
     setFluidTarget(target);
   };
 
@@ -33,7 +33,6 @@ const BottlePage = () => {
       setFluidLeft(newFluidLeft);
     }
   };
-  
 
   return (
     <main>

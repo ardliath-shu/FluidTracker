@@ -2,9 +2,7 @@ const FluidTargetForm = ({ currentTarget, setTarget, canSubmit }) => {
   return (
     <div>
       <div>
-        <form
-          onSubmit={(event) => canSubmit(false)}
-        >
+        <form onSubmit={(event) => canSubmit(false)}>
           <div>
             <label htmlFor="q">Fluid Target: </label>
             <input
