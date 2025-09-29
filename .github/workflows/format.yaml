@@ -1,0 +1,17 @@
+name: Check the linting and formatting of the codebase
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    name: Lint and Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install packages
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Prettier
+        run: npm run check-pretty

@@ -1,7 +1,11 @@
-import '@/app/global.css';
-import { Roboto } from 'next/font/google';
+import "@/app/global.css";
+import { Roboto } from "next/font/google";
 
-const roboto = Roboto({ weight: ['400', '700'], subsets: ['latin'], preload: false, });
+const roboto = Roboto({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  preload: false,
+});
 
 export default function RootLayout({ children }) {
   return (
@@ -10,11 +14,12 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Fluid Tracker</title>
         <link rel="icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        />
       </head>
-      <body className={roboto.className}>
-        {children}
-      </body>
+      <body className={roboto.className}>{children}</body>
     </html>
   );
 }
