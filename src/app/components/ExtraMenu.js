@@ -1,7 +1,6 @@
 import { siteConfig } from "@/app/lib/site.config";
 import Card from "./Card";
 
-
 export default function ExtraMenu() {
   return (
     <aside className="extra">
