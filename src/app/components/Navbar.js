@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { siteConfig } from "@/app/lib/site.config";
 import Link from "next/link";
 
 export default function Navbar({ onToggleSidebar }) {
@@ -7,7 +7,7 @@ export default function Navbar({ onToggleSidebar }) {
     <nav className="navbar">
       <div className="brand">
         <Link href="/">
-          <i className="fa fa-droplet"></i> Fluid Tracker
+          <i className="fa fa-droplet"></i> {siteConfig.name}
         </Link>
       </div>
 

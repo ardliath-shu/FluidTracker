@@ -1,4 +1,5 @@
 import "@/app/global.css";
+import { siteConfig } from "@/app/lib/site.config";
 import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
@@ -12,7 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Fluid Tracker</title>
+        <title>{siteConfig.name}</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="stylesheet"
