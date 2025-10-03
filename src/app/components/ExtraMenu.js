@@ -1,3 +1,4 @@
+import { siteConfig } from "@/app/lib/site.config";
 import Card from "./Card";
 
 export default function ExtraMenu() {
@@ -38,13 +39,12 @@ export default function ExtraMenu() {
         </div>
       </Card>
       <Card
-        title="About Fluid Tracker"
+        title={`About ${siteConfig.name}`}
         icon="fas fa-fw fa-droplet"
         colour="green"
       >
         <p>
-          Fluid Tracker is a sample application demonstrating a responsive
-          layout using Next.js and React.
+          {siteConfig.name} is {siteConfig.description.toLowerCase()}.
         </p>
       </Card>
     </aside>
