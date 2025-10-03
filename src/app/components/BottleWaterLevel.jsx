@@ -1,5 +1,21 @@
+import Image from "next/image";
+import wavyWaterLine from "../../../public/images/wavy-water-line.svg";
+
+// TODO: add toggle for reduced animations
+import "../../../public/css/water-animation.css";
+
 const BottleWaterLevel = ({ levelPercent }) => {
-  return <div id="waterlevel" style={{ height: levelPercent + "%" }}></div>;
+  return (
+    <div className="water">
+      <div id="waterlevel" style={{ height: levelPercent + "%" }}>
+        <Image
+          id="wavywaterline"
+          src={wavyWaterLine}
+          alt="Wavy line showing the current fluid level."
+        />
+      </div>
+    </div>
+  );
 };
 
 export default BottleWaterLevel;

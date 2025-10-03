@@ -1,5 +1,7 @@
 "use client";
+
 import { useState } from "react";
+import { siteConfig } from "@/app/lib/site.config";
 import ExtraMenu from "@/app/components/ExtraMenu";
 import Bottle from "@/app/components/Bottle";
 import FluidTargetForm from "@/app/components/FluidTargetForm";
@@ -37,7 +39,7 @@ export default function Home() {
   return (
     <>
       <div>
-        <h2>Welcome to Fluid Tracker</h2>
+        <h2>Welcome to {siteConfig.name}</h2>
         <hr />
         <section>
           {allowTargetChange && (

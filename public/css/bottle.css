@@ -5,24 +5,52 @@
 
 #bottle {
   display: flex;
+  flex-direction: column;
+  position: relative;
   height: 70vh;
-  aspect-ratio: 1/2;
+  width: 32vh;
   margin: auto;
-  background: lightcyan;
-  outline: 2%;
-  outline-color: black;
-  outline-style: solid;
-  border-radius: 2%;
+  /* background: lightcyan; */
+  /* outline: 2%; */
+  /* outline-color: black; */
+  /* outline-style: solid; */
+  /* border-radius: 2%; */
+}
+
+#bottleimage {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.water {
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  width: 96%;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5%;
+  overflow: visible;
 }
 
 #waterlevel {
-  display: flex;
-  height: 50%;
+  overflow: hidden;
   width: 100%;
   margin-top: auto;
-  background: blue;
+  margin-bottom: 3%;
   transition: 1s;
+  background: linear-gradient(#00000000 4.4vh, #0000FF 4.4vh);
+  /* background: blue; */
 }
+
+#wavywaterline {
+  height: 5vh;
+  width: 220%;
+  margin-left: -45%;
+}
+
 
 .fluidbutton {
   height: 20%;

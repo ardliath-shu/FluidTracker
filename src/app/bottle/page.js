@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
 
+import { useState } from "react";
+import { siteConfig } from "@/app/lib/site.config";
 import Bottle from "@/app/components/Bottle";
 import FluidTargetForm from "@/app/components/FluidTargetForm";
 
@@ -37,7 +38,7 @@ const BottlePage = () => {
   return (
     <main>
       <div>
-        <h1>Fluid Tracker</h1>
+        <h1>{siteConfig.name}</h1>
       </div>
       <section>
         {allowTargetChange && (
