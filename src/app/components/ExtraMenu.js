@@ -6,19 +6,19 @@ export default function ExtraMenu() {
     <aside className="extra">
       <Card title="Hourly Trend" icon="fas fa-fw fa-chart-line" colour="red">
         <p>
-          Fluid Tracker is a sample application demonstrating a responsive
+          {siteConfig.name} is a sample application demonstrating a responsive
           layout using Next.js and React.
         </p>
       </Card>
       <Card title="Statistics" icon="fas fa-fw fa-percent" colour="orange">
         <p>
-          Fluid Tracker is a sample application demonstrating a responsive
+          {siteConfig.name} is a sample application demonstrating a responsive
           layout using Next.js and React.
         </p>
       </Card>
       <Card title="People" icon="fas fa-fw fa-users" colour="yellow">
         <p>
-          Fluid Tracker is a sample application demonstrating a responsive
+          {siteConfig.name} is a sample application demonstrating a responsive
           layout using Next.js and React.
         </p>
       </Card>
@@ -26,13 +26,13 @@ export default function ExtraMenu() {
         <div className="row">
           <div className="col">
             <p>
-              Fluid Tracker is a sample application demonstrating a responsive
+              {siteConfig.name} is a sample application demonstrating a responsive
               layout using Next.js and React.
             </p>
           </div>
           <div className="col">
             <p>
-              Fluid Tracker is a sample application demonstrating a responsive
+              {siteConfig.name} is a sample application demonstrating a responsive
               layout using Next.js and React.
             </p>
           </div>
