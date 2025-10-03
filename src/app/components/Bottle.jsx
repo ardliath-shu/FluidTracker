@@ -11,11 +11,7 @@ const Bottle = ({ target, currentFluid, changeFluidAmount }) => {
       <div className="bottlecontainer">
         <div id="bottle">
           <BottleWaterLevel levelPercent={(currentFluid / target) * 100} />
-          <Image
-            id="bottleimage"
-            src={bottleImage}
-            alt="A water bottle."
-          />
+          <Image id="bottleimage" src={bottleImage} alt="A water bottle." />
         </div>
 
         {/* Proof of concept water level controls */}

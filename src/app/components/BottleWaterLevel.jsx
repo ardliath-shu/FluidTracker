@@ -10,7 +10,7 @@ const BottleWaterLevel = ({ levelPercent }) => {
       <div id="waterlevel" style={{ height: levelPercent + "%" }}>
         <Image
           id="wavywaterline"
-          src={ wavyWaterLine }
+          src={wavyWaterLine}
           alt="Wavy line showing the current fluid level."
         />
       </div>

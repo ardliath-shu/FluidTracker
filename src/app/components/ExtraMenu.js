@@ -26,14 +26,14 @@ export default function ExtraMenu() {
         <div className="row">
           <div className="col">
             <p>
-              {siteConfig.name} is a sample application demonstrating a responsive
-              layout using Next.js and React.
+              {siteConfig.name} is a sample application demonstrating a
+              responsive layout using Next.js and React.
             </p>
           </div>
           <div className="col">
             <p>
-              {siteConfig.name} is a sample application demonstrating a responsive
-              layout using Next.js and React.
+              {siteConfig.name} is a sample application demonstrating a
+              responsive layout using Next.js and React.
             </p>
           </div>
         </div>
