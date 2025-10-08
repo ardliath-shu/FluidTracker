@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="282.07999"
+   height="619.04028"
+   viewBox="0 0 35.259998 77.380036"
+   version="1.1"
+   id="svg2"
+   sodipodi:docname="bottle.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.13875"
+     inkscape:cx="296.37761"
+     inkscape:cy="161.1416"
+     inkscape:window-width="1182"
+     inkscape:window-height="1303"
+     inkscape:window-x="3600"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="Calque_2" />
+  <title
+     id="title1" />
+  <g
+     data-name="Calque 2"
+     id="Calque_2"
+     transform="translate(-32.49,-15.12)">
+    <path
+       d="m 58.31,20.3 v -3.68 c 0,-0.828427 -0.671573,-1.5 -1.5,-1.5 h -0.66 c 0,0 -12.061341,0.005 -12.06,0 h -0.66 c -0.828427,0 -1.5,0.671573 -1.5,1.5 v 3.68 c -5.355683,0.557368 -9.428016,2.565406 -9.44,7.95 V 91 c -1.8e-5,0.832348 0.67767,1.505549 1.51,1.5 h 32.25 c 0.828427,0 1.5,-0.671573 1.5,-1.5 V 28.25 C 67.738016,22.865406 63.665683,20.857368 58.31,20.3 Z M 44.93,18.12 h 10.38 v 2.13 H 44.93 Z M 64.75,89.5 H 35.49 V 28.25 c 0.0055,-4.139852 3.360148,-4.994491 7.5,-5 h 14.26 c 4.139852,0.0055 7.494491,0.860148 7.5,5 z"
+       id="path1"
+       sodipodi:nodetypes="cssccssccccsscccccccccccccc" />
+    <path
+       d="m 40.17,37.33 a 1.5,1.5 0 0 0 -1.5,1.5 v 32.34 a 1.5,1.5 0 0 0 3,0 V 38.83 a 1.5,1.5 0 0 0 -1.5,-1.5 z"
+       id="path2" />
+  </g>
+</svg>
