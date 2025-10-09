@@ -64,7 +64,7 @@ export default function AddTest() {
         <div>
             <h1>Add A Drink</h1>
             <hr />
-            <p className="center">Add a common drink and it's details.</p>
+            <p className="center">Add a common drink and the details.</p>
             <br />
 
             {/* Search by Barcode */}
