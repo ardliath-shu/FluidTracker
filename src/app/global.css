@@ -105,7 +105,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .sidebar h5 {
-	margin: 0.8em 0 0.4em 0.5em;
+	margin: 0.4em 0 0.4em 0.5em;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -123,7 +123,7 @@ h1, h2, h3, h4, h5 {
 .sidebar li {
 	padding: 0;
 	border-bottom: 1px solid #00000020;
-	border-top: 2px solid #ffffff30;
+	border-top: 2px solid #ffffff20;
 }
 
 .sidebar a {
@@ -325,28 +325,19 @@ i.pink {
 	color: #ff69b4;
 }
 
-img.w-100 {
+
+/* Button */
+.btn.w-100 {
 	width: 100%;
 	height: auto;
 }
-
-img.h-100 {
-	width: auto;
-	max-width: 100%;
-	max-height: 80dvh;
-	margin: auto;
-	display: block;
-}
-
-
-
 
 .btn {
 	display: inline-block;
 	padding: 0.5em 1em;
 	border: none;
 	border-radius: 5px;
-	background: #3498db;
+	background: #afafaf;
 	color: white;
 	cursor: pointer;
 	text-align: center;
@@ -358,35 +349,57 @@ img.h-100 {
 	box-shadow: 0 2px 2px 0 #00000030;
 }
 .btn:hover {
-	/* background: #2980b9; */
+	background: #858585;
 	box-shadow: none;
 }
 .btn.red {
 	background-color: #e74c3c;
 }
+	.btn.red:hover {
+		background-color: #ab392c;
+	}
+
 .btn.blue {
 	background-color: #3498db;
 }
+	.btn.blue:hover {
+		background-color: #2980b9;
+	}
 
 .btn.green {
 	background-color: #2ecc71;
 }
+	.btn.green:hover {
+		background-color: #24a35b;
+	}
 
 .btn.yellow {
 	background-color: #f1c40f;
 }
+	.btn.yellow:hover {
+		background-color: #c8a20e;
+	}
 
 .btn.purple {
 	background-color: #9b59b6;
 }
+	.btn.purple:hover {
+		background-color: #7a3d99;
+	}
 
 .btn.orange {
 	background-color: #e67e22;
 }
+	.btn.orange:hover {
+		background-color: #b3611a;
+	}
 
 .btn.pink {
 	background-color: #ff69b4;
 }
+	.btn.pink:hover {
+		background-color: #cc568f;
+	}
 
 
 /* Auth Layout */
@@ -516,118 +529,23 @@ label {
 }
 
 
-
-/* Dark Mode */
-body.dark-mode {
-	background: #2c3e50;
-	color: #ecf0f1;
+.form-floating select {
+	padding: 1em 0.6em;
 }
 
-.dark-mode .navbar {
-	background: #46719c;
+
+.row-sm {
+	display: flex;
+	gap: 0.6rem;
 }
 
-.dark-mode h1, 
-.dark-mode h2,
-.dark-mode h3, 
-.dark-mode h4, 
-.dark-mode h5 {
-	color: #f0f0f0;
+.row-sm .flex-1 {
+	flex: 1;
 }
 
-.dark-mode .navbar .burger {
-	color: #f0f0f0;
+.row-sm .flex-2 {
+	flex: 2;
 }
-
-.dark-mode .sidebar {
-	background: #375472;
-}
-
-.dark-mode .show-sidebar-btn {
-	background: #375472;
-}
-
-.dark-mode hr {
-	border-bottom-color: #ffffff20;
-}
-
-.dark-mode .main {
-	background: #2c3e50;
-}
-
-.dark-mode .extra {
-	background: #34495e;
-}
-
-.dark-mode .extra a {
-	color: #ecf0f1;
-}
-
-.dark-mode .card-header {
-	border-bottom-color: #ffffff40;
-}
-
-/* Responsive (desktop and up) */
-@media (min-width: 992px) {
-	.layout {
-		display: flex; /* side-by-side layout */
-	}
-
-	.main {
-		flex-direction: row; /* side-by-side columns */
-		width: 100%;
-	}
-
-	.row {
-		display: flex;
-		gap: 1rem;
-		margin-bottom: 1rem;
-	}
-
-	.row .col {
-		flex: 1;
-	}
-
-	.sidebar {
-		left: 0;
-		height: calc(100vh - 50px); /* full viewport height - navbar */
-		width: 200px;
-		z-index: 100;
-	}
-
-	/* collapsed sidebar (desktop only) */
-	.sidebar.collapsed {
-		width: 0;
-		padding: 0;
-		overflow: hidden;
-	}
-
-	/* show reopen button on desktop 
-	.show-sidebar-btn {
-		 display: block !important; 
-	}
-	*/
-	
-	.extra {
-		width: 350px;
-		/* border-left: 1px solid #ccc; */
-		border-top: none;
-		max-height: calc(100vh - 50px);
-		/* Hide overflow but allow scrolling and hide scrollbar */
-		overflow-y: scroll;
-		scrollbar-width: thin;
-		scrollbar-color: transparent transparent;
-	}
-
-	.navbar .burger {
-		display: none; /* hide burger on desktop */
-	}
-
-	.sidebar .close-btn{
-		display: none; /* hide close button on desktop */
-	}
-}
-
 
 pre {
 	white-space: pre; /* preserve whitespace */
