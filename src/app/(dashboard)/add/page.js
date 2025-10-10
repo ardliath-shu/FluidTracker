@@ -108,7 +108,7 @@ export default function AddTest() {
                   </div>
                 </div>
                 <div className="flex-1">
-                  <button type="submit" className="btn blue w-100">
+                  <button type="submit" className="btn w-100">
                     Search For Drink
                   </button>
                 </div>
