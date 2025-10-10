@@ -5,6 +5,7 @@ import Link from "next/link";
 const prefix = "../../../../"; // Hack to return to home from nested cms/insert etc
 const links = [
   { name: "Dashboard", icon: "fa-tachometer-alt", href: prefix }, // Hack to return to home from nested cms/insert etc
+  { name: "Add Drink", icon: "fa-bottle-water", href: prefix + "add" },
   { name: "Profile", icon: "fa-user", href: "#" },
   { name: "Settings", icon: "fa-cog", href: "#" },
   { name: "Elements", icon: "fa-th", href: prefix + "elements" }, // Hack to return to home from nested cms/insert etc
@@ -40,7 +41,6 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
             &times;
           </button>
         </h5>
-        <hr />
         <ul>
           {links.map((link) => (
             <li key={link.name}>

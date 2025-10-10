@@ -1,0 +1,49 @@
+/* Dark Mode */
+body.dark-mode {
+  background: #2c3e50;
+  color: #ecf0f1;
+}
+
+.dark-mode .navbar {
+  background: #46719c;
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5 {
+  color: #f0f0f0;
+}
+
+.dark-mode .navbar .burger {
+  color: #f0f0f0;
+}
+
+.dark-mode .sidebar {
+  background: #375472;
+}
+
+.dark-mode .show-sidebar-btn {
+  background: #375472;
+}
+
+.dark-mode hr {
+  border-bottom-color: #ffffff20;
+}
+
+.dark-mode .main {
+  background: #2c3e50;
+}
+
+.dark-mode .extra {
+  background: #34495e;
+}
+
+.dark-mode .extra a {
+  color: #ecf0f1;
+}
+
+.dark-mode .card-header {
+  border-bottom-color: #ffffff40;
+}

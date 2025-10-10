@@ -1,0 +1,66 @@
+/* Responsive (desktop and up) */
+@media (min-width: 992px) {
+  .layout {
+    display: flex; /* side-by-side layout */
+  }
+
+  .main {
+    flex-direction: row; /* side-by-side columns */
+    width: 100%;
+  }
+
+  .sidebar h5 {
+    display: none;
+  }
+
+  .row,
+  .row-sm {
+    display: flex;
+    gap: 1rem;
+    /* margin-bottom: 1rem; */
+  }
+
+  .row .col,
+  .row-sm .col {
+    flex: 1;
+  }
+
+  .sidebar {
+    left: 0;
+    height: calc(100vh - 50px); /* full viewport height - navbar */
+    width: 200px;
+    z-index: 100;
+  }
+
+  /* collapsed sidebar (desktop only) */
+  .sidebar.collapsed {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* show reopen button on desktop 
+	.show-sidebar-btn {
+		 display: block !important; 
+	}
+	*/
+
+  .extra {
+    width: 350px;
+    /* border-left: 1px solid #ccc; */
+    border-top: none;
+    max-height: calc(100vh - 50px);
+    /* Hide overflow but allow scrolling and hide scrollbar */
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  .navbar .burger {
+    display: none; /* hide burger on desktop */
+  }
+
+  .sidebar .close-btn {
+    display: none; /* hide close button on desktop */
+  }
+}

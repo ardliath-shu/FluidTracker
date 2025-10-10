@@ -42,7 +42,7 @@ export default function RegisterPage() {
           />
           <label htmlFor="confirmPassword">Confirm Password</label>
         </div>
-        <button type="submit" className="btn">
+        <button type="submit" className="btn blue">
           Register
         </button>
       </form>

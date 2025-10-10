@@ -1,7 +1,6 @@
 import { fetchUser, getMyPatientCurrentFluidTarget, setNewPatientFluidTarget } from "../lib/db";
 
 const TestPage = async () => {
-  
   const result = await fetchUser(1);
   const user = result[0];
 

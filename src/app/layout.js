@@ -1,4 +1,6 @@
 import "@/app/global.css";
+import "@/app/global-desktop.css";
+import "@/app/global-dark.css";
 import { siteConfig } from "@/app/lib/site.config";
 import { Roboto } from "next/font/google";
 

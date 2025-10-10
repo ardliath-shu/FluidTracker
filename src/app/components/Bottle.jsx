@@ -16,12 +16,24 @@ const Bottle = ({ target, currentFluid, changeFluidAmount }) => {
 
         {/* Proof of concept water level controls */}
         {/* The final controls will behave a lot differently to this ^^' */}
-        <button className="fluidbutton" onClick={() => changeFluidAmount(+100)}>
-          Add 50ml
-        </button>
-        <button className="fluidbutton" onClick={() => changeFluidAmount(-100)}>
-          Remove 50ml
-        </button>
+        <div className="row">
+          <div className="col center">
+            <button
+              className="btn green w-100"
+              onClick={() => changeFluidAmount(+100)}
+            >
+              Add 50ml
+            </button>
+          </div>
+          <div className="col center">
+            <button
+              className="btn red w-100"
+              onClick={() => changeFluidAmount(-100)}
+            >
+              Remove 50ml
+            </button>
+          </div>
+        </div>
       </div>
       <p>Debug Target: {target}ml</p>
       <p>Debug Fluid Left: {currentFluid}ml</p>
