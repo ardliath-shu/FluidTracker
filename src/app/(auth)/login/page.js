@@ -25,7 +25,7 @@ export default function LoginPage() {
           />
           <label htmlFor="password">Password</label>
         </div>
-        <button type="submit" className="btn">
+        <button type="submit" className="btn blue">
           Log In
         </button>
       </form>

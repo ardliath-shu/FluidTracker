@@ -39,8 +39,8 @@ export default function Home() {
   return (
     <>
       <div>
-        <h2>Welcome to {siteConfig.name}</h2>
-        <hr />
+        {/* <h2>Welcome to {siteConfig.name}</h2>
+        <hr /> */}
         <section>
           {allowTargetChange && (
             <FluidTargetForm
