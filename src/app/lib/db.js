@@ -69,3 +69,20 @@ WHERE r.patientId = ?
 };
 
 export { setNewPatientFluidTarget };
+
+
+const logNewDrink = async (user_id, patient_id, millilitres, startDate, startTime, endTime, notes) => {
+
+const insertQuery = `INSERT INTO fluidtracker.fluidentries (patientId, userId, createdAt, millilitres, date, timeStarted, timeEnded, note)
+SELECT r.patientId, r.userId, NOW(), ?, ?, ?, ?, ?
+FROM fluidtracker.relationships AS r
+WHERE r.patientId = ?
+  AND r.userId = ?;`;
+
+  const [insertRows] = await connection.execute(insertQuery, [millilitres, startDate, startTime, endTime, notes, patient_id, user_id]); 
+
+};
+
+export { logNewDrink };
+
+
