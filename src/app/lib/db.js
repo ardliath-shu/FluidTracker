@@ -30,7 +30,6 @@ const getMyPatientCurrentFluidTarget = async (user_id, patient_id) => {
   }
 };
 
-export { getMyPatientCurrentFluidTarget };
 
 const setNewPatientFluidTarget = async (user_id, patient_id, target, change_date) => {
   try {
@@ -68,8 +67,6 @@ WHERE r.patientId = ?
   }
 };
 
-export { setNewPatientFluidTarget };
-
 
 const logNewDrink = async (user_id, patient_id, millilitres, startDate, startTime, endTime, notes) => {
 
@@ -82,8 +79,6 @@ WHERE r.patientId = ?
   const [insertRows] = await connection.execute(insertQuery, [millilitres, startDate, startTime, endTime, notes, patient_id, user_id]); 
 
 };
-
-export { logNewDrink };
 
 
 const getOpenDrinks = async (user_id, patient_id) => {
@@ -98,4 +93,37 @@ WHERE r.patientId = ?
 return rows;
 };
 
-export { getOpenDrinks };
+
+const finishOpenDrink = async (time_ended, user_id, patient_id, fluidEntryId) => {
+  
+    const updateQuery = `UPDATE fluidtracker.fluidEntries AS e
+JOIN fluidtracker.relationships AS r
+  ON e.patientId = r.patientId
+SET
+  e.timeEnded = ?
+WHERE
+  r.patientId = ?
+  AND r.userId = ?
+  AND e.timeEnded IS NULL
+  AND e.fluidEntryId = ?`;
+
+    const [updateRows] = await connection.execute(updateQuery, [time_ended, patient_id, user_id, fluidEntryId]); 
+
+};
+
+
+
+
+const getDrinksForDate = async (user_id, patient_id, date) => {
+
+const query = `SELECT fluidEntryId, millilitres, date, timeStarted, timeEnded, note FROM fluidtracker.fluidentries e
+JOIN  fluidtracker.relationships AS r on e.patientId = r.PatientId
+WHERE r.patientId = ?
+  AND r.userId = ?
+  AND e.date = ?;`;
+
+  const [rows] = await connection.execute(query, [patient_id, user_id, date]); 
+  return rows;
+};
+
+export { getDrinksForDate, getOpenDrinks, logNewDrink, getMyPatientCurrentFluidTarget, setNewPatientFluidTarget, finishOpenDrink };
