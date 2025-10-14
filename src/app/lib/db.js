@@ -86,3 +86,16 @@ WHERE r.patientId = ?
 export { logNewDrink };
 
 
+const getOpenDrinks = async (user_id, patient_id) => {
+
+const query = `SELECT fluidEntryId, millilitres, date, timeStarted, note FROM fluidtracker.fluidentries e
+JOIN  fluidtracker.relationships AS r on e.patientId = r.PatientId
+WHERE r.patientId = ?
+  AND r.userId = ?
+  AND e.timeEnded IS NULL;`;
+
+  const [rows] = await connection.execute(query, [patient_id, user_id]); 
+return rows;
+};
+
+export { getOpenDrinks };

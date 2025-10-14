@@ -1,4 +1,4 @@
-import { fetchUser, getMyPatientCurrentFluidTarget, setNewPatientFluidTarget, logNewDrink } from "../lib/db";
+import { fetchUser, getMyPatientCurrentFluidTarget, setNewPatientFluidTarget, logNewDrink, getOpenDrinks } from "../lib/db";
 
 const TestPage = async () => {
   const result = await fetchUser(1);
@@ -20,8 +20,9 @@ const TestPage = async () => {
 
 await logNewDrink(1, 1, 200, day, minutesSinceMidnight, minutesSinceMidnight + 30, 'Programatically added drink');
 
+const openDrinks = await getOpenDrinks(1, 1);
 
-console.log(user);
+console.log(openDrinks);
   return (
     <main>
       <div>
