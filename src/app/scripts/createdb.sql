@@ -113,3 +113,56 @@ CREATE TABLE users (
         TRUE,
         2500
     );
+
+
+
+
+    CREATE TABLE fluidtracker.fluidentries (
+        fluidEntryId INT AUTO_INCREMENT PRIMARY KEY,
+        patientId INT NOT NULL,
+        userId INT NOT NULL,
+        createdAt DATETIME NOT NULL,
+        millilitres INT NOT NULL,
+        date DATE NOT NULL,
+        timeStarted INT NOT NULL,
+        timeEnded INT NULL,
+        note VARCHAR(1023) NULL,
+        CONSTRAINT fk_fluidEntries_patients FOREIGN KEY (patientId) REFERENCES patients(patientId),
+        CONSTRAINT fk_fluidEntries_users FOREIGN KEY (userId) REFERENCES users(userId)
+    );
+
+
+    INSERT INTO fluidtracker.fluidentries(patientId,
+	userId, 
+    createdAt,
+    millilitres,
+    date,
+    timeStarted,
+    timeEnded,
+    note) VALUES(1,
+    1,
+    '2025-01-13 16:30',
+    200,
+    '2025-01-13',
+    1000,
+    1030,
+    'Completed drink')
+    
+
+    INSERT INTO fluidtracker.fluidentries(patientId,
+	userId, 
+    createdAt,
+    millilitres,
+    date,
+    timeStarted,
+    timeEnded,
+    note) VALUES(1,
+    1,
+    '2025-01-13 16:30',
+    200,
+    '2025-01-13',
+    1060,
+    null,
+    'In Progress Drink')
+    
+    
