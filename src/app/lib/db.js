@@ -111,6 +111,25 @@ WHERE
 
 };
 
+const getTypicalProgresss = async (user_id, patient_id, since_date, time) => {
+
+const query = `SELECT MIN(runningTotal) min, MAX(runningTotal) max, AVG(runningTotal) average
+FROM
+(
+	SELECT date, SUM(millilitres) runningTotal
+	FROM fluidtracker.fluidentries e
+	JOIN  fluidtracker.relationships AS r on e.patientId = r.PatientId
+	WHERE r.patientId = ?
+	AND r.userId = ?
+	AND e.date >= ?
+	AND e.timeEnded < ?
+	GROUP BY date
+) d;`;
+
+  const [rows] = await connection.execute(query, [patient_id, user_id, since_date, time]); 
+return rows;
+};
+
 
 
 
@@ -126,4 +145,4 @@ WHERE r.patientId = ?
   return rows;
 };
 
-export { getDrinksForDate, getOpenDrinks, logNewDrink, getMyPatientCurrentFluidTarget, setNewPatientFluidTarget, finishOpenDrink };
+export { getDrinksForDate, getOpenDrinks, logNewDrink, getMyPatientCurrentFluidTarget, setNewPatientFluidTarget, finishOpenDrink, getTypicalProgresss };

@@ -1,4 +1,4 @@
-import { fetchUser, getMyPatientCurrentFluidTarget, setNewPatientFluidTarget, logNewDrink, getOpenDrinks, getDrinksForDate, finishOpenDrink } from "../lib/db";
+import { fetchUser, getMyPatientCurrentFluidTarget, setNewPatientFluidTarget, logNewDrink, getOpenDrinks, getDrinksForDate, finishOpenDrink, getTypicalProgresss } from "../lib/db";
 
 const TestPage = async () => {
   const result = await fetchUser(1);
@@ -26,13 +26,18 @@ console.log(openDrinks);
 const drinksToday = await getDrinksForDate(1, 1, day);
 console.log(drinksToday);
 
-await finishOpenDrink(1100, 1, 1, 2);
+// await finishOpenDrink(1100, 1, 1, 2);
+
+const typicalProgress = await getTypicalProgresss(1, 1, '2025-01-01', minutesSinceMidnight);
+console.log(typicalProgress);
 
   return (
     <main>
       <div>
         <h1>Hello {user.email}</h1>  
-        {/* <p>Your fluid target was {fluidTarget[0].millilitres} it has been updated to {newFluidTarget[0].millilitres} ml</p> */}
+        <p>Your fluid target is {fluidTarget[0].millilitres}</p>
+
+        <p>By this time of day you will typically have drunk {typicalProgress[0].average} however you may have drunk as little as {typicalProgress[0].min} or as much as {typicalProgress[0].max}.</p>
       </div>
 
       <table>
