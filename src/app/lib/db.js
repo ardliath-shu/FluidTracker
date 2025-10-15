@@ -138,7 +138,7 @@ WHERE
   ]);
 };
 
-const getTypicalProgresss = async (user_id, patient_id, since_date, time) => {
+const getTypicalProgress = async (user_id, patient_id, since_date, time) => {
   const query = `SELECT MIN(runningTotal) min, MAX(runningTotal) max, AVG(runningTotal) average
 FROM
 (
@@ -179,5 +179,5 @@ export {
   getMyPatientCurrentFluidTarget,
   setNewPatientFluidTarget,
   finishOpenDrink,
-  getTypicalProgresss,
+  getTypicalProgress,
 };

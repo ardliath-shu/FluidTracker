@@ -6,7 +6,7 @@ import {
   getOpenDrinks,
   getDrinksForDate,
   finishOpenDrink,
-  getTypicalProgresss,
+  getTypicalProgress,
 } from "../lib/db";
 
 const TestPage = async () => {
@@ -36,7 +36,7 @@ const TestPage = async () => {
 
   // await finishOpenDrink(1100, 1, 1, 2);
 
-  const typicalProgress = await getTypicalProgresss(
+  const typicalProgress = await getTypicalProgress(
     1,
     1,
     "2025-01-01",
