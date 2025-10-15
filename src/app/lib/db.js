@@ -14,28 +14,29 @@ const fetchUser = async (user_id) => {
 
 export { fetchUser };
 
-
 const getMyPatientCurrentFluidTarget = async (user_id, patient_id) => {
   try {
     const query = `select r.userId, r.patientId, t.millilitres, t.effectiveFrom, t.effectiveTo
     from fluidtracker.fluidtargets t
     join fluidtracker.relationships r on t.patientId = r.PatientId
-    where t.isActive = 1 and r.patientId = ? and r.userId = ?`; 
+    where t.isActive = 1 and r.patientId = ? and r.userId = ?`;
 
-    const [rows] = await connection.execute(query, [patient_id, user_id]); 
+    const [rows] = await connection.execute(query, [patient_id, user_id]);
     return rows;
   } catch (error) {
-    console.error("Database Error:", error); 
+    console.error("Database Error:", error);
     throw new Error("Failed to fetch data.");
   }
 };
 
-
-const setNewPatientFluidTarget = async (user_id, patient_id, target, change_date) => {
+const setNewPatientFluidTarget = async (
+  user_id,
+  patient_id,
+  target,
+  change_date,
+) => {
   try {
-
     await connection.beginTransaction();
-
 
     const updateQuery = `UPDATE fluidtracker.fluidtargets AS t
 JOIN fluidtracker.relationships AS r
@@ -48,55 +49,77 @@ WHERE
   AND r.patientId = ?
   AND r.userId = ?`;
 
-    const [updateRows] = await connection.execute(updateQuery, [change_date, patient_id, user_id]); 
+    const [updateRows] = await connection.execute(updateQuery, [
+      change_date,
+      patient_id,
+      user_id,
+    ]);
 
-const insertQuery = `INSERT INTO fluidtracker.fluidtargets (patientId, userId, effectiveFrom, isActive, millilitres, createdAt)
+    const insertQuery = `INSERT INTO fluidtracker.fluidtargets (patientId, userId, effectiveFrom, isActive, millilitres, createdAt)
 SELECT r.patientId, r.userId, ?, 1, ?, NOW()
 FROM fluidtracker.relationships AS r
 WHERE r.patientId = ?
   AND r.userId = ?;`;
 
-  const [insertRows] = await connection.execute(insertQuery, [change_date, target, patient_id, user_id]); 
+    const [insertRows] = await connection.execute(insertQuery, [
+      change_date,
+      target,
+      patient_id,
+      user_id,
+    ]);
 
     await connection.commit();
-    
   } catch (error) {
     await connection.rollback();
-    console.error("Database Error:", error); 
+    console.error("Database Error:", error);
     throw new Error("Failed to fetch data.");
   }
 };
 
-
-const logNewDrink = async (user_id, patient_id, millilitres, startDate, startTime, endTime, notes) => {
-
-const insertQuery = `INSERT INTO fluidtracker.fluidentries (patientId, userId, createdAt, millilitres, date, timeStarted, timeEnded, note)
+const logNewDrink = async (
+  user_id,
+  patient_id,
+  millilitres,
+  startDate,
+  startTime,
+  endTime,
+  notes,
+) => {
+  const insertQuery = `INSERT INTO fluidtracker.fluidentries (patientId, userId, createdAt, millilitres, date, timeStarted, timeEnded, note)
 SELECT r.patientId, r.userId, NOW(), ?, ?, ?, ?, ?
 FROM fluidtracker.relationships AS r
 WHERE r.patientId = ?
   AND r.userId = ?;`;
 
-  const [insertRows] = await connection.execute(insertQuery, [millilitres, startDate, startTime, endTime, notes, patient_id, user_id]); 
-
+  const [insertRows] = await connection.execute(insertQuery, [
+    millilitres,
+    startDate,
+    startTime,
+    endTime,
+    notes,
+    patient_id,
+    user_id,
+  ]);
 };
 
-
 const getOpenDrinks = async (user_id, patient_id) => {
-
-const query = `SELECT fluidEntryId, millilitres, date, timeStarted, note FROM fluidtracker.fluidentries e
+  const query = `SELECT fluidEntryId, millilitres, date, timeStarted, note FROM fluidtracker.fluidentries e
 JOIN  fluidtracker.relationships AS r on e.patientId = r.PatientId
 WHERE r.patientId = ?
   AND r.userId = ?
   AND e.timeEnded IS NULL;`;
 
-  const [rows] = await connection.execute(query, [patient_id, user_id]); 
-return rows;
+  const [rows] = await connection.execute(query, [patient_id, user_id]);
+  return rows;
 };
 
-
-const finishOpenDrink = async (time_ended, user_id, patient_id, fluidEntryId) => {
-  
-    const updateQuery = `UPDATE fluidtracker.fluidEntries AS e
+const finishOpenDrink = async (
+  time_ended,
+  user_id,
+  patient_id,
+  fluidEntryId,
+) => {
+  const updateQuery = `UPDATE fluidtracker.fluidEntries AS e
 JOIN fluidtracker.relationships AS r
   ON e.patientId = r.patientId
 SET
@@ -107,13 +130,16 @@ WHERE
   AND e.timeEnded IS NULL
   AND e.fluidEntryId = ?`;
 
-    const [updateRows] = await connection.execute(updateQuery, [time_ended, patient_id, user_id, fluidEntryId]); 
-
+  const [updateRows] = await connection.execute(updateQuery, [
+    time_ended,
+    patient_id,
+    user_id,
+    fluidEntryId,
+  ]);
 };
 
 const getTypicalProgresss = async (user_id, patient_id, since_date, time) => {
-
-const query = `SELECT MIN(runningTotal) min, MAX(runningTotal) max, AVG(runningTotal) average
+  const query = `SELECT MIN(runningTotal) min, MAX(runningTotal) max, AVG(runningTotal) average
 FROM
 (
 	SELECT date, SUM(millilitres) runningTotal
@@ -126,23 +152,32 @@ FROM
 	GROUP BY date
 ) d;`;
 
-  const [rows] = await connection.execute(query, [patient_id, user_id, since_date, time]); 
-return rows;
+  const [rows] = await connection.execute(query, [
+    patient_id,
+    user_id,
+    since_date,
+    time,
+  ]);
+  return rows;
 };
 
-
-
-
 const getDrinksForDate = async (user_id, patient_id, date) => {
-
-const query = `SELECT fluidEntryId, millilitres, date, timeStarted, timeEnded, note FROM fluidtracker.fluidentries e
+  const query = `SELECT fluidEntryId, millilitres, date, timeStarted, timeEnded, note FROM fluidtracker.fluidentries e
 JOIN  fluidtracker.relationships AS r on e.patientId = r.PatientId
 WHERE r.patientId = ?
   AND r.userId = ?
   AND e.date = ?;`;
 
-  const [rows] = await connection.execute(query, [patient_id, user_id, date]); 
+  const [rows] = await connection.execute(query, [patient_id, user_id, date]);
   return rows;
 };
 
-export { getDrinksForDate, getOpenDrinks, logNewDrink, getMyPatientCurrentFluidTarget, setNewPatientFluidTarget, finishOpenDrink, getTypicalProgresss };
+export {
+  getDrinksForDate,
+  getOpenDrinks,
+  logNewDrink,
+  getMyPatientCurrentFluidTarget,
+  setNewPatientFluidTarget,
+  finishOpenDrink,
+  getTypicalProgresss,
+};
