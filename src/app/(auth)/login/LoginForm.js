@@ -33,16 +33,32 @@ export default function LoginForm() {
   return (
     <form className="form" action={formAction} noValidate>
       {state?.error && (
-        <div role="alert" aria-live="polite" style={{ color: "#b00020", marginBottom: 8 }}>
+        <div
+          role="alert"
+          aria-live="polite"
+          style={{ color: "#b00020", marginBottom: 8 }}
+        >
           {state.error}
         </div>
       )}
       <div className="form-floating">
-        <input type="email" id="email" name="email" placeholder="Email" required />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          required
+        />
         <label htmlFor="email">Email</label>
       </div>
       <div className="form-floating">
-        <input type="password" id="password" name="password" placeholder="Password" required />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
         <label htmlFor="password">Password</label>
       </div>
       <SubmitButton />

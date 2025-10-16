@@ -33,20 +33,42 @@ export default function RegisterForm() {
   return (
     <form action={formAction} className="form" noValidate>
       {state?.error && (
-        <div role="alert" aria-live="polite" style={{ color: "#b00020", marginBottom: 8 }}>
+        <div
+          role="alert"
+          aria-live="polite"
+          style={{ color: "#b00020", marginBottom: 8 }}
+        >
           {state.error}
         </div>
       )}
       <div className="form-floating">
-        <input type="text" id="name" name="name" placeholder="Full Name" required />
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Full Name"
+          required
+        />
         <label htmlFor="name">Full Name</label>
       </div>
       <div className="form-floating">
-        <input type="email" id="email" name="email" placeholder="Email" required />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          required
+        />
         <label htmlFor="email">Email</label>
       </div>
       <div className="form-floating">
-        <input type="password" id="password" name="password" placeholder="Password" required />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
         <label htmlFor="password">Password</label>
       </div>
       <div className="form-floating">

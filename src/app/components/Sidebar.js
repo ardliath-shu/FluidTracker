@@ -81,7 +81,11 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
             </button>
           </form>
 
-          <Link href="#" title="Toggle dark mode" onClick={handleToggleDarkMode}>
+          <Link
+            href="#"
+            title="Toggle dark mode"
+            onClick={handleToggleDarkMode}
+          >
             <i className="fa fa-fw fa-circle-half-stroke"></i>
           </Link>
         </div>

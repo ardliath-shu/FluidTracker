@@ -21,7 +21,7 @@ function toMessage(e: unknown, fallback: string) {
 
 export async function signUpAction(
   _prevState: ActionState,
-  formData: FormData
+  formData: FormData,
 ): Promise<ActionState | void> {
   const email = (formData.get("email") as string)?.trim();
   const password = (formData.get("password") as string) || "";
@@ -29,7 +29,8 @@ export async function signUpAction(
   const name = (formData.get("name") as string)?.trim();
 
   if (!email) return { error: "Email is required." };
-  if (password.length < 8) return { error: "Password must be at least 8 characters." };
+  if (password.length < 8)
+    return { error: "Password must be at least 8 characters." };
   if (password !== confirmPassword) return { error: "Passwords do not match." };
 
   try {
@@ -45,7 +46,7 @@ export async function signUpAction(
 
 export async function signInAction(
   _prevState: ActionState,
-  formData: FormData
+  formData: FormData,
 ): Promise<ActionState | void> {
   const email = (formData.get("email") as string)?.trim();
   const password = (formData.get("password") as string) || "";
@@ -65,7 +66,7 @@ export async function signInAction(
 
 export async function signOutAction() {
   await auth.api.signOut({
-    headers: await headers()
+    headers: await headers(),
   });
   redirect("/login");
 }
