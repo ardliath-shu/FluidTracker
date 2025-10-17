@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Card from "@/app/components/Card";
+import BarcodeScanner from "@/app/components/BarcodeScanner";
 
 export default function AddTest() {
   const [barcode, setBarcode] = useState("");
@@ -10,12 +11,21 @@ export default function AddTest() {
   const [measurement, setMeasurement] = useState("");
   const [ingredients, setIngredients] = useState("");
 
-  const handleBarcodeSubmit = async (e) => {
-    e.preventDefault();
+  const lastScannedRef = useRef(null);
 
+  const fetchProduct = async (code) => {
+    // Prevent repeated scans
+    if (code === lastScannedRef.current) return;
+    lastScannedRef.current = code;
+
+    setBarcode(code); // update input box with code
+    fetchData(code); // pass code directly
+  };
+
+  async function fetchData(code) {
     try {
       const response = await fetch(
-        `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`,
+        `https://world.openfoodfacts.org/api/v0/product/${code}.json`,
       );
       const data = await response.json();
 
@@ -23,32 +33,29 @@ export default function AddTest() {
         setDrinkName(
           data.product.product_name_en || data.product.product_name || "",
         );
-        //setQuantity(data.product.quantity || data.product.serving_size || data.product.serving_quantity || "")
         setIngredients(data.product.ingredients_text_en || "");
-        // If quntity includes ml, cl or ltr text set measurement select value
+
         let rawQuantity =
           data.product.quantity ||
           data.product.serving_size ||
           data.product.serving_quantity ||
           "";
 
-        // Extract number and unit (e.g., "200 ml" => "200", "ml")
         const quantityMatch = rawQuantity.match(/([\d.]+)\s*(ml|cl|l|ltr)?/i);
 
         if (quantityMatch) {
-          setQuantity(quantityMatch[1]); // sets just the number part
+          setQuantity(quantityMatch[1]);
           const unit = quantityMatch[2]?.toLowerCase();
 
-          // Normalize l to ltr
           if (unit === "l") {
             setMeasurement("ltr");
           } else if (unit === "cl" || unit === "ml") {
             setMeasurement(unit);
           } else {
-            setMeasurement(""); // fallback
+            setMeasurement("");
           }
         } else {
-          setQuantity(rawQuantity); // fallback if pattern didn't match
+          setQuantity(rawQuantity);
           setMeasurement("");
         }
       } else {
@@ -64,6 +71,11 @@ export default function AddTest() {
       setQuantity("");
       setIngredients("");
     }
+  }
+
+  const handleBarcodeSubmit = async (e) => {
+    e.preventDefault();
+    fetchData(barcode); // Pass current barcode value
   };
 
   return (
@@ -73,31 +85,38 @@ export default function AddTest() {
       <p className="center">Add a common drink and the details.</p>
       <br />
 
-      {/* Search by Barcode */}
-      <Card colour="" icon="fa-search" title="Search Drink">
-        <form onSubmit={handleBarcodeSubmit}>
-          <div className="row">
-            <div className="col">
-              <div className="form-floating">
-                <input
-                  type="text"
-                  id="barcode"
-                  placeholder="Barcode Number"
-                  value={barcode}
-                  onChange={(e) => setBarcode(e.target.value)}
-                  required
-                />
-                <label htmlFor="barcode">Enter A Barcode Number</label>
+      <div className="row">
+        <div className="col">
+          {/* Search by Barcode Number */}
+          <Card colour="" icon="fa-search" title="Search Drink">
+            <form onSubmit={handleBarcodeSubmit}>
+              <div className="row">
+                <div className="col">
+                  <BarcodeScanner onDetected={(code) => fetchProduct(code)} />
+                </div>
+                <div className="col">
+                  <div className="form-floating">
+                    <input
+                      type="text"
+                      id="barcode"
+                      placeholder="Barcode Number"
+                      value={barcode}
+                      onChange={(e) => setBarcode(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="barcode">Enter A Barcode Number</label>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <button type="submit" className="btn w-100">
+                    Search For Drink
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="">
-              <button type="submit" className="btn blue w-100">
-                Search For A Drink
-              </button>
-            </div>
-          </div>
-        </form>
-      </Card>
+            </form>
+          </Card>
+        </div>
+      </div>
 
       {/*  Drink Details */}
       <Card colour="" icon="fa-bottle-water" title="Add A Drink Type">
