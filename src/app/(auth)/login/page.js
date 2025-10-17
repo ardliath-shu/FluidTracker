@@ -1,4 +1,5 @@
 import LoginForm from "./LoginForm";
+import Link from "next/link";
 
 export const metadata = {
   title: "Log In",
@@ -13,7 +14,7 @@ export default function LoginPage() {
       <LoginForm />
       <hr />
       <p>
-        Don&apos;t have an account? <a href="/register">Register</a>
+        Don&apos;t have an account? <Link href="/register">Register</Link>
       </p>
     </div>
   );

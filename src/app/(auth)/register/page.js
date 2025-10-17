@@ -1,4 +1,5 @@
 import RegisterForm from "./RegisterForm";
+import Link from "next/link";
 
 export const metadata = {
   title: "Register",
@@ -13,7 +14,7 @@ export default function RegisterPage() {
       <RegisterForm />
       <hr />
       <p>
-        Already have an account? <a href="/login">Log In</a>
+        Already have an account? <Link href="/login">Log In</Link>
       </p>
     </div>
   );
