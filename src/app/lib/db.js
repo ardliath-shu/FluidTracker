@@ -3,7 +3,7 @@ import connection from "./connection";
 
 const fetchUser = async (user_id) => {
   try {
-    const query = "select * from users where userId = ?";
+    const query = "SELECT * FROM users WHERE userId = ?";
     const [rows] = await connection.execute(query, [user_id]);
     return rows;
   } catch (error) {
@@ -16,10 +16,10 @@ export { fetchUser };
 
 const getMyPatientCurrentFluidTarget = async (user_id, patient_id) => {
   try {
-    const query = `select r.userId, r.patientId, t.millilitres, t.effectiveFrom, t.effectiveTo
-    from fluidtracker.fluidtargets t
-    join fluidtracker.relationships r on t.patientId = r.PatientId
-    where t.isActive = 1 and r.patientId = ? and r.userId = ?`;
+    const query = `SELECT r.userId, r.patientId, t.millilitres, t.effectiveFrom, t.effectiveTo
+    FROM fluidtracker.fluidtargets t
+    JOIN fluidtracker.relationships r ON t.patientId = r.PatientId
+    WHERE t.isActive = 1 AND r.patientId = ? AND r.userId = ?`;
 
     const [rows] = await connection.execute(query, [patient_id, user_id]);
     return rows;
@@ -103,8 +103,9 @@ WHERE r.patientId = ?
 };
 
 const getOpenDrinks = async (user_id, patient_id) => {
-  const query = `SELECT fluidEntryId, millilitres, date, timeStarted, note FROM fluidtracker.fluidentries e
-JOIN  fluidtracker.relationships AS r on e.patientId = r.PatientId
+  const query = `SELECT fluidEntryId, millilitres, date, timeStarted, note
+FROM fluidtracker.fluidentries e
+JOIN fluidtracker.relationships AS r ON e.patientId = r.PatientId
 WHERE r.patientId = ?
   AND r.userId = ?
   AND e.timeEnded IS NULL;`;
@@ -142,14 +143,14 @@ const getTypicalProgress = async (user_id, patient_id, since_date, time) => {
   const query = `SELECT MIN(runningTotal) min, MAX(runningTotal) max, AVG(runningTotal) average
 FROM
 (
-	SELECT date, SUM(millilitres) runningTotal
-	FROM fluidtracker.fluidentries e
-	JOIN  fluidtracker.relationships AS r on e.patientId = r.PatientId
-	WHERE r.patientId = ?
-	AND r.userId = ?
-	AND e.date >= ?
-	AND e.timeEnded < ?
-	GROUP BY date
+    SELECT date, SUM(millilitres) runningTotal
+    FROM fluidtracker.fluidentries e
+    JOIN fluidtracker.relationships AS r ON e.patientId = r.PatientId
+    WHERE r.patientId = ?
+    AND r.userId = ?
+    AND e.date >= ?
+    AND e.timeEnded < ?
+    GROUP BY date
 ) d;`;
 
   const [rows] = await connection.execute(query, [
@@ -162,8 +163,9 @@ FROM
 };
 
 const getDrinksForDate = async (user_id, patient_id, date) => {
-  const query = `SELECT fluidEntryId, millilitres, date, timeStarted, timeEnded, note FROM fluidtracker.fluidentries e
-JOIN  fluidtracker.relationships AS r on e.patientId = r.PatientId
+  const query = `SELECT fluidEntryId, millilitres, date, timeStarted, timeEnded, note
+FROM fluidtracker.fluidentries e
+JOIN fluidtracker.relationships AS r ON e.patientId = r.PatientId
 WHERE r.patientId = ?
   AND r.userId = ?
   AND e.date = ?;`;
