@@ -63,4 +63,12 @@
   .sidebar .close-btn {
     display: none; /* hide close button on desktop */
   }
+
+  .form-floating input,
+  .form-floating textarea {
+    width: 100%;
+    margin-left: 0;
+  }
+
+
 }
