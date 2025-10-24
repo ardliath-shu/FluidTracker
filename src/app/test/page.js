@@ -16,6 +16,11 @@ const TestPage = async () => {
   const fluidTarget = await getMyPatientCurrentFluidTarget(1, 1);
   console.log("initial read " + fluidTarget[0].millilitres);
 
+  await setNewPatientFluidTarget(1, 1, 2600, "2025-12-01 00:00:00");
+  const newFluidTarget = await getMyPatientCurrentFluidTarget(1, 1);
+  console.log("after update " + newFluidTarget[0].millilitres);
+
+  console.log(user);
   // await setNewPatientFluidTarget(1, 1, 2600, '2025-12-01 00:00:00');
   // const newFluidTarget = await getMyPatientCurrentFluidTarget(1, 1);
   // console.log("after update " + newFluidTarget[0].millilitres);

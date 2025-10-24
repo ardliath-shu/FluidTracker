@@ -1,36 +1,149 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# WaterLog (Fluid Tracker)
+
+Track daily fluid intake with a simple Next.js app. Uses Better Auth for email/password authentication and MySQL for persistence.
+
+## Contents
+
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Environment Variables](#environment-variables)
+  - [Install and Run](#install-and-run)
+- [Database](#database)
+  - [Create Schema](#create-schema)
+  - [Tables Overview](#tables-overview)
+- [Authentication](#authentication)
+  - [How It Works](#how-it-works)
+  - [Creating an Account](#creating-an-account)
+  - [Logging In and Out](#logging-in-and-out)
+- [Key Files](#key-files)
+- [License](#license)
+
+## Overview
+
+- App routes and UI live under `src/app`.
+- Auth backed by Better Auth with a MySQL connection and numeric IDs.
+- Dashboard is protected; unauthenticated users are redirected to login.
+
+## Tech Stack
+
+- Next.js 15, React 19
+- Better Auth
+- MySQL (mysql2)
+- Vanilla CSS for simple styling
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- MySQL 8 (or compatible)
+
+### Environment Variables
+
+Create a `.env.local` file in the project root:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+DB_HOST=127.0.0.1
+DB_USER=root
+DB_PASS=your_password
+DB_SCHEMA=fluidtracker
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Install and Run
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm install
+# Initialize database schema (MySQL must be running)
+mysql -u "$DB_USER" -p"$DB_PASS" -h "${DB_HOST:-localhost}" < "src/app/scripts/createdb.sql"
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Start the dev server
+npm run dev
+```
 
-## Learn More
+Open http://localhost:3000.
 
-To learn more about Next.js, take a look at the following resources:
+## Database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Create Schema
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The SQL to create all tables and seed minimal test data (non-auth) is in:
 
-## Deploy on Vercel
+- [`src/app/scripts/createdb.sql`](src/app/scripts/createdb.sql)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Run it with:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+mysql -u "$DB_USER" -p"$DB_PASS" -h "${DB_HOST:-localhost}" < "src/app/scripts/createdb.sql"
+```
+
+### Tables Overview
+
+- user
+  - Profile only: id INT AUTO_INCREMENT, email UNIQUE, name, emailVerified, timestamps.
+  - No password fields; Better Auth stores credentials in account.
+- account
+  - One row per auth provider per user (email/password lives here).
+  - Columns: id, userId (FK user.id), providerId, accountId, password (hash), tokens/timestamps.
+- session
+  - Active sessions created by Better Auth (id INT AUTO_INCREMENT, userId, token, expiresAt, metadata).
+- verification
+  - Tokens for flows like email verification or password reset.
+- patients, relationships, fluidTargets
+  - Domain tables used by the app for patient and target management.
+
+See full definitions in [`src/app/scripts/createdb.sql`](src/app/scripts/createdb.sql).
+
+## Authentication
+
+### How It Works
+
+- Config: [`src/app/lib/auth.ts`](src/app/lib/auth.ts)
+  - Uses a MySQL pool and numeric IDs (`advanced.database.useNumberId = true`).
+- Route handler: [`src/app/api/auth/[...all]/route.ts`](src/app/api/auth/%5B...all%5D/route.ts)
+- Server actions: [`src/app/actions/auth.ts`](src/app/actions/auth.ts)
+  - `signUpAction`: validates inputs, calls Better Auth `signUpEmail`, returns success or error.
+  - `signInAction`: calls `signInEmail`, returns success or error.
+  - `signOutAction`: calls `signOut` and redirects to `/login`.
+- Forms (client components) use `useActionState` to display inline errors and navigate on success:
+  - Register: [`src/app/(auth)/register/RegisterForm.js`](<src/app/(auth)/register/RegisterForm.js>)
+  - Login: [`src/app/(auth)/login/LoginForm.js`](<src/app/(auth)/login/LoginForm.js>)
+
+Better Auth creates:
+
+- user row (profile only)
+- account row with the password hash (providerId='email', accountId=email)
+- session row on successful sign-in
+
+### Creating an Account
+
+- Visit `/register`, submit email, name, and password.
+- On success, you’ll be navigated to `/login`.
+- After login, you’ll be taken to the dashboard `/`.
+
+### Logging In and Out
+
+- Visit `/login` with your credentials.
+- Logout link is in the sidebar; it posts to `signOutAction`.
+
+## Key Files
+
+- Auth
+  - [`src/app/lib/auth.ts`](src/app/lib/auth.ts)
+  - [`src/app/api/auth/[...all]/route.ts`](src/app/api/auth/%5B...all%5D/route.ts)
+  - [`src/app/actions/auth.ts`](src/app/actions/auth.ts)
+  - Forms: [`login`](<src/app/(auth)/login/LoginForm.js>), [`register`](<src/app/(auth)/register/RegisterForm.js>)
+- UI shell
+  - [`src/app/layout.js`](src/app/layout.js)
+  - [`src/app/components/Layout.js`](src/app/components/Layout.js)
+  - [`src/app/components/Sidebar.js`](src/app/components/Sidebar.js)
+- Dashboard
+  - [`src/app/(dashboard)/page.js`](<src/app/(dashboard)/page.js>)
+  - [`src/app/(dashboard)/DashboardClient.js`](<src/app/(dashboard)/DashboardClient.js>)
+- Schema
+  - [`src/app/scripts/createdb.sql`](src/app/scripts/createdb.sql)
+
+## License
+
+MIT © 2025

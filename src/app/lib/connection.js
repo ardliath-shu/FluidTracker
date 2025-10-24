@@ -4,5 +4,6 @@ const connection = await mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_SCHEMA,
+  timezone: "Z", // Important to ensure UTC timezone
 });
 export default connection;

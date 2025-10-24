@@ -1,15 +1,16 @@
 "use client";
 import { useEffect } from "react";
 import Link from "next/link";
+import { signOutAction } from "../actions/auth";
 
 const prefix = "../../../../"; // Hack to return to home from nested cms/insert etc
 const links = [
-  { name: "Dashboard", icon: "fa-tachometer-alt", href: prefix }, // Hack to return to home from nested cms/insert etc
+  { name: "Dashboard", icon: "fa-tachometer-alt", href: prefix },
   { name: "Add Drink", icon: "fa-bottle-water", href: prefix + "add" },
   { name: "Profile", icon: "fa-user", href: "#" },
   { name: "Settings", icon: "fa-cog", href: "#" },
-  { name: "Elements", icon: "fa-th", href: prefix + "elements" }, // Hack to return to home from nested cms/insert etc
-  { name: "Generic Page", icon: "fa-file", href: prefix + "generic" }, // Hack to return to home from nested cms/insert etc
+  { name: "Elements", icon: "fa-th", href: prefix + "elements" },
+  { name: "Generic Page", icon: "fa-file", href: prefix + "generic" },
 ];
 
 export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
@@ -62,9 +63,23 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
             alignItems: "center",
           }}
         >
-          <Link href="login">
-            <i className="fa fa-fw fa-sign-out-alt"></i> Logout
-          </Link>
+          {/* Use a form to bind the server action */}
+          <form action={signOutAction}>
+            <button
+              type="submit"
+              title="Logout"
+              style={{
+                background: "none",
+                border: "none",
+                color: "inherit",
+                cursor: "pointer",
+                padding: 0,
+                font: "inherit",
+              }}
+            >
+              <i className="fa fa-fw fa-sign-out-alt"></i> Logout
+            </button>
+          </form>
 
           <Link
             href="#"
