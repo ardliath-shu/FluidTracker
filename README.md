@@ -31,7 +31,7 @@ Track daily fluid intake with a simple Next.js app. Uses Better Auth for email/p
 - Next.js 15, React 19
 - Better Auth
 - MySQL (mysql2)
-- CSS modules for simple styling
+- Vanilla CSS for simple styling
 
 ## Getting Started
 
