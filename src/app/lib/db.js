@@ -29,7 +29,6 @@ const getMyPatientCurrentFluidTarget = async (user_id, patient_id) => {
   }
 };
 
-export { getMyPatientCurrentFluidTarget };
 
 const setNewPatientFluidTarget = async (
   user_id,
