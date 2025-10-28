@@ -109,7 +109,8 @@ export default function AddTest() {
                 </div>
                 <div className="flex-1">
                   <button type="submit" className="btn w-100">
-                    Search For Drink
+                    <i className="fa-solid fa-magnifying-glass"></i> Search For
+                    Drink
                   </button>
                 </div>
               </div>
@@ -153,10 +154,11 @@ export default function AddTest() {
                 <select
                   id="measurement"
                   name="measurement"
+                  aria-label="The unit that the drink is measured in."
                   value={measurement}
                   onChange={(e) => setMeasurement(e.target.value)}
                 >
-                  <option value=""></option>
+                  <option value="">Unit</option>
                   <option value="ml">ml</option>
                   <option value="cl">cl</option>
                   <option value="ltr">ltr</option>
