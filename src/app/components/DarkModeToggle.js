@@ -19,7 +19,11 @@ export default function DarkModeToggle() {
 
   return (
     <span className="dark-mode-toggle">
-      <button type="button" onClick={handleToggleDarkMode} title="Toggle dark mode.">
+      <button
+        type="button"
+        onClick={handleToggleDarkMode}
+        title="Toggle dark mode."
+      >
         <i className="fa-solid fa-moon"></i>
       </button>
     </span>
