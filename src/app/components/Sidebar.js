@@ -1,7 +1,8 @@
 "use client";
-import { useEffect } from "react";
+
 import Link from "next/link";
 import { signOutAction } from "../actions/auth";
+import DarkModeToggle from "./DarkModeToggle";
 
 const prefix = "../../../../"; // Hack to return to home from nested cms/insert etc
 const links = [
@@ -14,20 +15,6 @@ const links = [
 ];
 
 export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
-  // Handle click to dark-mode toggle and save to local storage
-  const handleToggleDarkMode = (e) => {
-    e.preventDefault(); // Prevent default link behavior
-    const isDarkMode = localStorage.getItem("dark-mode") === "true";
-    localStorage.setItem("dark-mode", !isDarkMode);
-    document.body.classList.toggle("dark-mode", !isDarkMode);
-  };
-
-  // Manage dark-mode on load and add class to body based on local storage
-  useEffect(() => {
-    const isDarkMode = localStorage.getItem("dark-mode") === "true";
-    document.body.classList.toggle("dark-mode", isDarkMode);
-  }, []);
-
   return (
     <aside
       className={`sidebar 
@@ -36,12 +23,12 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
     >
       {/* Top section */}
       <div className="sidebar-top">
-        <h5>
+        <h2>
           Menu
           <button className="close-btn" onClick={onClose}>
             &times;
           </button>
-        </h5>
+        </h2>
         <ul>
           {links.map((link) => (
             <li key={link.name}>
@@ -64,30 +51,12 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
           }}
         >
           {/* Use a form to bind the server action */}
-          <form action={signOutAction}>
-            <button
-              type="submit"
-              title="Logout"
-              style={{
-                background: "none",
-                border: "none",
-                color: "inherit",
-                cursor: "pointer",
-                padding: 0,
-                font: "inherit",
-              }}
-            >
+          <form action={signOutAction} style={{ flexGrow: "1" }}>
+            <button className="logout" type="submit">
               <i className="fa fa-fw fa-sign-out-alt"></i> Logout
             </button>
           </form>
-
-          <Link
-            href="#"
-            title="Toggle dark mode"
-            onClick={handleToggleDarkMode}
-          >
-            <i className="fa fa-fw fa-circle-half-stroke"></i>
-          </Link>
+          <DarkModeToggle />
         </div>
       </div>
 
