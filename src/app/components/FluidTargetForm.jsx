@@ -12,7 +12,6 @@ const FluidTargetForm = ({ currentTarget, setTarget, canSubmit }) => {
                   id="fluid_target_input"
                   value={currentTarget}
                   step={50}
-                  // onChange={handleTargetChange}
                   onChange={(event) => setTarget(parseInt(event.target.value))}
                 />
                 <label htmlFor="fluid_target_input">Fluid Target: </label>
