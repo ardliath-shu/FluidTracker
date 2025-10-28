@@ -12,13 +12,35 @@ h5 {
   color: #333333;
 }
 
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+button:hover {
+  background-color: #00000020;
+}
+
+.dark-mode-toggle button:hover {
+  background-color: #00000010;
+}
+
+.dark-mode-toggle button i {
+  color: #1e3050;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #76b3f0;
-  color: white;
+  color: #000060;
   padding: 5px 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -36,7 +58,7 @@ h5 {
 
 .navbar .brand a {
   text-decoration: none;
-  color: white;
+  color: #000060;
 }
 
 /* Make .brand i drop in from the top after 0.5s  */
@@ -89,7 +111,7 @@ h5 {
 /* Sidebar (mobile-first hidden off-canvas) */
 .sidebar {
   background: #6aa4de;
-  color: white;
+  color: #000060;
   width: 200px;
   padding: 0;
   height: calc(100dvh - 50px);
@@ -108,14 +130,14 @@ h5 {
   right: 0;
 }
 
-.sidebar h5 {
+.sidebar h2 {
   margin: 0.4em 0 0.4em 0.5em;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1.2em;
   padding: 0 0.5em;
-  color: #ffffff;
+  color: #000060;
 }
 
 .sidebar ul {
@@ -130,12 +152,18 @@ h5 {
   border-top: 2px solid #ffffff20;
 }
 
-.sidebar a {
+.sidebar a,
+.sidebar button {
   padding: 1em;
-  color: white;
+  color: #000060;
   text-decoration: none;
   display: block;
   white-space: nowrap;
+}
+
+.logout {
+  width: 100%;
+  text-align: start;
 }
 
 .sidebar a:hover {
@@ -182,7 +210,7 @@ h5 {
   position: fixed;
   z-index: 1000;
   background: #6aa4de;
-  color: white;
+  color: #000060;
   border: none;
   padding: 0.5rem 0.7rem;
   cursor: pointer;
@@ -195,7 +223,7 @@ h5 {
 .show-sidebar-btn:hover {
   font-size: 1.2em;
   transition: all 0.3s ease;
-  color: white;
+  color: #000060;
   box-shadow: 2px 0 2px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -340,8 +368,8 @@ i.pink {
   padding: 0.5em 1em;
   border: none;
   border-radius: 5px;
-  background: #afafaf;
-  color: white;
+  background: #969696;
+  color: black;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -352,7 +380,7 @@ i.pink {
   box-shadow: 0 2px 2px 0 #00000030;
 }
 .btn:hover {
-  background: #858585;
+  background: #b3b3b3;
   box-shadow: none;
 }
 .btn.red {
@@ -363,10 +391,10 @@ i.pink {
 }
 
 .btn.blue {
-  background-color: #3498db;
+  background-color: #45a1de;
 }
 .btn.blue:hover {
-  background-color: #2980b9;
+  background-color: #78bbe8;
 }
 
 .btn.green {
