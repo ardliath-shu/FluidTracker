@@ -16,12 +16,67 @@ body.dark-mode {
   color: #f0f0f0;
 }
 
+.dark-mode .dark-mode-toggle button i {
+  color: #b2c3e2;
+}
+
+.dark-mode a {
+  color: #80bfff;
+}
+
+.dark-mode a:visited {
+  color: #800fff;
+}
+
+.dark-mode .btn {
+  background-color: #595959;
+  color: white;
+}
+
+.dark-mode .btn:hover {
+  background-color: #424242;
+}
+
+.dark-mode .btn.red {
+  background-color: #a82315;
+}
+
+.dark-mode .btn.red:hover {
+  background-color: #7f1b10;
+}
+
+.dark-mode .btn.blue {
+  background-color: #2e2eff;
+}
+
+.dark-mode .btn.blue:hover {
+  background-color: #0000e0;
+}
+
+.dark-mode .btn.green {
+  background-color: #006600;
+}
+
+.dark-mode .btn.green:hover {
+  background-color: #004d00;
+}
+
 .dark-mode .navbar .burger {
   color: #f0f0f0;
 }
 
+.dark-mode .navbar .brand a {
+  color: white;
+}
+
 .dark-mode .sidebar {
   background: #375472;
+  color: white;
+}
+
+.dark-mode .sidebar a,
+.dark-mode .sidebar button {
+  color: white;
 }
 
 .dark-mode .show-sidebar-btn {

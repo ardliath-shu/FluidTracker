@@ -13,3 +13,9 @@
   margin-left: -45%;
   animation: wavy-water-line-scroll 10s linear infinite;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  #wavywaterline {
+    animation: none;
+  }
+}
