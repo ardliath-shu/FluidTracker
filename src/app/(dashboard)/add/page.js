@@ -8,7 +8,6 @@ export default function AddTest() {
   const [barcode, setBarcode] = useState("");
   const [drinkName, setDrinkName] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [measurement, setMeasurement] = useState("");
   const [ingredients, setIngredients] = useState("");
 
   const lastScannedRef = useRef(null);
@@ -44,16 +43,16 @@ export default function AddTest() {
         const quantityMatch = rawQuantity.match(/([\d.]+)\s*(ml|cl|l|ltr)?/i);
 
         if (quantityMatch) {
-          setQuantity(quantityMatch[1]);
+          var quantityValue = parseFloat(quantityMatch[1]);
           const unit = quantityMatch[2]?.toLowerCase();
 
           if (unit === "l") {
-            setMeasurement("ltr");
-          } else if (unit === "cl" || unit === "ml") {
-            setMeasurement(unit);
+            quantityValue = quantityValue * 1000; // convert to ml
+          } else if (unit === "cl") {
+            quantityValue = quantityValue * 10; // convert cl to ml
           } else {
-            setMeasurement("");
           }
+          setQuantity(quantityValue);
         } else {
           setQuantity(rawQuantity);
           setMeasurement("");
@@ -82,7 +81,7 @@ export default function AddTest() {
     <div>
       <h1>Add A Drink</h1>
       <hr />
-      <p className="center">Add a common drink and the details.</p>
+      <p className="center">Add a drink and the details.</p>
       <br />
 
       <div className="row">
@@ -141,15 +140,15 @@ export default function AddTest() {
                 <input
                   type="text"
                   id="quantity"
-                  placeholder="Quantity (eg: 200)"
+                  placeholder="Quantity Millilitres (eg: 200)"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   required
                 />
-                <label htmlFor="quantity">Quantity</label>
+                <label htmlFor="quantity">Quantity (Millilitres)</label>
               </div>
             </div>
-            <div className="">
+            {/* <div className="">
               <div className="form-floating">
                 <select
                   id="measurement"
@@ -164,9 +163,9 @@ export default function AddTest() {
                   <option value="ltr">ltr</option>
                 </select>
               </div>
-            </div>
+            </div> */}
           </div>
-          <div className="form-floating">
+          {/* <div className="form-floating">
             <textarea
               id="ingredients"
               placeholder="Ingredients"
@@ -174,7 +173,9 @@ export default function AddTest() {
               onChange={(e) => setIngredients(e.target.value)}
             ></textarea>
             <label htmlFor="ingredients">Ingredients</label>
-          </div>
+          </div> */}
+          {/* Display text ingredients */}
+          <div>{ingredients}</div>
           <button type="submit" className="btn green w-100">
             <i className="fa fa-plus"></i> Add
           </button>

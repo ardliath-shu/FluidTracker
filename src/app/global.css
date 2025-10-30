@@ -34,13 +34,23 @@ button:hover {
   color: #1e3050;
 }
 
+.auth-layout .dark-mode-toggle {
+  float: right;
+  font-size: 1.5em;
+  border: 1px solid #081427;
+  padding: 0.2em 0.4em;
+  border-radius: 1em;
+  background-color: #00000010;
+  line-height: 0;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #76b3f0;
-  color: #000060;
+  color: #3d6c9a;
   padding: 5px 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -53,12 +63,11 @@ button:hover {
 .navbar .brand {
   font-weight: bold;
   font-size: 1.5em;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .navbar .brand a {
   text-decoration: none;
-  color: #000060;
+  color: #0d3a67;
 }
 
 /* Make .brand i drop in from the top after 0.5s  */
@@ -111,7 +120,7 @@ button:hover {
 /* Sidebar (mobile-first hidden off-canvas) */
 .sidebar {
   background: #6aa4de;
-  color: #000060;
+  color: #0d3a67;
   width: 200px;
   padding: 0;
   height: calc(100dvh - 50px);
@@ -137,7 +146,7 @@ button:hover {
   align-items: center;
   font-size: 1.2em;
   padding: 0 0.5em;
-  color: #000060;
+  color: #0d3a67;
 }
 
 .sidebar ul {
@@ -155,13 +164,19 @@ button:hover {
 .sidebar a,
 .sidebar button {
   padding: 1em;
-  color: #000060;
+  color: #0d3a67;
   text-decoration: none;
   display: block;
   white-space: nowrap;
 }
 
-.logout {
+.sidebar-bottom > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-bottom .logout {
   width: 100%;
   text-align: start;
 }
@@ -210,7 +225,7 @@ button:hover {
   position: fixed;
   z-index: 1000;
   background: #6aa4de;
-  color: #000060;
+  color: #0d3a67;
   border: none;
   padding: 0.5rem 0.7rem;
   cursor: pointer;
@@ -223,7 +238,7 @@ button:hover {
 .show-sidebar-btn:hover {
   font-size: 1.2em;
   transition: all 0.3s ease;
-  color: #000060;
+  color: #0d3a67;
   box-shadow: 2px 0 2px 0 rgba(0, 0, 0, 0.2);
 }
 

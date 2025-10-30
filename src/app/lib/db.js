@@ -3,7 +3,7 @@ import connection from "./connection";
 
 const fetchUser = async (user_id) => {
   try {
-    const query = "SELECT * FROM users WHERE userId = ?";
+    const query = "SELECT * FROM user WHERE id = ?";
     const [rows] = await connection.execute(query, [user_id]);
     return rows;
   } catch (error) {
@@ -11,8 +11,37 @@ const fetchUser = async (user_id) => {
     throw new Error("Failed to fetch data.");
   }
 };
-
 export { fetchUser };
+
+const fetchPatient = async (user_id, patient_id) => {
+  try {
+    const query = `SELECT * 
+    FROM patients p
+    JOIN fluidtracker.relationships r ON p.patientId = r.PatientId
+    WHERE r.userId = ? AND r.patientId = ?`;
+    const [rows] = await connection.execute(query, [user_id, patient_id]);
+    return rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch data.");
+  }
+};
+export { fetchPatient };
+
+// Get list of patients for a user
+const fetchPatients = async (user_id) => {
+  try {
+    const query = `SELECT p.* FROM patients p
+    JOIN fluidtracker.relationships r ON p.patientId = r.PatientId
+    WHERE r.userId = ?`;
+    const [rows] = await connection.execute(query, [user_id]);
+    return rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch data.");
+  }
+};
+export { fetchPatients };
 
 const getMyPatientCurrentFluidTarget = async (user_id, patient_id) => {
   try {
@@ -174,7 +203,22 @@ WHERE r.patientId = ?
   return rows;
 };
 
+const getTotalForToday = async (user_id, patient_id) => {
+  const query = `SELECT SUM(millilitres) AS totalMillilitres
+FROM fluidtracker.fluidentries e
+JOIN fluidtracker.relationships AS r ON e.patientId = r.PatientId
+WHERE r.patientId = ?
+  AND r.userId = ?
+  AND e.date = ?
+  AND e.timeEnded IS NOT NULL;`;
+  const today = new Date().toISOString().split("T")[0];
+
+  const [rows] = await connection.execute(query, [patient_id, user_id, today]);
+  return rows;
+};
+
 export {
+  getTotalForToday,
   getDrinksForDate,
   getOpenDrinks,
   logNewDrink,

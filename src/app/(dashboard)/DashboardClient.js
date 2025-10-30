@@ -5,10 +5,12 @@ import ExtraMenu from "@/app/components/ExtraMenu";
 import Bottle from "@/app/components/Bottle";
 import FluidTargetForm from "@/app/components/FluidTargetForm";
 
-export default function DashboardClient() {
-  const defaultFluidTarget = 2500; // ml
+export default function DashboardClient({ username, patient, patients }) {
+  const defaultFluidTarget = patient.fluidTarget; // ml
   const [fluidTarget, setFluidTarget] = useState(defaultFluidTarget);
-  const [fluidLeft, setFluidLeft] = useState(defaultFluidTarget);
+  const [fluidLeft, setFluidLeft] = useState(
+    defaultFluidTarget - patient.totalToday,
+  );
   const [allowTargetChange, setAllowTargetChange] = useState(true);
 
   // TODO: get fluidTarget from db.
@@ -54,7 +56,7 @@ export default function DashboardClient() {
         </section>
       </div>
 
-      <ExtraMenu />
+      <ExtraMenu username={username} patient={patient} patients={patients} />
     </>
   );
 }

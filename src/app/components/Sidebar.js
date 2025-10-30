@@ -43,13 +43,7 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
       {/* Bottom section */}
       <div className="sidebar-bottom">
         <hr />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <div>
           {/* Use a form to bind the server action */}
           <form action={signOutAction} style={{ flexGrow: "1" }}>
             <button className="logout" type="submit">

@@ -21,6 +21,7 @@ VALUES
     ('ardliath@gmail.com', 'Ardliath', TRUE, '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
     ('john.doe@example.com', 'John Doe', FALSE, '2025-02-01 00:00:00', '2025-02-01 00:00:00');
 
+
 -- Create the 'patients' table
 CREATE TABLE patients (
     patientId INT AUTO_INCREMENT PRIMARY KEY,
@@ -38,6 +39,7 @@ VALUES
     (1, 'Adam', 'Smith', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
     (2, 'Jane', 'Doe', '2025-02-01 00:00:00', '2025-02-01 00:00:00');
 
+
 -- Create the 'relationships' table
 CREATE TABLE relationships (
     relationshipId INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,6 +55,62 @@ INSERT INTO relationships (userId, patientId, notes)
 VALUES
     (1, 1, 'Primary caregiver'),
     (2, 2, 'Secondary caregiver');
+
+
+-- Create the 'session' table
+CREATE TABLE session (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Unique identifier for each session
+    userId INT NOT NULL, -- The ID of the user
+    token VARCHAR(255) NOT NULL UNIQUE, -- The unique session token
+    expiresAt DATETIME NOT NULL, -- The time when the session expires
+    ipAddress VARCHAR(45), -- The IP address of the device (optional)
+    userAgent VARCHAR(512), -- The user agent information of the device (optional)
+    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_session_user FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+);
+-- Insert test sessions
+INSERT INTO session (id, userId, token, expiresAt, ipAddress, userAgent, createdAt, updatedAt)
+VALUES
+    (1, 1, 'token1', '2025-12-31 23:59:59', '192.168.1.1', 'Mozilla/5.0', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+    (2, 2, 'token2', '2025-12-31 23:59:59', '192.168.1.2', 'Mozilla/5.0', '2025-02-01 00:00:00', '2025-02-01 00:00:00');
+
+
+-- Create the `verification` table
+CREATE TABLE verification (
+    id VARCHAR(36) PRIMARY KEY, -- Unique identifier for each verification
+    identifier VARCHAR(255) NOT NULL, -- The identifier for the verification request
+    value VARCHAR(255) NOT NULL, -- The value to be verified
+    expiresAt DATETIME NOT NULL, -- The time when the verification request expires
+    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Insert test verifications
+INSERT INTO verification (id, identifier, value, expiresAt, createdAt, updatedAt)
+VALUES
+    ('verification1', 'email', 'ardliath@gmail.com', '2025-12-31 23:59:59', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+    ('verification2', 'email', 'john.doe@example.com', '2025-12-31 23:59:59', '2025-02-01 00:00:00', '2025-02-01 00:00:00');
+
+
+-- Create the 'account' table
+CREATE TABLE account (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    providerId VARCHAR(191) NOT NULL,
+    accountId VARCHAR(191) NOT NULL,
+    password VARCHAR(255) NULL,
+    accessToken VARCHAR(512) NULL,
+    refreshToken VARCHAR(512) NULL,
+    scope VARCHAR(512) NULL,
+    idToken VARCHAR(1024) NULL,
+    expiresAt DATETIME NULL,
+    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY account_provider_unique (providerId, accountId),
+    CONSTRAINT fk_account_user FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+);
+
 
 -- Create the 'fluidTargets' table
 CREATE TABLE fluidTargets (
@@ -75,143 +133,24 @@ VALUES
     (1, 1, '2025-03-01 00:00:00', '2025-03-01 00:00:00', NULL, TRUE, 2500),
     (2, 2, '2025-02-01 00:00:00', '2025-02-01 00:00:00', NULL, TRUE, 1800);
 
--- Create the 'session' table
-CREATE TABLE session (
-    id INT AUTO_INCREMENT PRIMARY KEY, -- Unique identifier for each session
-    userId INT NOT NULL, -- The ID of the user
-    token VARCHAR(255) NOT NULL UNIQUE, -- The unique session token
-    expiresAt DATETIME NOT NULL, -- The time when the session expires
-    ipAddress VARCHAR(45), -- The IP address of the device (optional)
-    userAgent VARCHAR(512), -- The user agent information of the device (optional)
-    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_session_user FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
-);
 
-INSERT INTO session (id, userId, token, expiresAt, ipAddress, userAgent, createdAt, updatedAt)
-VALUES
-    (1, 1, 'token1', '2025-12-31 23:59:59', '192.168.1.1', 'Mozilla/5.0', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-    (2, 2, 'token2', '2025-12-31 23:59:59', '192.168.1.2', 'Mozilla/5.0', '2025-02-01 00:00:00', '2025-02-01 00:00:00');
-
--- Create the `verification` table
-CREATE TABLE verification (
-    id VARCHAR(36) PRIMARY KEY, -- Unique identifier for each verification
-    identifier VARCHAR(255) NOT NULL, -- The identifier for the verification request
-    value VARCHAR(255) NOT NULL, -- The value to be verified
-    expiresAt DATETIME NOT NULL, -- The time when the verification request expires
-    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- Insert test verifications
-INSERT INTO verification (id, identifier, value, expiresAt, createdAt, updatedAt)
-VALUES
-    ('verification1', 'email', 'ardliath@gmail.com', '2025-12-31 23:59:59', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-    ('verification2', 'email', 'john.doe@example.com', '2025-12-31 23:59:59', '2025-02-01 00:00:00', '2025-02-01 00:00:00');
-
--- Create the 'account' table
-CREATE TABLE account (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+-- Create the 'fluidentries' table
+CREATE TABLE fluidentries (
+    fluidEntryId INT AUTO_INCREMENT PRIMARY KEY,
+    patientId INT NOT NULL,
     userId INT NOT NULL,
-    providerId VARCHAR(191) NOT NULL,
-    accountId VARCHAR(191) NOT NULL,
-    password VARCHAR(255) NULL,
-    accessToken VARCHAR(512) NULL,
-    refreshToken VARCHAR(512) NULL,
-    scope VARCHAR(512) NULL,
-    idToken VARCHAR(1024) NULL,
-    expiresAt DATETIME NULL,
-    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    UNIQUE KEY account_provider_unique (providerId, accountId),
-    CONSTRAINT fk_account_user FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+    createdAt DATETIME NOT NULL,
+    millilitres INT NOT NULL,
+    date DATE NOT NULL,
+    timeStarted INT NOT NULL,
+    timeEnded INT NULL,
+    note VARCHAR(1023) NULL,
+    CONSTRAINT fk_fluidEntries_patients FOREIGN KEY (patientId) REFERENCES patients(patientId),
+    CONSTRAINT fk_fluidEntries_users FOREIGN KEY (userId) REFERENCES user(id)
 );
-    INSERT INTO fluidtracker.fluidTargets (
-        patientId,
-        userId,
-        createdAt,
-        effectiveFrom,
-        effectiveTo,
-        isActive,
-        millilitres
-    ) VALUES
-    (
-        1,
-        1,
-        '2025-01-01 00:00:00',
-        '2025-01-01 00:00:00',
-        '2025-03-01 00:00:00',
-        FALSE,
-        2000
-    ),
-    (
-        1,
-        1,
-        '2025-03-01 00:00:00',
-        '2025-03-01 00:00:00',
-        '2025-10-09 23:59:59',
-        FALSE,
-        2200
-    ),
-    (
-        1,
-        1,
-        '2025-10-10 00:00:00',
-        '2025-10-10 00:00:00',
-        NULL,
-        TRUE,
-        2500
-    );
 
-
-
-
-    CREATE TABLE fluidtracker.fluidentries (
-        fluidEntryId INT AUTO_INCREMENT PRIMARY KEY,
-        patientId INT NOT NULL,
-        userId INT NOT NULL,
-        createdAt DATETIME NOT NULL,
-        millilitres INT NOT NULL,
-        date DATE NOT NULL,
-        timeStarted INT NOT NULL,
-        timeEnded INT NULL,
-        note VARCHAR(1023) NULL,
-        CONSTRAINT fk_fluidEntries_patients FOREIGN KEY (patientId) REFERENCES patients(patientId),
-        CONSTRAINT fk_fluidEntries_users FOREIGN KEY (userId) REFERENCES users(userId)
-    );
-
-
-    INSERT INTO fluidtracker.fluidentries(patientId,
-	userId, 
-    createdAt,
-    millilitres,
-    date,
-    timeStarted,
-    timeEnded,
-    note) VALUES(1,
-    1,
-    '2025-01-13 16:30',
-    200,
-    '2025-01-13',
-    1000,
-    1030,
-    'Completed drink')
-    
-
-    INSERT INTO fluidtracker.fluidentries(patientId,
-	userId, 
-    createdAt,
-    millilitres,
-    date,
-    timeStarted,
-    timeEnded,
-    note) VALUES(1,
-    1,
-    '2025-01-13 16:30',
-    200,
-    '2025-01-13',
-    1060,
-    null,
-    'In Progress Drink')
-    
-    
+-- Insert test fluid entries
+INSERT INTO fluidentries(patientId, userId, createdAt, millilitres, date, timeStarted, timeEnded, note) 
+VALUES
+    (1, 1, '2025-01-13 16:30', 200, '2025-01-13', 1000, 1030, 'Completed drink'),
+    (1, 1, '2025-01-13 16:30', 200, '2025-01-13', 1060, null, 'In Progress Drink');
