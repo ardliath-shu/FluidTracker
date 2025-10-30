@@ -1,28 +1,57 @@
-const FluidTargetForm = ({ currentTarget, setTarget, canSubmit }) => {
+"use client";
+
+import { useTransition } from "react";
+import { updatePatientFluidTarget } from "@/app/actions/patients";
+
+const FluidTargetForm = ({
+  currentTarget,
+  setTarget,
+  canSubmit,
+  patientId,
+  onUpdated,
+}) => {
+  const [isPending, startTransition] = useTransition();
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    startTransition(async () => {
+      const updatedPatient = await updatePatientFluidTarget(
+        patientId,
+        currentTarget,
+      );
+      //canSubmit(false);
+      onUpdated?.(updatedPatient);
+    });
+  }
+
   return (
     <div>
-      <div>
-        <form onSubmit={(event) => canSubmit(false)}>
-          <div className="row-sm">
-            <div className="col flex-2">
-              <div className="form-floating">
-                <input
-                  type="number"
-                  name="fluid target"
-                  id="fluid_target_input"
-                  value={currentTarget}
-                  step={50}
-                  onChange={(event) => setTarget(parseInt(event.target.value))}
-                />
-                <label htmlFor="fluid_target_input">Fluid Target: </label>
-              </div>
-            </div>
-            <div className="">
-              <input type="submit" value="Set" className="btn blue" />
+      <form onSubmit={handleSubmit}>
+        <div className="row-sm">
+          <div className="col flex-2">
+            <div className="form-floating">
+              <input
+                type="number"
+                name="fluid_target"
+                id="fluid_target_input"
+                value={currentTarget}
+                step={50}
+                onChange={(event) => setTarget(parseInt(event.target.value))}
+                disabled={isPending}
+              />
+              <label htmlFor="fluid_target_input">Fluid Target (ml):</label>
             </div>
           </div>
-        </form>
-      </div>
+          <div className="">
+            <input
+              type="submit"
+              value={isPending ? "Updating..." : "Set"}
+              className="btn blue"
+              disabled={isPending}
+            />
+          </div>
+        </div>
+      </form>
     </div>
   );
 };

@@ -73,7 +73,7 @@ const TestPage = async () => {
   const drinksToday = await getDrinksForDate(userId, patientId, day);
   console.log(drinksToday);
 
-  // EXAMPLE FOR: finishOpenDrink(millilitres, userId, patientId, fluidEntryId)
+  // EXAMPLE FOR: finishOpenDrink(timeEnded, userId, patientId, fluidEntryId)
   //await finishOpenDrink(1100, userId, patientId, 2);
 
   const typicalProgress = await getTypicalProgress(

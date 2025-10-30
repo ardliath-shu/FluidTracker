@@ -17,7 +17,7 @@ const fetchPatient = async (user_id, patient_id) => {
   try {
     // If looking for specific patient
     if (patient_id) {
-      const query = `SELECT * 
+      const query = `SELECT *, p.userId AS userId
       FROM patients p
       JOIN fluidtracker.relationships r ON p.patientId = r.PatientId
       WHERE r.userId = ? AND r.patientId = ?`;

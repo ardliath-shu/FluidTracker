@@ -8,9 +8,17 @@ import {
   getDrinksForDate,
   getTypicalProgress,
   logNewDrink,
+  finishOpenDrink,
+  setNewPatientFluidTarget,
 } from "@/app/lib/db";
 import { auth } from "@/app/lib/auth";
 import { headers } from "next/headers";
+
+const now = new Date();
+const hours = now.getHours();
+const minutes = now.getMinutes();
+const minutesSinceMidnight = hours * 60 + minutes;
+const day = now.toISOString().split("T")[0];
 
 export async function getPatientData(patientId) {
   const session = await auth.api.getSession({
@@ -20,11 +28,6 @@ export async function getPatientData(patientId) {
   if (!session) throw new Error("Not authenticated");
 
   const userId = session.user.id;
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const minutesSinceMidnight = hours * 60 + minutes;
-  const day = now.toISOString().split("T")[0];
 
   const patientResult = await fetchPatient(userId, patientId);
   const patient = patientResult[0];
@@ -44,7 +47,7 @@ export async function getPatientData(patientId) {
   return patient;
 }
 
-export async function logDrinkForPatient(patientId, millilitres, note = "") {
+export async function logNewDrinkAction(patientId, millilitres, note = "") {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -52,14 +55,6 @@ export async function logDrinkForPatient(patientId, millilitres, note = "") {
   if (!session) throw new Error("Not authenticated");
 
   const userId = session.user.id;
-
-  const now = new Date();
-  const time = now.toTimeString().split(" ")[0].slice(0, 5); // e.g. "14:23"
-
-  const hours = now.getHours(); // 0–23
-  const minutes = now.getMinutes(); // 0–59
-  const minutesSinceMidnight = hours * 60 + minutes;
-  const day = now.toISOString().split("T")[0];
 
   await logNewDrink(
     userId,
@@ -73,4 +68,39 @@ export async function logDrinkForPatient(patientId, millilitres, note = "") {
 
   // Return updated patient stats
   return await getPatientData(patientId);
+}
+
+export async function finishOpenDrinkAction(fluidEntryId, patientId) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) throw new Error("Not authenticated");
+
+  const userId = session.user.id;
+
+  // Run the DB function to mark drink as finished
+  await finishOpenDrink(minutesSinceMidnight, userId, patientId, fluidEntryId);
+
+  // Return updated patient stats
+  const updatedPatient = await getPatientData(patientId);
+
+  return updatedPatient;
+}
+
+export async function updatePatientFluidTarget(patientId, newTarget) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) throw new Error("Not authenticated");
+
+  const userId = session.user.id;
+  const changeDate = day; // YYYY-MM-DD
+
+  await setNewPatientFluidTarget(userId, patientId, newTarget, changeDate);
+
+  // Return updated patient stats
+  const updatedPatient = await getPatientData(patientId);
+  return updatedPatient;
 }

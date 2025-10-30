@@ -343,6 +343,41 @@ hr.mini {
   opacity: 0.5;
 }
 
+.card-header-collapsible {
+  cursor: pointer;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border: none;
+}
+
+.card-body {
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.card-body.collapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.card-body.open {
+  max-height: 2000px; /* arbitrarily large for animation */
+  opacity: 1;
+}
+
+
+.card-body.open ul.open-drinks,
+.card-body.open ul.finished-drinks {
+  margin-top: -1em;
+}
+
+.card-toggle{
+  float: right;
+  font-size: 0.9em;
+  opacity: 0.5;
+}
+
+
 /* Icon Colours */
 i.red {
   color: #e74c3c;
@@ -609,13 +644,14 @@ pre {
 }
 
 
+/* Stats List */
 .stats-list {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   gap: 1rem;
   padding: 0;
-  margin: 1rem 0 0 0;
+  margin: 1rem 0 ;
   list-style: none;
   flex-wrap: wrap;              
   box-sizing: border-box;
@@ -625,14 +661,15 @@ pre {
   flex: 1 1 0;                  
   min-width: 0;                 
   text-align: center;
-  background: #f5f7fa30;
+  background: #ffffff30;
   border-radius: 8px;
   padding: 0.5rem;
   letter-spacing: -1px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   /* transition: transform 0.2s ease, box-shadow 0.2s ease; */
   box-sizing: border-box;      
-  border-bottom: 5px solid rgba(94, 94, 94, 0.4); 
+  border: 1px solid rgba(94, 94, 94, 0.4); 
+  border-bottom-width: 5px;
 }
 
 /* .stat-box:hover {
@@ -660,33 +697,49 @@ pre {
 }
 
 
-
-
-
-.card-header-collapsible {
-  cursor: pointer;
-  padding-bottom: 0;
-  margin-bottom: 0;
-  border: none;
+/* Open Drinks List */
+.open-drinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.card-body {
-  transition: max-height 0.3s ease, opacity 0.3s ease;
+.open-drink-item {
+  /* display: flex; */
+  align-items: center;
+  padding: 0.5em 0;
+  font-size: 0.8em;
+  border-bottom: 1px solid #00000040;
+}
+.open-drink-item div {
+  margin-left: 0.5em;
 }
 
-.card-body.collapsed {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
+.open-drink-item div span{
+  font-size: 0.85em;
+  opacity: 0.75;
 }
 
-.card-body.open {
-  max-height: 2000px; /* arbitrarily large for animation */
-  opacity: 1;
-}
-
-.card-toggle{
+.finish-btn {
   float: right;
-  font-size: 0.9em;
-  color: #666666;
+  margin-top: -0.2em;
 }
+
+
+/* Finished Drinks List */
+.finished-drinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.finished-drinks li {
+  padding: 0.5em 0;
+  font-size: 0.8em;
+  border-bottom: 1px solid #00000040;
+}
+
+.finished-drinks li span {
+  font-size: 0.85em;
+  opacity: 0.75;
+} 

@@ -18,9 +18,7 @@ export default function DashboardClient({
 
   const [currentPatient, setCurrentPatient] = useState(patient);
   const [fluidTarget, setFluidTarget] = useState(defaultFluidTarget);
-  const [fluidLeft, setFluidLeft] = useState(
-    defaultFluidTarget - patient.totalToday,
-  );
+  const [fluidLeft, setFluidLeft] = useState(fluidTarget - patient.totalToday);
   const [allowTargetChange, setAllowTargetChange] = useState(true);
   const [isPending, startTransition] = useTransition();
 
@@ -32,7 +30,7 @@ export default function DashboardClient({
     }
   }, [patient]);
 
-  function handleSelect(e) {
+  function handleSelectPatient(e) {
     const newId = Number(e.target.value);
     setSelectedPatientId(newId);
     handlePatientChange(newId);
@@ -44,13 +42,13 @@ export default function DashboardClient({
   };
 
   const handleSetFluidTarget = (target) => {
-    setFluidLeft(target);
     setFluidTarget(target);
+    setFluidLeft(target - (currentPatient.totalToday || 0));
   };
 
   const handleSetFluidLeft = (amount) => {
     const newFluidLeft = fluidLeft + amount;
-
+    alert(newFluidLeft);
     if (newFluidLeft > fluidTarget) {
       setFluidLeft(fluidTarget);
     } else if (newFluidLeft < 0) {
@@ -73,12 +71,18 @@ export default function DashboardClient({
     <>
       <div>
         <section>
-          {patients.length > 0 && (
-            <Card title="" icon="" colour="">
-              <select value={selectedPatientId} onChange={handleSelect}>
+          {patients.length > 1 && (
+            <Card 
+              title={Number(currentPatient['userId']) === Number(userId) ? "Your Log" : (currentPatient.firstName + " " + currentPatient.lastName + "'s Log")} 
+              icon="fa-user" 
+              colour="blue" 
+              collapsible={true}
+              defaultOpen={false} >
+              <select value={selectedPatientId} onChange={handleSelectPatient}>
                 {patients.map((p) => (
                   <option key={p.patientId} value={p.patientId}>
-                    {p.firstName} {p.lastName}
+                    {p.firstName} {p.lastName}{" "}
+                    {p.userId == userId ? "(You)" : ""}
                   </option>
                 ))}
               </select>
@@ -110,6 +114,14 @@ export default function DashboardClient({
                 currentTarget={fluidTarget ? fluidTarget : defaultFluidTarget}
                 setTarget={handleSetFluidTarget}
                 canSubmit={handleSetAllowTargetChange}
+                patientId={currentPatient.patientId}
+                onUpdated={(updatedPatient) => {
+                  setCurrentPatient(updatedPatient);
+                  setFluidTarget(updatedPatient.fluidTarget);
+                  setFluidLeft(
+                    updatedPatient.fluidTarget - updatedPatient.totalToday,
+                  );
+                }}
               />
             </Card>
           )}
@@ -117,6 +129,7 @@ export default function DashboardClient({
       </div>
 
       <ExtraMenu
+        userId={userId}
         username={username}
         patient={currentPatient}
         patients={patients}

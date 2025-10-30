@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import Card from "@/app/components/Card";
 import BarcodeScanner from "@/app/components/BarcodeScanner";
-import { logDrinkForPatient } from "@/app/actions/patients";
+import { logNewDrinkAction } from "@/app/actions/patients";
 
 export default function AddDrinkForm({ patient, onPatientUpdated }) {
   const [barcode, setBarcode] = useState("");
@@ -67,7 +67,7 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
 
     try {
       setIsSubmitting(true);
-      const updatedPatient = await logDrinkForPatient(
+      const updatedPatient = await logNewDrinkAction(
         patient.patientId,
         quantity,
         drinkName,

@@ -1,14 +1,17 @@
 import { siteConfig } from "@/app/lib/site.config";
 import Card from "./Card";
 import { formatMinutesSinceMidnight } from "@/app/lib/utils";
-import { useState, useEffect } from "react";
+import { finishOpenDrinkAction } from "@/app/actions/patients";
+import { useState, useEffect, useTransition } from "react";
 
 export default function ExtraMenu({
+  userId,
   username,
   patient,
   patients,
   onPatientChange,
 }) {
+  const [isPending, startTransition] = useTransition();
   // const [selectedPatientId, setSelectedPatientId] = useState(patient.patientId);
 
   // useEffect(() => {
@@ -23,6 +26,19 @@ export default function ExtraMenu({
   //   onPatientChange?.(newId);
   // }
 
+  console.log(patient);
+
+  const handleFinishDrink = (drinkId) => {
+    startTransition(async () => {
+      const updatedPatient = await finishOpenDrinkAction(
+        drinkId,
+        patient.patientId,
+      );
+      // refresh the current patient data in the parent DashboardClient
+      onPatientChange?.(updatedPatient.patientId);
+    });
+  };
+
   return (
     <aside className="extra">
       {/* {patients.length > 0 && (
@@ -36,7 +52,13 @@ export default function ExtraMenu({
         </select>
       </Card>
       )} */}
-      <Card title="Statistics" icon="fas fa-fw fa-percent" colour="orange">
+      <Card
+        title="Stats and Daily Trend"
+        icon="fas fa-fw fa-percent"
+        colour="orange"
+        collapsible={true}
+        defaultOpen={true}
+      >
         <ul className="stats-list">
           <li className="stat-box">
             <span className="stat-value">{patient.fluidTarget}ml</span>
@@ -46,7 +68,7 @@ export default function ExtraMenu({
             <span className="stat-value">
               {Math.round((patient.totalToday / patient.fluidTarget) * 100)}%
             </span>
-            <span className="stat-label">Drunk</span>
+            <span className="stat-label">Complete</span>
           </li>
           {/* <li className="stat-box">
             <span className="stat-value">{Math.round(patient.totalToday)}ml</span>
@@ -59,41 +81,81 @@ export default function ExtraMenu({
             <span className="stat-label">Remaining</span>
           </li>
         </ul>
-      </Card>
-      <Card title="Daily Trend" icon="fas fa-fw fa-chart-line" colour="red">
         <p>
-          By this time of day {patient.firstName} will typically have drunk{" "}
-          {Math.round(patient.typicalProgress[0].average)}ml however they may
-          have drunk as little as {Math.round(patient.typicalProgress[0].min)}ml
-          or as much as {Math.round(patient.typicalProgress[0].max)}ml.
+          {Number(patient.userId) === Number(userId)
+            ? "You have"
+            : patient.firstName + " has"}{" "}
+          drunk {Math.round(patient.totalToday)}ml so far today of the{" "}
+          {patient.fluidTarget}ml target. By this time of day{" "}
+          {Number(patient.userId) === Number(userId)
+            ? "you have"
+            : patient.firstName + " has"}{" "}
+          typically drunk {Math.round(patient.typicalProgress[0].average)}ml
+          however {Number(patient.userId) === Number(userId) ? "you" : "they"}{" "}
+          may have drunk as little as{" "}
+          {Math.round(patient.typicalProgress[0].min)}ml or as much as{" "}
+          {Math.round(patient.typicalProgress[0].max)}ml.
         </p>
       </Card>
-      <Card title="Open Drinks" icon="fas fa-fw fa-droplet" colour="purple">
-        <ul>
+      <Card
+        title="Open Drinks"
+        icon="fas fa-fw fa-droplet"
+        colour="purple"
+        collapsible={true}
+        defaultOpen={true}
+      >
+        <ul className="open-drinks">
+          {patient.openDrinks.length === 0 && <li>No open drinks</li>}
           {patient.openDrinks.map((drink) => (
-            <li key={drink.fluidEntryId}>
-              {drink.note} ({drink.millilitres}ml)
+            <li key={drink.fluidEntryId} className="open-drink-item">
+              <button
+                className="finish-btn btn"
+                onClick={() => handleFinishDrink(drink.fluidEntryId)}
+                disabled={isPending}
+              >
+                {isPending ? (
+                  "..."
+                ) : (
+                  <i className="fa-solid fa-check white"></i>
+                )}
+              </button>
+              <div>
+                {drink.note} ({drink.millilitres}ml)
+                <br />
+                <span>
+                  Started at {formatMinutesSinceMidnight(drink.timeStarted)}
+                </span>
+              </div>
             </li>
           ))}
         </ul>
       </Card>
-      <Card title="Finished Drinks" icon="fas fa-fw fa-check" colour="green">
+      <Card
+        title="Finished Drinks"
+        icon="fas fa-fw fa-check"
+        colour="green"
+        collapsible={true}
+        defaultOpen={true}
+      >
         <div className="rowX">
           <div className="col">
-            <ul>
+            <ul className="finished-drinks">
               {patient.drinksToday
                 .filter((drink) => drink.timeEnded !== null) // only finished drinks
                 .map((drink) => (
                   <li key={drink.fluidEntryId}>
-                    {drink.note} ({drink.millilitres}ml) - Finished at{" "}
-                    {formatMinutesSinceMidnight(drink.timeEnded)}
+                    {drink.note} ({drink.millilitres}ml)
+                    <br />
+                    <span>
+                      Finished at {formatMinutesSinceMidnight(drink.timeEnded)}
+                    </span>
                   </li>
                 ))}
             </ul>
           </div>
         </div>
       </Card>
-      <Card
+      {/* <Card
         title={`About ${siteConfig.name}`}
         icon="fas fa-fw fa-droplet"
         colour="green"
@@ -101,7 +163,7 @@ export default function ExtraMenu({
         <p>
           {siteConfig.name} is {siteConfig.description.toLowerCase()}.
         </p>
-      </Card>
+      </Card> */}
     </aside>
   );
 }

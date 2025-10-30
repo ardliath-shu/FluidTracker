@@ -7,7 +7,6 @@ import DarkModeToggle from "./DarkModeToggle";
 const prefix = "../../../../"; // Hack to return to home from nested cms/insert etc
 const links = [
   { name: "Dashboard", icon: "fa-tachometer-alt", href: prefix },
-  { name: "Add Drink", icon: "fa-bottle-water", href: prefix + "add" },
   { name: "Profile", icon: "fa-user", href: "#" },
   { name: "Settings", icon: "fa-cog", href: "#" },
   { name: "Elements", icon: "fa-th", href: prefix + "elements" },
