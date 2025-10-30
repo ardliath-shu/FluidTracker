@@ -11,12 +11,17 @@ const Bottle = ({ target, currentFluid, changeFluidAmount }) => {
       <div className="bottlecontainer">
         <div id="bottle">
           <BottleWaterLevel levelPercent={(currentFluid / target) * 100} />
-          <Image id="bottleimage" src={bottleImage} alt="A water bottle." />
+          <Image
+            id="bottleimage"
+            src={bottleImage}
+            alt="A water bottle."
+            priority
+          />
         </div>
 
         {/* Proof of concept water level controls */}
         {/* The final controls will behave a lot differently to this ^^' */}
-        <div className="row">
+        {/* <div className="row">
           <div className="col center">
             <button
               className="btn green w-100"
@@ -33,10 +38,11 @@ const Bottle = ({ target, currentFluid, changeFluidAmount }) => {
               Remove 50ml
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
-      <p>Debug Target: {target}ml</p>
-      <p>Debug Fluid Left: {currentFluid}ml</p>
+      {/* <p>Debug Target: {target}ml</p>
+      <p>Debug Fluid Left: {currentFluid}ml</p> */}
+      <hr />
     </div>
   );
 };

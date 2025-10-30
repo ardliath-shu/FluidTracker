@@ -607,3 +607,86 @@ pre {
   text-align: center;
   margin: auto;
 }
+
+
+.stats-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 0;
+  margin: 1rem 0 0 0;
+  list-style: none;
+  flex-wrap: wrap;              
+  box-sizing: border-box;
+}
+
+.stat-box {
+  flex: 1 1 0;                  
+  min-width: 0;                 
+  text-align: center;
+  background: #f5f7fa30;
+  border-radius: 8px;
+  padding: 0.5rem;
+  letter-spacing: -1px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  /* transition: transform 0.2s ease, box-shadow 0.2s ease; */
+  box-sizing: border-box;      
+  border-bottom: 5px solid rgba(94, 94, 94, 0.4); 
+}
+
+/* .stat-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+} */
+
+.stat-value {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+  /* color: #1e3a8a; */
+  line-height: 1.2;
+  word-break: break-word;      
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  /* color: #6b7280; */
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+
+
+
+
+.card-header-collapsible {
+  cursor: pointer;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border: none;
+}
+
+.card-body {
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.card-body.collapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.card-body.open {
+  max-height: 2000px; /* arbitrarily large for animation */
+  opacity: 1;
+}
+
+.card-toggle{
+  float: right;
+  font-size: 0.9em;
+  color: #666666;
+}

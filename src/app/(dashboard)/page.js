@@ -29,6 +29,7 @@ export default async function Home() {
   const userId = session.user.id;
   const userResult = await fetchUser(userId);
   const user = userResult[0];
+  const username = user["name"];
 
   const userPatients = await fetchPatients(userId);
   const patients = userPatients || [];
@@ -40,7 +41,11 @@ export default async function Home() {
   const day = now.toISOString().split("T")[0];
 
   // Get the patient the user is managing - for now, just get the first one.
-  const patientId = 1; // For testing purposes
+  //const patientId = 1; // For testing purposes
+
+  const userPatient = await fetchPatient(userId);
+  const patientId = userPatient[0].patientId;
+
   const patientResult = await fetchPatient(userId, patientId);
   const patient = patientResult[0];
   const fluidTarget = await getMyPatientCurrentFluidTarget(userId, patientId);
@@ -52,13 +57,13 @@ export default async function Home() {
   patient.typicalProgress = await getTypicalProgress(
     userId,
     patientId,
-    day,
+    "2025-01-01",
     minutesSinceMidnight,
   );
-  const username = user["name"];
 
   return (
     <DashboardClient
+      userId={userId}
       username={username}
       patient={patient}
       patients={patients}

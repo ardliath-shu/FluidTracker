@@ -15,12 +15,22 @@ export { fetchUser };
 
 const fetchPatient = async (user_id, patient_id) => {
   try {
-    const query = `SELECT * 
-    FROM patients p
-    JOIN fluidtracker.relationships r ON p.patientId = r.PatientId
-    WHERE r.userId = ? AND r.patientId = ?`;
-    const [rows] = await connection.execute(query, [user_id, patient_id]);
-    return rows;
+    // If looking for specific patient
+    if (patient_id) {
+      const query = `SELECT * 
+      FROM patients p
+      JOIN fluidtracker.relationships r ON p.patientId = r.PatientId
+      WHERE r.userId = ? AND r.patientId = ?`;
+      const [rows] = await connection.execute(query, [user_id, patient_id]);
+      return rows;
+    } else {
+      // Get users own patient records
+      const query = `SELECT * 
+      FROM patients p
+      WHERE p.userId = ? `;
+      const [rows] = await connection.execute(query, [user_id]);
+      return rows;
+    }
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch data.");
