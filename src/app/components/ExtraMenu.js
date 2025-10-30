@@ -1,32 +1,10 @@
-import { siteConfig } from "@/app/lib/site.config";
-import Card from "./Card";
+import { useTransition } from "react";
 import { formatMinutesSinceMidnight } from "@/app/lib/utils";
 import { finishOpenDrinkAction } from "@/app/actions/patients";
-import { useState, useEffect, useTransition } from "react";
+import Card from "./Card";
 
-export default function ExtraMenu({
-  userId,
-  username,
-  patient,
-  patients,
-  onPatientChange,
-}) {
+export default function ExtraMenu({ userId, patient, onPatientChange }) {
   const [isPending, startTransition] = useTransition();
-  // const [selectedPatientId, setSelectedPatientId] = useState(patient.patientId);
-
-  // useEffect(() => {
-  //   if (patient?.patientId && patient.patientId !== selectedPatientId) {
-  //     setSelectedPatientId(patient.patientId);
-  //   }
-  // }, [patient]);
-
-  // function handleSelect(e) {
-  //   const newId = Number(e.target.value);
-  //   setSelectedPatientId(newId);
-  //   onPatientChange?.(newId);
-  // }
-
-  console.log(patient);
 
   const handleFinishDrink = (drinkId) => {
     startTransition(async () => {
@@ -41,20 +19,9 @@ export default function ExtraMenu({
 
   return (
     <aside className="extra">
-      {/* {patients.length > 0 && (
-      <Card title="People You Manage" icon="fas fa-fw fa-users" colour="blue">
-        <select value={selectedPatientId} onChange={handleSelect}>
-          {patients.map((p) => (
-            <option key={p.patientId} value={p.patientId}>
-              {p.firstName} {p.lastName}
-            </option>
-          ))}
-        </select>
-      </Card>
-      )} */}
       <Card
         title="Stats and Daily Trend"
-        icon="fas fa-fw fa-percent"
+        icon="fa-percent"
         colour="orange"
         collapsible={true}
         defaultOpen={true}
@@ -99,7 +66,7 @@ export default function ExtraMenu({
       </Card>
       <Card
         title="Open Drinks"
-        icon="fas fa-fw fa-droplet"
+        icon="fa-droplet"
         colour="purple"
         collapsible={true}
         defaultOpen={true}
@@ -112,6 +79,7 @@ export default function ExtraMenu({
                 className="finish-btn btn"
                 onClick={() => handleFinishDrink(drink.fluidEntryId)}
                 disabled={isPending}
+                title="Mark Drink as Finished"
               >
                 {isPending ? (
                   "..."
@@ -132,7 +100,7 @@ export default function ExtraMenu({
       </Card>
       <Card
         title="Finished Drinks"
-        icon="fas fa-fw fa-check"
+        icon="fa-check"
         colour="green"
         collapsible={true}
         defaultOpen={true}

@@ -20,6 +20,7 @@ const minutes = now.getMinutes();
 const minutesSinceMidnight = hours * 60 + minutes;
 const day = now.toISOString().split("T")[0];
 
+// Fetch patient data helper
 export async function getPatientData(patientId) {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -47,6 +48,7 @@ export async function getPatientData(patientId) {
   return patient;
 }
 
+// Log a new drink for a patient
 export async function logNewDrinkAction(patientId, millilitres, note = "") {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -70,6 +72,7 @@ export async function logNewDrinkAction(patientId, millilitres, note = "") {
   return await getPatientData(patientId);
 }
 
+// Finish an open drink for a patient
 export async function finishOpenDrinkAction(fluidEntryId, patientId) {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -88,6 +91,7 @@ export async function finishOpenDrinkAction(fluidEntryId, patientId) {
   return updatedPatient;
 }
 
+// Update a patient's fluid target
 export async function updatePatientFluidTarget(patientId, newTarget) {
   const session = await auth.api.getSession({
     headers: await headers(),

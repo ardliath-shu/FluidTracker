@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Card from "@/app/components/Card";
-import BarcodeScanner from "@/app/components/BarcodeScanner";
 import { logNewDrinkAction } from "@/app/actions/patients";
+import BarcodeScanner from "@/app/components/BarcodeScanner";
+import Card from "@/app/components/Card";
 
 export default function AddDrinkForm({ patient, onPatientUpdated }) {
   const [barcode, setBarcode] = useState("");
@@ -15,7 +15,7 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
 
   const lastScannedRef = useRef(null);
 
-  // 🧩 Fetch product by barcode (scan or manual)
+  // Fetch product by barcode (scan or manual)
   async function fetchProduct(code) {
     if (!code || code === lastScannedRef.current) return;
     lastScannedRef.current = code;
@@ -92,12 +92,6 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
     }
   }
 
-  const handleBarcodeSubmit = (e) => {
-    e.preventDefault();
-    if (!barcode) return;
-    fetchProduct(barcode);
-  };
-
   return (
     <Card
       colour=""
@@ -141,28 +135,33 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
         <hr />
 
         {/* Drink details */}
-        <div className="form-floating">
-          <input
-            type="text"
-            id="drink_name"
-            placeholder="Drink Name"
-            value={drinkName}
-            onChange={(e) => setDrinkName(e.target.value)}
-            required
-          />
-          <label htmlFor="drink_name">Drink Name</label>
-        </div>
-
-        <div className="form-floating">
-          <input
-            type="number"
-            id="quantity"
-            placeholder="Quantity (ml)"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-            required
-          />
-          <label htmlFor="quantity">Quantity (ml)</label>
+        <div className="row">
+          <div className="col">
+            <div className="form-floating">
+              <input
+                type="text"
+                id="drink_name"
+                placeholder="Drink Name"
+                value={drinkName}
+                onChange={(e) => setDrinkName(e.target.value)}
+                required
+              />
+              <label htmlFor="drink_name">Drink Name</label>
+            </div>
+          </div>
+          <div className="col">
+            <div className="form-floating">
+              <input
+                type="number"
+                id="quantity"
+                placeholder="Quantity (ml)"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                required
+              />
+              <label htmlFor="quantity">Quantity (ml)</label>
+            </div>
+          </div>
         </div>
 
         {/* {ingredients && (

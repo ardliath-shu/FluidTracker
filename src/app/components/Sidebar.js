@@ -9,8 +9,8 @@ const links = [
   { name: "Dashboard", icon: "fa-tachometer-alt", href: prefix },
   { name: "Profile", icon: "fa-user", href: "#" },
   { name: "Settings", icon: "fa-cog", href: "#" },
-  { name: "Elements", icon: "fa-th", href: prefix + "elements" },
-  { name: "Generic Page", icon: "fa-file", href: prefix + "generic" },
+  // { name: "Elements", icon: "fa-th", href: prefix + "elements" },
+  // { name: "Generic Page", icon: "fa-file", href: prefix + "generic" },
 ];
 
 export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {

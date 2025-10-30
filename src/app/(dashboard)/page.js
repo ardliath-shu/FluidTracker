@@ -7,11 +7,8 @@ import {
   fetchPatient,
   fetchPatients,
   getMyPatientCurrentFluidTarget,
-  setNewPatientFluidTarget,
-  logNewDrink,
   getOpenDrinks,
   getDrinksForDate,
-  finishOpenDrink,
   getTypicalProgress,
   getTotalForToday,
 } from "../lib/db";
@@ -40,14 +37,13 @@ export default async function Home() {
   const minutesSinceMidnight = hours * 60 + minutes;
   const day = now.toISOString().split("T")[0];
 
-  // Get the patient the user is managing - for now, just get the first one.
+  // Get the patient the user is managing
   //const patientId = 1; // For testing purposes
 
+  // Get the patient who is linked to the user
   const userPatient = await fetchPatient(userId);
   const patientId = userPatient[0].patientId;
-
-  const patientResult = await fetchPatient(userId, patientId);
-  const patient = patientResult[0];
+  const patient = userPatient[0];
   const fluidTarget = await getMyPatientCurrentFluidTarget(userId, patientId);
   patient.fluidTarget = fluidTarget[0].millilitres;
   const totalToday = await getTotalForToday(userId, patientId);

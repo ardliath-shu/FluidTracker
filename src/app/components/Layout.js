@@ -33,9 +33,6 @@ export default function Layout({ children }) {
   //   }
   // Fix as above causes hydration issues - move to useEffect in Navbar or Sidebar if needed
 
-  // Margin for .main on desktop when sidebar is expanded/collapsed - mobile is always 0
-  const marginLeft = isDesktop ? (isSidebarCollapsed ? 0 : 200) : 0;
-
   return (
     <>
       <Navbar
@@ -58,9 +55,7 @@ export default function Layout({ children }) {
           onClose={handleSidebarClose}
         />
 
-        <main style={{ marginLeft }} className="main">
-          {children}
-        </main>
+        <main className="main">{children}</main>
 
         {/* <ExtraMenu /> */}
       </div>

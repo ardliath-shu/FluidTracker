@@ -7,37 +7,30 @@ export default function Card({
   icon,
   colour,
   children,
-  collapsible = false,
-  defaultOpen = true,
+  collapsible = false, // Optional for collapsible cards
+  defaultOpen = true, // Optional default open state (if collapsible is true)
 }) {
+  // Manage collapsibale state
   const [isOpen, setIsOpen] = useState(defaultOpen);
-
   const handleToggle = () => {
     if (collapsible) setIsOpen((prev) => !prev);
   };
 
-  //   export default function CardComponent({ title, icon, colour, children }) {
-  //   return (
-  //     <div className={`card ${colour}`}>
-  //       <div className="card-header">
-  //         <i className={`fa ${icon}`}></i> {title}
-  //       </div>
-  //       <div className="card-body">{children}</div>
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className={`card ${colour}`}>
+      {/* If title is provided, show the card header */}
       {title && (
         <div
           className={`card-header ${collapsible ? "card-header-collapsible" : ""}`}
           onClick={handleToggle}
+          title={isOpen ? "Close Panel" : "Open Panel"}
         >
+          {/* Card Toggle Icon */}
           {collapsible && (
             <div className="card-toggle">{isOpen ? "▲" : "▼"}</div>
           )}
 
+          {/* Card Title and Icon */}
           <div className="card-title">
             {icon && (
               <i
@@ -49,6 +42,8 @@ export default function Card({
           </div>
         </div>
       )}
+
+      {/* Card Body */}
       <div className={`card-body ${isOpen ? "open" : "collapsed"}`}>
         {collapsible && <hr />}
         {children}
