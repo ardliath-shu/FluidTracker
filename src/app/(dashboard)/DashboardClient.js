@@ -72,12 +72,20 @@ export default function DashboardClient({
       <div>
         <section>
           {patients.length > 1 && (
-            <Card 
-              title={Number(currentPatient['userId']) === Number(userId) ? "Your Log" : (currentPatient.firstName + " " + currentPatient.lastName + "'s Log")} 
-              icon="fa-user" 
-              colour="blue" 
+            <Card
+              title={
+                Number(currentPatient["userId"]) === Number(userId)
+                  ? "Your Log"
+                  : currentPatient.firstName +
+                    " " +
+                    currentPatient.lastName +
+                    "'s Log"
+              }
+              icon="fa-user"
+              colour="blue"
               collapsible={true}
-              defaultOpen={false} >
+              defaultOpen={false}
+            >
               <select value={selectedPatientId} onChange={handleSelectPatient}>
                 {patients.map((p) => (
                   <option key={p.patientId} value={p.patientId}>
