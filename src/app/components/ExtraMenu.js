@@ -72,7 +72,9 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
         defaultOpen={true}
       >
         <ul className="open-drinks">
-          {patient.openDrinks.length === 0 && <li>No open drinks</li>}
+          {patient.openDrinks.length === 0 && (
+            <li className="open-drink-item">No open drinks</li>
+          )}
           {patient.openDrinks.map((drink) => (
             <li key={drink.fluidEntryId} className="open-drink-item">
               <button
@@ -119,6 +121,9 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
                     </span>
                   </li>
                 ))}
+              {/* if no finished drinks */}
+              {patient.drinksToday.filter((drink) => drink.timeEnded !== null)
+                .length === 0 && <li>No finished drinks</li>}
             </ul>
           </div>
         </div>
