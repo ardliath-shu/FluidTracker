@@ -21,7 +21,7 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
     <aside className="extra">
       <Card
         title="Stats and Daily Trend"
-        icon="fa-percent"
+        icon="fa-percent orange"
         colour="orange"
         collapsible={true}
         defaultOpen={true}
@@ -66,8 +66,8 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
       </Card>
       <Card
         title="Open Drinks"
-        icon="fa-droplet"
-        colour="purple"
+        icon="fa-droplet blue"
+        colour="blue"
         collapsible={true}
         defaultOpen={true}
       >
@@ -78,16 +78,12 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
           {patient.openDrinks.map((drink) => (
             <li key={drink.fluidEntryId} className="open-drink-item">
               <button
-                className="finish-btn btn"
+                className="finish-btn btn green"
                 onClick={() => handleFinishDrink(drink.fluidEntryId)}
                 disabled={isPending}
                 title="Mark Drink as Finished"
               >
-                {isPending ? (
-                  "..."
-                ) : (
-                  <i className="fa-solid fa-check white"></i>
-                )}
+                {isPending ? "..." : <i className="fa-solid fa-check"></i>}
               </button>
               <div>
                 {drink.note} ({drink.millilitres}ml)
@@ -102,7 +98,7 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
       </Card>
       <Card
         title="Finished Drinks"
-        icon="fa-check"
+        icon="fa-check green"
         colour="green"
         collapsible={true}
         defaultOpen={true}
