@@ -33,7 +33,7 @@ export default function DashboardClient({
     if (patient?.patientId && patient.patientId !== selectedPatientId) {
       setSelectedPatientId(patient.patientId);
     }
-  }, [patient]);
+  }, [patient, selectedPatientId]);
 
   // Handle patient selection change
   function handleSelectPatient(e) {
