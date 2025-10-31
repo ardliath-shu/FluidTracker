@@ -39,7 +39,7 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
           </li>
           {/* <li className="stat-box">
             <span className="stat-value">{Math.round(patient.totalToday)}ml</span>
-            <span className="stat-label">Drunk</span>
+            <span className="stat-label">Consumed</span>
           </li> */}
           <li className="stat-box">
             <span className="stat-value">
@@ -52,14 +52,14 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
           {Number(patient.userId) === Number(userId)
             ? "You have"
             : patient.firstName + " has"}{" "}
-          drunk {Math.round(patient.totalToday)}ml so far today of the{" "}
+          consumed {Math.round(patient.totalToday)}ml so far today of the{" "}
           {patient.fluidTarget}ml target. By this time of day{" "}
           {Number(patient.userId) === Number(userId)
             ? "you have"
             : patient.firstName + " has"}{" "}
-          typically drunk {Math.round(patient.typicalProgress[0].average)}ml
+          typically consumed {Math.round(patient.typicalProgress[0].average)}ml
           however {Number(patient.userId) === Number(userId) ? "you" : "they"}{" "}
-          may have drunk as little as{" "}
+          may have consumed as little as{" "}
           {Math.round(patient.typicalProgress[0].min)}ml or as much as{" "}
           {Math.round(patient.typicalProgress[0].max)}ml.
         </p>
