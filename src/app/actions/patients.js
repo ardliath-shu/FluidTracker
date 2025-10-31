@@ -14,17 +14,17 @@ import {
 import { auth } from "@/app/lib/auth";
 import { headers } from "next/headers";
 
-const now = new Date();
-const hours = now.getHours();
-const minutes = now.getMinutes();
-const minutesSinceMidnight = hours * 60 + minutes;
-const day = now.toISOString().split("T")[0];
-
 // Fetch patient data helper
 export async function getPatientData(patientId) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
+
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const minutesSinceMidnight = hours * 60 + minutes;
+  const day = now.toISOString().split("T")[0];
 
   if (!session) throw new Error("Not authenticated");
 
@@ -58,6 +58,12 @@ export async function logNewDrinkAction(patientId, millilitres, note = "") {
 
   const userId = session.user.id;
 
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const minutesSinceMidnight = hours * 60 + minutes;
+  const day = now.toISOString().split("T")[0];
+
   await logNewDrink(
     userId,
     patientId,
@@ -81,6 +87,11 @@ export async function finishOpenDrinkAction(fluidEntryId, patientId) {
   if (!session) throw new Error("Not authenticated");
 
   const userId = session.user.id;
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const minutesSinceMidnight = hours * 60 + minutes;
+  const day = now.toISOString().split("T")[0];
 
   // Run the DB function to mark drink as finished
   await finishOpenDrink(minutesSinceMidnight, userId, patientId, fluidEntryId);
@@ -100,6 +111,12 @@ export async function updatePatientFluidTarget(patientId, newTarget) {
   if (!session) throw new Error("Not authenticated");
 
   const userId = session.user.id;
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const minutesSinceMidnight = hours * 60 + minutes;
+  const day = now.toISOString().split("T")[0];
+
   const changeDate = day; // YYYY-MM-DD
 
   await setNewPatientFluidTarget(userId, patientId, newTarget, changeDate);

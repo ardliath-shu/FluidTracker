@@ -4,6 +4,9 @@ import "../../../public/css/bottle.css";
 import bottleImage from "../../../public/images/bottle.svg";
 
 const Bottle = ({ target, currentFluid }) => {
+  if (currentFluid < 0) {
+    currentFluid = 0;
+  }
   return (
     <div>
       <div className="bottlecontainer">
@@ -17,7 +20,6 @@ const Bottle = ({ target, currentFluid }) => {
           />
         </div>
       </div>
-      <hr />
     </div>
   );
 };

@@ -4,10 +4,14 @@ export function formatMinutesSinceMidnight(minutes) {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
 
-  // Format using a 12-hour clock with AM/PM:
   const time = new Date(0, 0, 0, hours, mins);
-  return time.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 
-  // If you prefer 24-hour time, use:
-  // return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+  // Format time as HH:MM 24Hour with leading zero
+  const timeString = time.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  return timeString;
 }

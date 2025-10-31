@@ -1,7 +1,9 @@
 import { useTransition } from "react";
 import { formatMinutesSinceMidnight } from "@/app/lib/utils";
 import { finishOpenDrinkAction } from "@/app/actions/patients";
+import AddDrinkForm from "./AddDrink";
 import Card from "./Card";
+import FluidTargetForm from "./FluidTargetForm";
 
 export default function ExtraMenu({ userId, patient, onPatientChange }) {
   const [isPending, startTransition] = useTransition();
@@ -17,63 +19,26 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
     });
   };
 
+  //Time now
+  const now = new Date();
+  const timeString = now.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
   return (
     <aside className="extra">
-      <Card
-        title="Stats and Daily Trend"
-        icon="fa-percent orange"
-        colour="orange"
-        collapsible={true}
-        defaultOpen={true}
-      >
-        <ul className="stats-list">
-          <li className="stat-box">
-            <span className="stat-value">{patient.fluidTarget}ml</span>
-            <span className="stat-label">Target</span>
-          </li>
-          <li className="stat-box">
-            <span className="stat-value">
-              {Math.round((patient.totalToday / patient.fluidTarget) * 100)}%
-            </span>
-            <span className="stat-label">Complete</span>
-          </li>
-          {/* <li className="stat-box">
-            <span className="stat-value">{Math.round(patient.totalToday)}ml</span>
-            <span className="stat-label">Consumed</span>
-          </li> */}
-          <li className="stat-box">
-            <span className="stat-value">
-              {patient.fluidTarget - patient.totalToday}ml
-            </span>
-            <span className="stat-label">Remaining</span>
-          </li>
-        </ul>
-        <p>
-          {Number(patient.userId) === Number(userId)
-            ? "You have"
-            : patient.firstName + " has"}{" "}
-          consumed {Math.round(patient.totalToday)}ml so far today of the{" "}
-          {patient.fluidTarget}ml target. By this time of day{" "}
-          {Number(patient.userId) === Number(userId)
-            ? "you have"
-            : patient.firstName + " has"}{" "}
-          typically consumed {Math.round(patient.typicalProgress[0].average)}ml
-          however {Number(patient.userId) === Number(userId) ? "you" : "they"}{" "}
-          may have consumed as little as{" "}
-          {Math.round(patient.typicalProgress[0].min)}ml or as much as{" "}
-          {Math.round(patient.typicalProgress[0].max)}ml.
-        </p>
-      </Card>
+      {/* Open Drinks List */}
       <Card
         title="Open Drinks"
-        icon="fa-droplet blue"
+        icon="fa-glass-water"
         colour="blue"
         collapsible={true}
-        defaultOpen={true}
+        defaultOpen={patient.openDrinks.length > 0}
       >
         <ul className="open-drinks">
           {patient.openDrinks.length === 0 && (
-            <li className="open-drink-item">No open drinks</li>
+            <li className="open-drink-item center">No open drinks</li>
           )}
           {patient.openDrinks.map((drink) => (
             <li key={drink.fluidEntryId} className="open-drink-item">
@@ -96,34 +61,72 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
           ))}
         </ul>
       </Card>
+
+      {/* Add Drink Form */}
+      <AddDrinkForm
+        patient={patient}
+        userId={userId}
+        onPatientUpdated={() => onPatientChange(patient.patientId)}
+      />
+
+      {/* Fluid Target Form */}
+      <FluidTargetForm
+        currentTarget={patient.fluidTarget}
+        patientId={patient.patientId}
+        onUpdated={() => onPatientChange(patient.patientId)}
+      />
+
+      {/* Finished Drinks List */}
       <Card
         title="Finished Drinks"
-        icon="fa-check green"
+        icon="fa-check"
         colour="green"
         collapsible={true}
-        defaultOpen={true}
+        defaultOpen={false}
       >
-        <div className="rowX">
-          <div className="col">
-            <ul className="finished-drinks">
-              {patient.drinksToday
-                .filter((drink) => drink.timeEnded !== null) // only finished drinks
-                .map((drink) => (
-                  <li key={drink.fluidEntryId}>
-                    {drink.note} ({drink.millilitres}ml)
-                    <br />
-                    <span>
-                      Finished at {formatMinutesSinceMidnight(drink.timeEnded)}
-                    </span>
-                  </li>
-                ))}
-              {/* if no finished drinks */}
-              {patient.drinksToday.filter((drink) => drink.timeEnded !== null)
-                .length === 0 && <li>No finished drinks</li>}
-            </ul>
-          </div>
-        </div>
+        <ul className="finished-drinks">
+          {patient.drinksToday
+            .filter((drink) => drink.timeEnded !== null) // only finished drinks
+            .map((drink) => (
+              <li key={drink.fluidEntryId}>
+                {drink.note} ({drink.millilitres}ml)
+                <br />
+                <span>
+                  Finished at {formatMinutesSinceMidnight(drink.timeEnded)}
+                </span>
+              </li>
+            ))}
+          {/* if no finished drinks */}
+          {patient.drinksToday.filter((drink) => drink.timeEnded !== null)
+            .length === 0 && <li>No finished drinks</li>}
+        </ul>
       </Card>
+
+      {/* Stats and Daily Trends */}
+      <Card
+        title="Stats and Daily Trend"
+        icon="fa-percent"
+        colour="orange"
+        collapsible={true}
+        defaultOpen={false}
+      >
+        <p>
+          {Number(patient.userId) === Number(userId)
+            ? "You have"
+            : patient.firstName + " has"}{" "}
+          consumed {Math.round(patient.totalToday)}ml so far today of the{" "}
+          {patient.fluidTarget}ml target. By this time of day{" "}
+          {Number(patient.userId) === Number(userId)
+            ? "you have"
+            : patient.firstName + " has"}{" "}
+          typically consumed {Math.round(patient.typicalProgress[0].average)}ml
+          however {Number(patient.userId) === Number(userId) ? "you" : "they"}{" "}
+          may have consumed as little as{" "}
+          {Math.round(patient.typicalProgress[0].min)}ml or as much as{" "}
+          {Math.round(patient.typicalProgress[0].max)}ml.
+        </p>
+      </Card>
+
       {/* <Card
         title={`About ${siteConfig.name}`}
         icon="fas fa-fw fa-droplet"

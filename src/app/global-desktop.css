@@ -7,23 +7,12 @@
   .main {
     flex-direction: row; /* side-by-side columns */
     width: 100%;
-    margin-left: 200px;;
+    margin-left: 200px;
+    min-height: calc(100vh - 50px);
   }
 
   .sidebar h2 {
     display: none;
-  }
-
-  .row,
-  .row-sm {
-    display: flex;
-    gap: 1rem;
-    /* margin-bottom: 1rem; */
-  }
-
-  .row .col,
-  .row-sm .col {
-    flex: 1;
   }
 
   .sidebar {
@@ -50,7 +39,7 @@
     width: 350px;
     /* border-left: 1px solid #ccc; */
     border-top: none;
-    /* max-height: calc(100vh - 50px); */
+    max-height: calc(100vh - 50px); 
     /* Hide overflow but allow scrolling and hide scrollbar */
     overflow-y: scroll;
     scrollbar-width: thin;
@@ -70,4 +59,21 @@
     width: 100%;
     margin-left: 0;
   }
+}
+
+@media (min-width: 1279px) {
+
+
+  .row,
+  .row-sm {
+    display: flex;
+    gap: 1rem;
+    /* margin-bottom: 1rem; */
+  }
+
+  .row .col,
+  .row-sm .col {
+    flex: 1;
+  }
+
 }

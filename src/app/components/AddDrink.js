@@ -6,6 +6,7 @@ import BarcodeScanner from "@/app/components/BarcodeScanner";
 import Card from "@/app/components/Card";
 
 export default function AddDrinkForm({ patient, onPatientUpdated }) {
+  const cardRef = useRef(null);
   const [barcode, setBarcode] = useState("");
   const [drinkName, setDrinkName] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -13,6 +14,7 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
+  const [showBarcodeInput, setShowBarcodeInput] = useState(false);
   const lastScannedRef = useRef(null);
 
   // Fetch product by barcode (scan or manual)
@@ -77,6 +79,7 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
 
       // refresh dashboard
       onPatientUpdated?.(updatedPatient);
+      cardRef.current?.collapse();
 
       // clear form
       setDrinkName("");
@@ -94,43 +97,62 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
 
   return (
     <Card
-      colour=""
+      ref={cardRef}
+      colour="blue"
       icon="fa-bottle-water"
       title="Start a Drink"
       collapsible={true}
       defaultOpen={false}
     >
       <form onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col">
-            {/* Scanner */}
-            <BarcodeScanner onDetected={(code) => fetchProduct(code)} />
+        {/* Scanner */}
+        <BarcodeScanner onDetected={(code) => fetchProduct(code)} />
+        {/* Toggle manual barcode input */}
+        {!showBarcodeInput && (
+          <div
+            className="barcode-manual-toggle"
+            onClick={() => setShowBarcodeInput(true)}
+          >
+            Enter barcode manually
           </div>
-          <div className="col">
-            {/* Manual barcode entry */}
-            <div className="form-floating">
-              <input
-                type="text"
-                id="barcode"
-                placeholder="Enter barcode"
-                value={barcode}
-                onChange={(e) => setBarcode(e.target.value)}
-              />
-              <label htmlFor="barcode">Barcode</label>
+        )}
+
+        {/* Manual barcode input row */}
+        {showBarcodeInput && (
+          <>
+            <div className="row">
+              <div className="col">
+                <div className="form-floating no-margin">
+                  <input
+                    type="text"
+                    id="barcode"
+                    placeholder="Enter barcode"
+                    value={barcode}
+                    onChange={(e) => setBarcode(e.target.value)}
+                  />
+                  <label htmlFor="barcode">Barcode</label>
+                </div>
+              </div>
+              <div className="col">
+                <button
+                  type="button"
+                  className="btn w-100"
+                  onClick={() => fetchProduct(barcode)}
+                  disabled={isFetching}
+                >
+                  <i className="fa-solid fa-magnifying-glass"></i>{" "}
+                  {isFetching ? "Searching..." : "Search"}
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="col">
-            <button
-              type="button"
-              className="btn w-100"
-              onClick={() => fetchProduct(barcode)}
-              disabled={isFetching}
+            <div
+              className="barcode-manual-toggle"
+              onClick={() => setShowBarcodeInput(false)}
             >
-              <i className="fa-solid fa-magnifying-glass"></i>{" "}
-              {isFetching ? "Searching..." : "Search"}
-            </button>
-          </div>
-        </div>
+              Hide barcode entry
+            </div>
+          </>
+        )}
 
         <hr />
 
@@ -156,6 +178,8 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
                 id="quantity"
                 placeholder="Quantity (ml)"
                 value={quantity}
+                step={50}
+                min={0}
                 onChange={(e) => setQuantity(e.target.value)}
                 required
               />

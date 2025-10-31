@@ -100,6 +100,7 @@ button:hover {
   background-color: transparent;
   color: #46719c;
   border: 2px solid #00000030;
+  padding: 0.1em 0.3em;
 }
 
 .navbar .burger:hover {
@@ -290,7 +291,7 @@ hr.mini {
 
 .card {
   border: 1px solid #00000040;
-  padding: 0.75em 1em 1em 1em;
+  padding: 1em 1em 1em 1em;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
@@ -298,32 +299,45 @@ hr.mini {
   background-color: #ffffff20;
 }
 
-.card.red {
-  border-top: 6px solid #e74c3c;
+.card.red,
+.stat-box.red {
+  border-top: 6px solid #e74c3c !important;
+  padding-top: 0.75em;
 }
 
-.card.blue {
-  border-top: 6px solid #3498db;
+.card.blue,
+.stat-box.blue {
+  border-top: 6px solid #3498db !important;
+  padding-top: 0.75em;
 }
 
-.card.green {
-  border-top: 6px solid #2ecc71;
+.card.green,
+.stat-box.green {
+  border-top: 6px solid #2ecc71 !important;
+  padding-top: 0.75em;
 }
 
-.card.yellow {
-  border-top: 6px solid #f1c40f;
+.card.yellow,
+.stat-box.yellow {
+  border-top: 6px solid #f1c40f !important;
+  padding-top: 0.75em;
 }
 
-.card.purple {
-  border-top: 6px solid #9b59b6;
+.card.purple,
+.stat-box.purple {
+  border-top: 6px solid #9b59b6 !important;
 }
 
-.card.orange {
-  border-top: 6px solid #e67e22;
+.card.orange,
+.stat-box.orange {
+  border-top: 6px solid #e67e22 !important;
+  padding-top: 0.75em;
 }
 
-.card.pink {
-  border-top: 6px solid #ff69b4;
+.card.pink,
+.stat-box.pink {
+  border-top: 6px solid #ff69b4 !important;
+  padding-top: 0.75em;
 }
 
 .card-body p {
@@ -365,10 +379,11 @@ hr.mini {
   opacity: 1;
 }
 
-
-.card-body.open ul.open-drinks,
-.card-body.open ul.finished-drinks {
+.card-body.open > hr + ul {
   margin-top: -1em;
+}
+.card-body.open  ul {
+  margin-top: 0em;
 }
 
 .card-toggle{
@@ -643,6 +658,10 @@ pre {
   margin: auto;
 }
 
+.no-margin {
+  margin: 0 !important;
+}
+
 
 /* Stats List */
 .stats-list {
@@ -651,7 +670,7 @@ pre {
   align-items: stretch;
   gap: 1rem;
   padding: 0;
-  margin: 1rem 0 ;
+  margin: 0 ;
   list-style: none;
   flex-wrap: wrap;              
   box-sizing: border-box;
@@ -672,6 +691,15 @@ pre {
   border-bottom-width: 5px;
 }
 
+.stats-list-dashboard .stat-box {
+  border: 2px solid rgba(0, 0, 0, .25);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* border-top: 6px solid #3498db; */
+  padding-bottom: 5px;
+  padding-top: 6px;
+}
+
 /* .stat-box:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -685,13 +713,15 @@ pre {
   line-height: 1.2;
   word-break: break-word;      
 }
-
+.stats-list-dashboard  .stat-value {
+  line-height: 1.0;
+}
 .stat-label {
   display: block;
   font-size: 0.85rem;
   font-weight: 500;
   /* color: #6b7280; */
-  margin-top: 0.25rem;
+  /* margin-top: 0.25rem; */
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -730,7 +760,11 @@ pre {
 .finished-drinks {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0;    
+  max-height: 200px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #00000030 #b1b2b530;
 }
 
 .finished-drinks li {
@@ -743,3 +777,62 @@ pre {
   font-size: 0.85em;
   opacity: 0.75;
 } 
+
+.patient-list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.patient-list li {
+  padding: 0.5em 0.5em;
+  font-size: 0.9em;
+  border: 1px solid #00000040;
+  border-top: none;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+.patient-list li:hover {
+  background: #00000010;
+}
+.patient-list li.selected {
+  background: #00000020;
+}
+
+.patient-list li i {
+  opacity: 0.5;
+  font-size: 0.8em;
+  margin-right: 0.5em;
+  border-radius: 1em;
+  border: 2px solid #00000030;
+  background-color: #00000030;
+  padding: 0.2em 0.1em;
+}
+
+div:has(.card-dropdown) {
+  position: relative;
+  min-height: 4em;
+}
+
+.card-dropdown {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #f3f3f3;
+    z-index: 10;
+}
+
+.dark-mode .card-dropdown {
+    background: #2c3e50;
+}
+
+
+.barcode-manual-toggle {
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.8em;
+  margin: 0.5em ;
+  text-decoration: underline;
+}
+.barcode-manual-toggle:hover {
+  color: #000060;
+}

@@ -1,53 +1,71 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useImperativeHandle, forwardRef } from "react";
 
-export default function Card({
-  title,
-  icon,
-  colour,
-  children,
-  collapsible = false, // Optional for collapsible cards
-  defaultOpen = true, // Optional default open state (if collapsible is true)
-}) {
-  // Manage collapsibale state
-  const [isOpen, setIsOpen] = useState(defaultOpen);
-  const handleToggle = () => {
-    if (collapsible) setIsOpen((prev) => !prev);
-  };
+const Card = forwardRef(
+  (
+    {
+      title,
+      icon,
+      colour,
+      children,
+      collapsible = false,
+      defaultOpen = true,
+      onToggle,
+      dropdown = false,
+    },
+    ref,
+  ) => {
+    const [isOpen, setIsOpen] = useState(defaultOpen);
 
-  return (
-    <div className={`card ${colour}`}>
-      {/* If title is provided, show the card header */}
-      {title && (
-        <div
-          className={`card-header ${collapsible ? "card-header-collapsible" : ""}`}
-          onClick={handleToggle}
-          title={isOpen ? "Close Panel" : "Open Panel"}
-        >
-          {/* Card Toggle Icon */}
-          {collapsible && (
-            <div className="card-toggle">{isOpen ? "▲" : "▼"}</div>
-          )}
+    const handleToggle = () => {
+      if (collapsible) setIsOpen((prev) => !prev);
+    };
 
-          {/* Card Title and Icon */}
-          <div className="card-title">
-            {icon && (
-              <i
-                className={`fa fa-fw ${icon}`}
-                style={{ marginRight: "0.5rem" }}
-              ></i>
+    // Expose collapse() and expand() methods via ref
+    useImperativeHandle(ref, () => ({
+      collapse: () => setIsOpen(false),
+      expand: () => setIsOpen(true),
+      toggle: () => handleToggle(),
+    }));
+
+    return (
+      <div
+        className={`card ${dropdown || !collapsible || (collapsible && isOpen) ? colour : ""} ${dropdown ? "card-dropdown" : ""}`}
+      >
+        {title && (
+          <div
+            className={`card-header ${
+              collapsible ? "card-header-collapsible" : ""
+            }`}
+            onClick={handleToggle}
+            title={isOpen ? "Close Panel" : "Open Panel"}
+          >
+            {collapsible && (
+              <div className="card-toggle">{isOpen ? "▲" : "▼"}</div>
             )}
-            {title}
+            <div className="card-title">
+              {icon && (
+                <i
+                  className={`fa fa-fw ${icon}`}
+                  style={{ marginRight: "0.5rem" }}
+                ></i>
+              )}
+              {title}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Card Body */}
-      <div className={`card-body ${isOpen ? "open" : "collapsed"}`}>
-        {collapsible && <hr />}
-        {children}
+        <div
+          className={`card-body ${isOpen ? "open" : "collapsed"}`}
+          onClick={() => onToggle?.(isOpen)}
+        >
+          {collapsible && <hr />}
+          {children}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  },
+);
+
+export default Card;
