@@ -96,7 +96,7 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
     <Card
       colour=""
       icon="fa-bottle-water"
-      title="Add a Drink"
+      title="Start a Drink"
       collapsible={true}
       defaultOpen={false}
     >
