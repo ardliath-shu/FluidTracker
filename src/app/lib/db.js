@@ -147,9 +147,12 @@ FROM fluidtracker.fluidentries e
 JOIN fluidtracker.relationships AS r ON e.patientId = r.PatientId
 WHERE r.patientId = ?
   AND r.userId = ?
+  AND e.date = ?
   AND e.timeEnded IS NULL;`;
 
-  const [rows] = await connection.execute(query, [patient_id, user_id]);
+  const day = new Date().toISOString().split("T")[0];
+
+  const [rows] = await connection.execute(query, [patient_id, user_id, day]);
   return rows;
 };
 
