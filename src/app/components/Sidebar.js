@@ -7,11 +7,10 @@ import DarkModeToggle from "./DarkModeToggle";
 const prefix = "../../../../"; // Hack to return to home from nested cms/insert etc
 const links = [
   { name: "Dashboard", icon: "fa-tachometer-alt", href: prefix },
-  { name: "Add Drink", icon: "fa-bottle-water", href: prefix + "add" },
   { name: "Profile", icon: "fa-user", href: "#" },
   { name: "Settings", icon: "fa-cog", href: "#" },
-  { name: "Elements", icon: "fa-th", href: prefix + "elements" },
-  { name: "Generic Page", icon: "fa-file", href: prefix + "generic" },
+  // { name: "Elements", icon: "fa-th", href: prefix + "elements" },
+  // { name: "Generic Page", icon: "fa-file", href: prefix + "generic" },
 ];
 
 export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
@@ -43,13 +42,7 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
       {/* Bottom section */}
       <div className="sidebar-bottom">
         <hr />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <div>
           {/* Use a form to bind the server action */}
           <form action={signOutAction} style={{ flexGrow: "1" }}>
             <button className="logout" type="submit">
