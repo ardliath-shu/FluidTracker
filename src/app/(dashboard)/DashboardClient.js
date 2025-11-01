@@ -78,16 +78,16 @@ export default function DashboardClient({
   if (currentPatient.totalToday >= fluidTarget * 0.75) {
     colourIndicator = "green";
   } else if (currentPatient.totalToday >= fluidTarget * 0.5) {
-    colourIndicator = "orange";
-  } else if (currentPatient.totalToday >= fluidTarget * 0.25) {
     colourIndicator = "yellow";
+  } else if (currentPatient.totalToday >= fluidTarget * 0.25) {
+    colourIndicator = "orange";
   }
 
   return (
     <>
       <div>
         <section>
-          <div className="row">
+          <div className="row sticky-header-dashboard">
             {/* If user has multiple patients, show patient switcher */}
             {patients.length > 1 && (
               <div className="col">

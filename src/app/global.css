@@ -848,3 +848,15 @@ div:has(.card-dropdown) {
 .barcode-manual-toggle:hover {
   opacity: 0.8;
 }
+
+.row.sticky-header-dashboard {
+  position: sticky;
+  top: 67px;
+  z-index: 10;
+}
+.row.sticky-header-dashboard .stat-box {
+  background-color: #f3f4f5;
+}
+.dark-mode .row.sticky-header-dashboard .stat-box {
+  background-color: #2c3e50;
+}
