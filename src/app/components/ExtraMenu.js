@@ -1,6 +1,10 @@
 import { useTransition } from "react";
 import { formatMinutesSinceMidnight } from "@/app/lib/utils";
-import { finishOpenDrinkAction } from "@/app/actions/patients";
+import {
+  finishOpenDrinkAction,
+  removeOpenDrinkAction,
+} from "@/app/actions/patients";
+
 import AddDrinkForm from "./AddDrink";
 import Card from "./Card";
 import FluidTargetForm from "./FluidTargetForm";
@@ -26,15 +30,39 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
     minute: "2-digit",
   });
 
+  async function handleRemoveDrink(fluidEntryId) {
+    if (!confirm("Are you sure you want to remove this drink?")) return;
+
+    try {
+      startTransition(async () => {
+        const updatedPatient = await removeOpenDrinkAction(
+          fluidEntryId,
+          patient.patientId,
+        );
+        onPatientChange(updatedPatient.patientId);
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Failed to remove drink.");
+    }
+  }
+
   return (
     <aside className="extra">
+      {/* Add Drink Form */}
+      <AddDrinkForm
+        patient={patient}
+        userId={userId}
+        onPatientUpdated={() => onPatientChange(patient.patientId)}
+      />
+
       {/* Open Drinks List */}
       <Card
         title="Open Drinks"
         icon="fa-glass-water"
         colour="blue"
         collapsible={true}
-        defaultOpen={patient.openDrinks.length > 0}
+        defaultOpen={true}
       >
         <ul className="open-drinks">
           {patient.openDrinks.length === 0 && (
@@ -56,25 +84,18 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
                 <span>
                   Started at {formatMinutesSinceMidnight(drink.timeStarted)}
                 </span>
+                <span
+                  className="remove-link"
+                  onClick={() => handleRemoveDrink(drink.fluidEntryId)}
+                  title="Remove Drink"
+                >
+                  Remove Drink
+                </span>
               </div>
             </li>
           ))}
         </ul>
       </Card>
-
-      {/* Add Drink Form */}
-      <AddDrinkForm
-        patient={patient}
-        userId={userId}
-        onPatientUpdated={() => onPatientChange(patient.patientId)}
-      />
-
-      {/* Fluid Target Form */}
-      <FluidTargetForm
-        currentTarget={patient.fluidTarget}
-        patientId={patient.patientId}
-        onUpdated={() => onPatientChange(patient.patientId)}
-      />
 
       {/* Finished Drinks List */}
       <Card
@@ -98,7 +119,7 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
             ))}
           {/* if no finished drinks */}
           {patient.drinksToday.filter((drink) => drink.timeEnded !== null)
-            .length === 0 && <li>No finished drinks</li>}
+            .length === 0 && <li className="center">No finished drinks</li>}
         </ul>
       </Card>
 
@@ -126,6 +147,13 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
           {Math.round(patient.typicalProgress[0].max)}ml.
         </p>
       </Card>
+
+      {/* Fluid Target Form */}
+      <FluidTargetForm
+        currentTarget={patient.fluidTarget}
+        patientId={patient.patientId}
+        onUpdated={() => onPatientChange(patient.patientId)}
+      />
 
       {/* <Card
         title={`About ${siteConfig.name}`}

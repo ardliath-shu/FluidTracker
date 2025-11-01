@@ -67,12 +67,16 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
       return;
     }
 
+    const submitter = e.nativeEvent.submitter; // The button that triggered the submit
+    const actionType = submitter?.value; // "finished"?
+
     try {
       setIsSubmitting(true);
       const updatedPatient = await logNewDrinkAction(
         patient.patientId,
         quantity,
         drinkName,
+        actionType,
       );
 
       //alert(`Added ${drinkName} (${quantity}ml) for ${patient.firstName}`);
@@ -141,7 +145,7 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
                   disabled={isFetching}
                 >
                   <i className="fa-solid fa-magnifying-glass"></i>{" "}
-                  {isFetching ? "Searching..." : "Search"}
+                  {isFetching ? "..." : ""}
                 </button>
               </div>
             </div>
@@ -178,7 +182,7 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
                 id="quantity"
                 placeholder="Quantity (ml)"
                 value={quantity}
-                step={50}
+                max={5000}
                 min={0}
                 onChange={(e) => setQuantity(e.target.value)}
                 required
@@ -194,19 +198,39 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
           </div>
         )} */}
 
-        <button
-          type="submit"
-          className="btn green w-100"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            "Adding..."
-          ) : (
-            <>
-              <i className="fa fa-plus"></i> Add Drink
-            </>
-          )}
-        </button>
+        <div className="center">
+          <button
+            type="submit"
+            className="btn blue"
+            disabled={isSubmitting}
+            title="Add Drink"
+          >
+            {isSubmitting ? (
+              "Adding..."
+            ) : (
+              <>
+                <i className="fa fa-plus"></i> Add Drink
+              </>
+            )}
+          </button>
+
+          <button
+            type="submit"
+            name="action"
+            title="Add Finished Drink"
+            value="finished"
+            className="btn green"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              "Adding..."
+            ) : (
+              <>
+                <i className="fa fa-check"></i>
+              </>
+            )}
+          </button>
+        </div>
       </form>
     </Card>
   );

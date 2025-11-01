@@ -9,6 +9,7 @@ import {
   getTypicalProgress,
   logNewDrink,
   finishOpenDrink,
+  removeOpenDrink,
   setNewPatientFluidTarget,
 } from "@/app/lib/db";
 import { auth } from "@/app/lib/auth";
@@ -19,6 +20,7 @@ export async function getPatientData(patientId) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
+  if (!session) throw new Error("Not authenticated");
 
   const now = new Date();
   const hours = now.getHours();
@@ -26,14 +28,14 @@ export async function getPatientData(patientId) {
   const minutesSinceMidnight = hours * 60 + minutes;
   const day = now.toISOString().split("T")[0];
 
-  if (!session) throw new Error("Not authenticated");
-
   const userId = session.user.id;
 
   const patientResult = await fetchPatient(userId, patientId);
   const patient = patientResult[0];
   const fluidTarget = await getMyPatientCurrentFluidTarget(userId, patientId);
-  patient.fluidTarget = fluidTarget[0].millilitres;
+  patient.fluidTarget =
+    fluidTarget.length > 0 ? fluidTarget[0].millilitres : 2500;
+
   const totalToday = await getTotalForToday(userId, patientId);
   patient.totalToday = totalToday[0].totalMillilitres || 0;
   patient.openDrinks = await getOpenDrinks(userId, patientId);
@@ -49,7 +51,12 @@ export async function getPatientData(patientId) {
 }
 
 // Log a new drink for a patient
-export async function logNewDrinkAction(patientId, millilitres, note = "") {
+export async function logNewDrinkAction(
+  patientId,
+  millilitres,
+  note = "",
+  actionType,
+) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -64,13 +71,18 @@ export async function logNewDrinkAction(patientId, millilitres, note = "") {
   const minutesSinceMidnight = hours * 60 + minutes;
   const day = now.toISOString().split("T")[0];
 
+  let finishTime = null;
+  if (actionType === "finished") {
+    finishTime = minutesSinceMidnight;
+  }
+
   await logNewDrink(
     userId,
     patientId,
     millilitres,
     day,
     minutesSinceMidnight,
-    null,
+    finishTime,
     note,
   );
 
@@ -120,6 +132,23 @@ export async function updatePatientFluidTarget(patientId, newTarget) {
   const changeDate = day; // YYYY-MM-DD
 
   await setNewPatientFluidTarget(userId, patientId, newTarget, changeDate);
+
+  // Return updated patient stats
+  const updatedPatient = await getPatientData(patientId);
+  return updatedPatient;
+}
+
+// Remove an open drink for a patient
+export async function removeOpenDrinkAction(fluidEntryId, patientId) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) throw new Error("Not authenticated");
+
+  const userId = session.user.id;
+
+  await removeOpenDrink(userId, patientId, fluidEntryId);
 
   // Return updated patient stats
   const updatedPatient = await getPatientData(patientId);

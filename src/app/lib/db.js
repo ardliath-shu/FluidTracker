@@ -181,6 +181,32 @@ WHERE
   ]);
 };
 
+const removeOpenDrink = async (user_id, patient_id, fluidEntryId) => {
+  try {
+    const deleteQuery = `
+      DELETE e
+      FROM fluidtracker.fluidentries AS e
+      JOIN fluidtracker.relationships AS r
+        ON e.patientId = r.patientId
+      WHERE e.fluidEntryId = ?
+        AND r.patientId = ?
+        AND r.userId = ?
+        AND e.timeEnded IS NULL; -- Only delete open drinks
+    `;
+
+    const [result] = await connection.execute(deleteQuery, [
+      fluidEntryId,
+      patient_id,
+      user_id,
+    ]);
+
+    return result;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to remove open drink.");
+  }
+};
+
 const getTypicalProgress = async (user_id, patient_id, since_date, time) => {
   const query = `SELECT MIN(runningTotal) min, MAX(runningTotal) max, AVG(runningTotal) average
 FROM
@@ -238,5 +264,6 @@ export {
   getMyPatientCurrentFluidTarget,
   setNewPatientFluidTarget,
   finishOpenDrink,
+  removeOpenDrink,
   getTypicalProgress,
 };

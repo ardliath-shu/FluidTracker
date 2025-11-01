@@ -739,6 +739,7 @@ pre {
   align-items: center;
   padding: 0.5em 0;
   font-size: 0.8em;
+  font-weight: 600;
   border-bottom: 1px solid #00000040;
 }
 .open-drink-item div {
@@ -749,10 +750,21 @@ pre {
   font-size: 0.85em;
   opacity: 0.75;
 }
+.open-drink-item div span.remove-link{
+  float: right;
+  margin-right: 1em;
+  color: #510000;
+  cursor: pointer;
+  transform: 2s ease;
+}
+.open-drink-item div span.remove-link:hover {
+  color: #a50000;
+  text-decoration: underline;
+}
 
 .finish-btn {
   float: right;
-  margin-top: -0.2em;
+  margin-top: -0.1em;
 }
 
 
@@ -770,6 +782,7 @@ pre {
 .finished-drinks li {
   padding: 0.5em 0;
   font-size: 0.8em;
+  font-weight: 600;
   border-bottom: 1px solid #00000040;
 }
 
@@ -820,7 +833,6 @@ div:has(.card-dropdown) {
     background: #f3f3f3;
     z-index: 10;
 }
-
 .dark-mode .card-dropdown {
     background: #2c3e50;
 }
@@ -834,5 +846,5 @@ div:has(.card-dropdown) {
   text-decoration: underline;
 }
 .barcode-manual-toggle:hover {
-  color: #000060;
+  opacity: 0.8;
 }
