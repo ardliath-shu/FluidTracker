@@ -5,7 +5,7 @@ import { logNewDrinkAction } from "@/app/actions/patients";
 import BarcodeScanner from "@/app/components/BarcodeScanner";
 import Card from "@/app/components/Card";
 
-export default function AddDrinkForm({ patient, onPatientUpdated }) {
+export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
   const cardRef = useRef(null);
   const [barcode, setBarcode] = useState("");
   const [drinkName, setDrinkName] = useState("");
@@ -106,7 +106,7 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
       icon="fa-bottle-water"
       title="Start a Drink"
       collapsible={true}
-      defaultOpen={false}
+      defaultOpen={isOpen}
     >
       <form onSubmit={handleSubmit}>
         {/* Scanner */}
@@ -209,7 +209,7 @@ export default function AddDrinkForm({ patient, onPatientUpdated }) {
               "Adding..."
             ) : (
               <>
-                <i className="fa fa-plus"></i> Add Drink
+                <i className="fa fa-plus"></i> Open Drink
               </>
             )}
           </button>

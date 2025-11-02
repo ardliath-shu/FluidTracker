@@ -41,9 +41,9 @@
     border-top: none;
     max-height: calc(100vh - 82px); 
     /* Hide overflow but allow scrolling and hide scrollbar */
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: transparent transparent;
+    scrollbar-color: #00000030 #b1b2b530;
   }
 
   .navbar .burger {

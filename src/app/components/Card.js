@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useImperativeHandle, forwardRef } from "react";
+import { useState, useEffect, useImperativeHandle, forwardRef } from "react";
 
 const Card = forwardRef(
   (
@@ -17,6 +17,10 @@ const Card = forwardRef(
     ref,
   ) => {
     const [isOpen, setIsOpen] = useState(defaultOpen);
+
+    useEffect(() => {
+      setIsOpen(defaultOpen);
+    }, [defaultOpen]);
 
     const handleToggle = () => {
       if (collapsible) setIsOpen((prev) => !prev);

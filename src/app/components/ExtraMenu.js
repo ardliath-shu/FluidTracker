@@ -23,13 +23,6 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
     });
   };
 
-  //Time now
-  const now = new Date();
-  const timeString = now.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-
   async function handleRemoveDrink(fluidEntryId) {
     if (!confirm("Are you sure you want to remove this drink?")) return;
 
@@ -47,10 +40,16 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
     }
   }
 
+  // Get a count of finished drinks today
+  const finishedDrinksCount = patient.drinksToday.filter(
+    (drink) => drink.timeEnded !== null,
+  ).length;
+
   return (
     <aside className="extra">
       {/* Add Drink Form */}
       <AddDrinkForm
+        isOpen={patient.openDrinks.length === 0} // Open if no drinks open
         patient={patient}
         userId={userId}
         onPatientUpdated={() => onPatientChange(patient.patientId)}
@@ -58,11 +57,18 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
 
       {/* Open Drinks List */}
       <Card
-        title="Open Drinks"
+        title={
+          patient.openDrinks.length > 0
+            ? "" +
+              patient.openDrinks.length +
+              " Open Drink" +
+              (patient.openDrinks.length > 1 ? "s" : "")
+            : "No Open Drinks"
+        }
         icon="fa-glass-water"
         colour="blue"
         collapsible={true}
-        defaultOpen={true}
+        defaultOpen={patient.openDrinks.length > 0}
       >
         <ul className="open-drinks">
           {patient.openDrinks.length === 0 && (
@@ -99,11 +105,18 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
 
       {/* Finished Drinks List */}
       <Card
-        title="Finished Drinks"
+        title={
+          finishedDrinksCount > 0
+            ? "" +
+              finishedDrinksCount +
+              " Finished Drink" +
+              (finishedDrinksCount > 1 ? "s" : "")
+            : "No Finished Drinks"
+        }
         icon="fa-check"
         colour="green"
         collapsible={true}
-        defaultOpen={false}
+        defaultOpen={finishedDrinksCount > 0}
       >
         <ul className="finished-drinks">
           {patient.drinksToday

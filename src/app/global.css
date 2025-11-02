@@ -756,7 +756,7 @@ pre {
   margin-right: 1em;
   color: #510000;
   cursor: pointer;
-  transform: 2s ease;
+  margin-top: 2px;
 }
 .open-drink-item div span.remove-link:hover {
   color: #a50000;
@@ -775,7 +775,7 @@ pre {
   padding: 0;
   margin: 0;    
   max-height: 200px;
-  overflow-y: scroll;
+  overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #00000030 #b1b2b530;
 }
