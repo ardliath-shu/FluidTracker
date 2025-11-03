@@ -209,7 +209,7 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
               "Adding..."
             ) : (
               <>
-                <i className="fa fa-plus"></i> Open Drink
+                <i className="fa fa-plus"></i> Start Drink
               </>
             )}
           </button>
@@ -226,7 +226,7 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
               "Adding..."
             ) : (
               <>
-                <i className="fa fa-check"></i>
+                <i className="fa fa-check"></i> Log Drink
               </>
             )}
           </button>
