@@ -6,6 +6,7 @@ import {
   fetchUser,
   fetchPatient,
   fetchPatients,
+  createNewPatient,
   getMyPatientCurrentFluidTarget,
   getOpenDrinks,
   getDrinksForDate,
@@ -22,20 +23,26 @@ export default async function Home() {
     redirect("/login");
   }
 
+  const now = new Date();
+  const hours = now.getHours(); // 0–23
+  const minutes = now.getMinutes(); // 0–59
+  const minutesSinceMidnight = hours * 60 + minutes;
+  const day = now.toISOString().split("T")[0];
+
   // User is authenticated, get user info.
   const userId = session.user.id;
   const userResult = await fetchUser(userId);
   const user = userResult[0];
   const username = user["name"];
 
-  const userPatients = await fetchPatients(userId);
-  const patients = userPatients || [];
+  var userPatients = await fetchPatients(userId);
 
-  const now = new Date();
-  const hours = now.getHours(); // 0–23
-  const minutes = now.getMinutes(); // 0–59
-  const minutesSinceMidnight = hours * 60 + minutes;
-  const day = now.toISOString().split("T")[0];
+  if (userPatients.length == 0) {
+    const patientId = await createNewPatient(userId);
+    userPatients = await fetchPatients(userId);
+  }
+
+  const patients = userPatients;
 
   // Get the patient the user is managing
   //const patientId = 1; // For testing purposes
@@ -45,9 +52,9 @@ export default async function Home() {
   const patientId = userPatient[0].patientId;
   const patient = userPatient[0];
   const fluidTarget = await getMyPatientCurrentFluidTarget(userId, patientId);
-  patient.fluidTarget = fluidTarget[0].millilitres;
+  patient.fluidTarget = fluidTarget.length ? fluidTarget[0].millilitres : 2500;
   const totalToday = await getTotalForToday(userId, patientId);
-  patient.totalToday = totalToday[0].totalMillilitres || 0;
+  patient.totalToday = totalToday.length ? totalToday[0].totalMillilitres : 0;
   patient.openDrinks = await getOpenDrinks(userId, patientId);
   patient.drinksToday = await getDrinksForDate(userId, patientId, day);
   patient.typicalProgress = await getTypicalProgress(
