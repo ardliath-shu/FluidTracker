@@ -67,7 +67,7 @@ export default function BarcodeScanner({ onDetected }) {
       />
 
       {!scanning && (
-        <button className="btn blue w-100" onClick={startScanner}>
+        <button className="btn w-100" onClick={startScanner}>
           <i className="fa fa-barcode" /> Scan Barcode
         </button>
       )}

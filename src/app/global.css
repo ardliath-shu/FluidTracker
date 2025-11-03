@@ -2,6 +2,7 @@ body {
   margin: 0;
   /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
   background: #f8f9fa;
+  min-width: 350px;
 }
 
 h1,
@@ -34,13 +35,23 @@ button:hover {
   color: #1e3050;
 }
 
+.auth-layout .dark-mode-toggle {
+  float: right;
+  font-size: 1.5em;
+  border: 1px solid #081427;
+  padding: 0.2em 0.4em;
+  border-radius: 1em;
+  background-color: #00000010;
+  line-height: 0;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #76b3f0;
-  color: #000060;
+  color: #3d6c9a;
   padding: 5px 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -53,12 +64,11 @@ button:hover {
 .navbar .brand {
   font-weight: bold;
   font-size: 1.5em;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .navbar .brand a {
   text-decoration: none;
-  color: #000060;
+  color: #0d3a67;
 }
 
 /* Make .brand i drop in from the top after 0.5s  */
@@ -91,6 +101,7 @@ button:hover {
   background-color: transparent;
   color: #46719c;
   border: 2px solid #00000030;
+  padding: 0.1em 0.3em;
 }
 
 .navbar .burger:hover {
@@ -111,7 +122,7 @@ button:hover {
 /* Sidebar (mobile-first hidden off-canvas) */
 .sidebar {
   background: #6aa4de;
-  color: #000060;
+  color: #0d3a67;
   width: 200px;
   padding: 0;
   height: calc(100dvh - 50px);
@@ -137,7 +148,7 @@ button:hover {
   align-items: center;
   font-size: 1.2em;
   padding: 0 0.5em;
-  color: #000060;
+  color: #0d3a67;
 }
 
 .sidebar ul {
@@ -155,13 +166,19 @@ button:hover {
 .sidebar a,
 .sidebar button {
   padding: 1em;
-  color: #000060;
+  color: #0d3a67;
   text-decoration: none;
   display: block;
   white-space: nowrap;
 }
 
-.logout {
+.sidebar-bottom > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-bottom .logout {
   width: 100%;
   text-align: start;
 }
@@ -210,7 +227,7 @@ button:hover {
   position: fixed;
   z-index: 1000;
   background: #6aa4de;
-  color: #000060;
+  color: #0d3a67;
   border: none;
   padding: 0.5rem 0.7rem;
   cursor: pointer;
@@ -223,7 +240,7 @@ button:hover {
 .show-sidebar-btn:hover {
   font-size: 1.2em;
   transition: all 0.3s ease;
-  color: #000060;
+  color: #0d3a67;
   box-shadow: 2px 0 2px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -275,7 +292,7 @@ hr.mini {
 
 .card {
   border: 1px solid #00000040;
-  padding: 0.75em 1em 1em 1em;
+  padding: 1em 1em 1em 1em;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
@@ -283,32 +300,45 @@ hr.mini {
   background-color: #ffffff20;
 }
 
-.card.red {
-  border-top: 6px solid #e74c3c;
+.card.red,
+.stat-box.red {
+  border-top: 6px solid #e74c3c !important;
+  padding-top: 0.75em;
 }
 
-.card.blue {
-  border-top: 6px solid #3498db;
+.card.blue,
+.stat-box.blue {
+  border-top: 6px solid #3498db !important;
+  padding-top: 0.75em;
 }
 
-.card.green {
-  border-top: 6px solid #2ecc71;
+.card.green,
+.stat-box.green {
+  border-top: 6px solid #2ecc71 !important;
+  padding-top: 0.75em;
 }
 
-.card.yellow {
-  border-top: 6px solid #f1c40f;
+.card.yellow,
+.stat-box.yellow {
+  border-top: 6px solid #f1c40f !important;
+  padding-top: 0.75em;
 }
 
-.card.purple {
-  border-top: 6px solid #9b59b6;
+.card.purple,
+.stat-box.purple {
+  border-top: 6px solid #9b59b6 !important;
 }
 
-.card.orange {
-  border-top: 6px solid #e67e22;
+.card.orange,
+.stat-box.orange {
+  border-top: 6px solid #e67e22 !important;
+  padding-top: 0.75em;
 }
 
-.card.pink {
-  border-top: 6px solid #ff69b4;
+.card.pink,
+.stat-box.pink {
+  border-top: 6px solid #ff69b4 !important;
+  padding-top: 0.75em;
 }
 
 .card-body p {
@@ -327,6 +357,42 @@ hr.mini {
 .card-header i {
   opacity: 0.5;
 }
+
+.card-header-collapsible {
+  cursor: pointer;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border: none;
+}
+
+.card-body {
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.card-body.collapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.card-body.open {
+  max-height: 2000px; /* arbitrarily large for animation */
+  opacity: 1;
+}
+
+.card-body.open > hr + ul {
+  margin-top: -1em;
+}
+.card-body.open  ul {
+  margin-top: 0em;
+}
+
+.card-toggle{
+  float: right;
+  font-size: 0.9em;
+  opacity: 0.5;
+}
+
 
 /* Icon Colours */
 i.red {
@@ -591,4 +657,207 @@ pre {
 .center {
   text-align: center;
   margin: auto;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+
+/* Stats List */
+.stats-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 0;
+  margin: 0 ;
+  list-style: none;
+  flex-wrap: wrap;              
+  box-sizing: border-box;
+}
+
+.stat-box {
+  flex: 1 1 0;                  
+  min-width: 0;                 
+  text-align: center;
+  background: #ffffff30;
+  border-radius: 8px;
+  padding: 0.5rem;
+  letter-spacing: -1px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  /* transition: transform 0.2s ease, box-shadow 0.2s ease; */
+  box-sizing: border-box;      
+  border: 1px solid rgba(94, 94, 94, 0.4); 
+  border-bottom-width: 5px;
+}
+
+.stats-list-dashboard .stat-box {
+  border: 2px solid rgba(0, 0, 0, .25);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* border-top: 6px solid #3498db; */
+  padding-bottom: 5px;
+  padding-top: 6px;
+}
+
+/* .stat-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+} */
+
+.stat-value {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+  /* color: #1e3a8a; */
+  line-height: 1.2;
+  word-break: break-word;      
+}
+.stats-list-dashboard  .stat-value {
+  line-height: 1.0;
+}
+.stat-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  /* color: #6b7280; */
+  /* margin-top: 0.25rem; */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+
+/* Open Drinks List */
+.open-drinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.open-drink-item {
+  /* display: flex; */
+  align-items: center;
+  padding: 0.5em 0;
+  font-size: 0.8em;
+  font-weight: 600;
+  border-bottom: 1px solid #00000040;
+}
+.open-drink-item div {
+  margin-left: 0.5em;
+}
+
+.open-drink-item div span{
+  font-size: 0.85em;
+  opacity: 0.75;
+}
+.open-drink-item div span.remove-link{
+  float: right;
+  margin-right: 1em;
+  color: #510000;
+  cursor: pointer;
+  margin-top: 2px;
+}
+.open-drink-item div span.remove-link:hover {
+  color: #a50000;
+  text-decoration: underline;
+}
+
+.finish-btn {
+  float: right;
+  margin-top: -0.1em;
+}
+
+
+/* Finished Drinks List */
+.finished-drinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;    
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #00000030 #b1b2b530;
+}
+
+.finished-drinks li {
+  padding: 0.5em 0;
+  font-size: 0.8em;
+  font-weight: 600;
+  border-bottom: 1px solid #00000040;
+}
+
+.finished-drinks li span {
+  font-size: 0.85em;
+  opacity: 0.75;
+} 
+
+.patient-list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.patient-list li {
+  padding: 0.5em 0.5em;
+  font-size: 0.9em;
+  border: 1px solid #00000040;
+  border-top: none;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+.patient-list li:hover {
+  background: #00000010;
+}
+.patient-list li.selected {
+  background: #00000020;
+}
+
+.patient-list li i {
+  opacity: 0.5;
+  font-size: 0.8em;
+  margin-right: 0.5em;
+  border-radius: 1em;
+  border: 2px solid #00000030;
+  background-color: #00000030;
+  padding: 0.2em 0.1em;
+}
+
+div:has(.card-dropdown) {
+  position: relative;
+  min-height: 4em;
+}
+
+.card-dropdown {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #f3f3f3;
+    z-index: 10;
+}
+.dark-mode .card-dropdown {
+    background: #2c3e50;
+}
+
+
+.barcode-manual-toggle {
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.8em;
+  margin: 0.5em ;
+  text-decoration: underline;
+}
+.barcode-manual-toggle:hover {
+  opacity: 0.8;
+}
+
+.row.sticky-header-dashboard {
+  position: sticky;
+  top: 67px;
+  z-index: 10;
+}
+.row.sticky-header-dashboard .stat-box {
+  background-color: #f3f4f5;
+}
+.dark-mode .row.sticky-header-dashboard .stat-box {
+  background-color: #2c3e50;
 }

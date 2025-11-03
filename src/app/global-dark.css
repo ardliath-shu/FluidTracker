@@ -16,6 +16,10 @@ body.dark-mode {
   color: #f0f0f0;
 }
 
+.dark-mode .auth-layout .dark-mode-toggle {
+  border-color: #b2c3e2;
+}
+
 .dark-mode .dark-mode-toggle button i {
   color: #b2c3e2;
 }
@@ -25,7 +29,7 @@ body.dark-mode {
 }
 
 .dark-mode a:visited {
-  color: #800fff;
+  color: #5498dd;
 }
 
 .dark-mode .btn {

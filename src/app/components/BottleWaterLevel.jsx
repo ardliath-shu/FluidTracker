@@ -12,6 +12,7 @@ const BottleWaterLevel = ({ levelPercent }) => {
           id="wavywaterline"
           src={wavyWaterLine}
           alt="Wavy line showing the current fluid level."
+          priority
         />
       </div>
     </div>
