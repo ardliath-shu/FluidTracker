@@ -17,7 +17,7 @@ Track daily fluid intake with a simple Next.js app. Uses Better Auth for email/p
   - [How It Works](#how-it-works)
   - [Creating an Account](#creating-an-account)
   - [Logging In and Out](#logging-in-and-out)
-- [Session Management] (#session-management)
+- [Session Management](#session-management)
 - [Key Files](#key-files)
 - [License](#license)
 
