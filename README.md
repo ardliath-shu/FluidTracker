@@ -17,6 +17,7 @@ Track daily fluid intake with a simple Next.js app. Uses Better Auth for email/p
   - [How It Works](#how-it-works)
   - [Creating an Account](#creating-an-account)
   - [Logging In and Out](#logging-in-and-out)
+- [Session Management](#session-management)
 - [Key Files](#key-files)
 - [License](#license)
 
@@ -126,6 +127,17 @@ Better Auth creates:
 
 - Visit `/login` with your credentials.
 - Logout link is in the sidebar; it posts to `signOutAction`.
+
+## Session Management
+
+Session management is handled automatically by Better Auth. When a user logs in, a session is created and stored in the `session` table in the database. This session contains a unique token, the user's ID, and an expiry time.
+
+On every page load, the app checks for a valid session using `auth.api.getSession`. If the session is missing or expired, the user is redirected to `/login`. Logging out calls `auth.api.signOut`, which deletes the session and logs the user out.
+
+**Why:**
+This ensures only authenticated users can access the protected pages, and sessions expire after a set time (currently 1 hour), improving security by preventing indefinite access if a user leaves their browser open.
+
+Session expiry can be adjusted in [`src/app.lib/auth.ts`](src/app/lib/auth.ts) via the `maxAge` setting.
 
 ## Key Files
 
