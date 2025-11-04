@@ -53,6 +53,37 @@ const fetchPatients = async (user_id) => {
 };
 export { fetchPatients };
 
+const createNewPatient = async (user_id) => {
+  try {
+    // TODO: Allow users to set first and last name
+    const newPatientQuery = `
+    INSERT INTO patients (userId, firstName, lastName, createdAt, updatedAt)
+    VALUES(?, 'TestFirstName', 'TestLastName', ?, ?)`;
+    const currentDate = new Date().toISOString().split("T")[0];
+    var [rows] = await connection.execute(newPatientQuery, [
+      user_id,
+      currentDate,
+      currentDate,
+    ]);
+
+    const getPatientIdQuery = "SELECT patientId FROM patients WHERE userId = ?";
+    [rows] = await connection.execute(getPatientIdQuery, [user_id]);
+
+    const newRelationshipQuery = `
+    INSERT INTO relationships (userId, patientId, notes)
+    VALUES(?, ?, 'Self')`;
+    await connection.execute(newRelationshipQuery, [
+      user_id,
+      rows[0].patientId,
+    ]);
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch data.");
+  }
+};
+
+export { createNewPatient };
+
 const getMyPatientCurrentFluidTarget = async (user_id, patient_id) => {
   try {
     const query = `SELECT r.userId, r.patientId, t.millilitres, t.effectiveFrom, t.effectiveTo
