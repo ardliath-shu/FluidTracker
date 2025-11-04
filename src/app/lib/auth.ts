@@ -17,5 +17,9 @@ export const auth = betterAuth({
       useNumberId: true,
     },
   },
+  session: {
+    // Set the max age of the session
+    maxAge: 3600 // 1 hour (in seconds)
+  },
   plugins: [nextCookies()],
 });
