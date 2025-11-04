@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useActionState } from "react";
+import { useEffect, useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";
 import { signUpAction } from "@/app/actions/auth";
@@ -20,6 +20,14 @@ export default function RegisterForm() {
   const router = useRouter();
   const [state, formAction] = useActionState(signUpAction, initialState);
 
+  // Local state for form fields
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   useEffect(() => {
     router.prefetch("/login"); // speed up post-register nav
   }, [router]);
@@ -29,6 +37,14 @@ export default function RegisterForm() {
       router.replace("/login"); // navigate without leaving history
     }
   }, [state?.success, router]);
+
+  // Update local state on input change
+  function handleChange(e) {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  }
 
   return (
     <form action={formAction} className="form" noValidate>
@@ -48,16 +64,20 @@ export default function RegisterForm() {
           name="name"
           placeholder="Full Name"
           required
+          value={form.name}
+          onChange={handleChange}
         />
         <label htmlFor="name">Full Name</label>
       </div>
-      <div className="form-floating">
+      <div className=" form-floating">
         <input
           type="email"
           id="email"
           name="email"
           placeholder="Email"
           required
+          value={form.email}
+          onChange={handleChange}
         />
         <label htmlFor="email">Email</label>
       </div>
@@ -68,6 +88,8 @@ export default function RegisterForm() {
           name="password"
           placeholder="Password"
           required
+          value={form.password}
+          onChange={handleChange}
         />
         <label htmlFor="password">Password</label>
       </div>
@@ -78,6 +100,8 @@ export default function RegisterForm() {
           name="confirmPassword"
           placeholder="Confirm Password"
           required
+          value={form.confirmPassword}
+          onChange={handleChange}
         />
         <label htmlFor="confirmPassword">Confirm Password</label>
       </div>
