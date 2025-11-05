@@ -14,6 +14,7 @@ export default function DashboardClient({
   username,
   patient,
   patients,
+  isCarer,
 }) {
   // Set target to default or patient's existing target
   let defaultFluidTarget = 2500; // ml
@@ -160,6 +161,7 @@ export default function DashboardClient({
         userId={userId}
         patient={currentPatient}
         onPatientChange={handlePatientChange}
+        isCarer={isCarer}
       />
     </>
   );

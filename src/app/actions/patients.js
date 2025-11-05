@@ -52,6 +52,38 @@ export async function getPatientData(patientId) {
   return patient;
 }
 
+export async function addPatientByInviteCode(inviteCode) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session) throw new Error("Not authenticated");
+
+  const userId = session.user.id;
+
+  // Validate invite code and get patientId
+  const [inviteRows] = await connection.execute(
+    `SELECT * FROM carerInvites WHERE code = ? AND used = 0 AND expiresAt > NOW() LIMIT 1`,
+    [inviteCode],
+  );
+  if (!inviteRows.length) {
+    return { error: "Invalid or expired invite code." };
+  }
+  const invite = inviteRows[0];
+
+  // Link this user to the patient
+  await connection.execute(
+    `INSERT IGNORE INTO relationships (userId, patientId, notes) VALUES (?, ?, 'Carer linked via invite code')`,
+    [userId, invite.patientId],
+  );
+
+  // Mark invite code as used
+  await connection.execute(`UPDATE carerInvites SET used = 1 WHERE code = ?`, [
+    inviteCode,
+  ]);
+
+  return { success: true };
+}
+
 // Log a new drink for a patient
 export async function logNewDrinkAction(
   patientId,

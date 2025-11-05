@@ -53,6 +53,21 @@ const fetchPatients = async (user_id) => {
 };
 export { fetchPatients };
 
+// Returns true if user is a carer for any patient other than themselves
+const isUserCarer = async (user_id) => {
+  // Find patients where this user is a carer, but not their own patient record
+  const query = `
+    SELECT p.*
+    FROM patients p
+    JOIN fluidtracker.relationships r ON p.patientId = r.PatientId
+    WHERE r.userId = ? AND p.userId != ?
+    LIMIT 1
+  `;
+  const [rows] = await connection.execute(query, [user_id, user_id]);
+  return rows.length > 0;
+};
+export { isUserCarer };
+
 const createNewPatient = async (user_id, name) => {
   try {
     // TODO: Allow users to set first and last name

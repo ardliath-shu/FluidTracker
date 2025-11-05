@@ -13,6 +13,7 @@ import {
   getDrinksForDate,
   getTypicalProgress,
   getTotalForToday,
+  isUserCarer,
 } from "../lib/db";
 
 export default async function Home() {
@@ -38,6 +39,9 @@ export default async function Home() {
 
   // Fetch all patients associated with this user (as patient or carer)
   let userPatients = await fetchPatients(userId);
+
+  // Determine if user is a carer
+  const isCarer = await isUserCarer(userId);
 
   // Only create a patient if the user has no patients AND no carer relationships
   if (userPatients.length === 0) {
@@ -84,6 +88,7 @@ export default async function Home() {
       username={name}
       patient={patient}
       patients={patients}
+      isCarer={isCarer}
     />
   );
 }
