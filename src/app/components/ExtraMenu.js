@@ -1,8 +1,9 @@
-import { useTransition } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { formatMinutesSinceMidnight } from "@/app/lib/utils";
 import {
   finishOpenDrinkAction,
   removeOpenDrinkAction,
+  generateCarerInviteAction,
 } from "@/app/actions/patients";
 
 import AddDrinkForm from "./AddDrink";
@@ -11,6 +12,11 @@ import FluidTargetForm from "./FluidTargetForm";
 
 export default function ExtraMenu({ userId, patient, onPatientChange }) {
   const [isPending, startTransition] = useTransition();
+
+  // State for showing the generated invite code
+  const [inviteInfo, setInviteInfo] = useState(null);
+  const [invitePending, startInviteTransition] = useTransition();
+  const [copied, setCopied] = useState(false);
 
   const handleFinishDrink = (drinkId) => {
     startTransition(async () => {
@@ -37,6 +43,40 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
     } catch (err) {
       console.error(err);
       alert("Failed to remove drink.");
+    }
+  }
+
+  async function handleGenerateInvite() {
+    startInviteTransition(async () => {
+      try {
+        // Call the server action to generate the code
+        const info = await generateCarerInviteAction(patient.patientId);
+        setInviteInfo(info);
+        setCopied(false);
+      } catch (err) {
+        alert("Failed to generate invite code.");
+      }
+    });
+  }
+
+  // Countdown timer for expiry
+  const [secondsLeft, setSecondsLeft] = useState(null);
+  useEffect(() => {
+    if (!inviteInfo?.expiresAt) return;
+    const interval = setInterval(() => {
+      const diff = Math.floor(
+        (new Date(inviteInfo.expiresAt).getTime() - Date.now()) / 1000,
+      );
+      setSecondsLeft(diff > 0 ? diff : 0);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [inviteInfo]);
+
+  function handdleCopy() {
+    if (inviteInfo?.code) {
+      navigator.clipboard.writeText(inviteInfo.code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   }
 
@@ -167,6 +207,66 @@ export default function ExtraMenu({ userId, patient, onPatientChange }) {
         patientId={patient.patientId}
         onUpdated={() => onPatientChange(patient.patientId)}
       />
+
+      {/* Carer Invite Code Section */}
+      <Card
+        title="Invite a Carer"
+        icon="fa-user-plus"
+        colour="purple"
+        collapsible={true}
+        defaultOpen={false}
+      >
+        <div className="center">
+          <button
+            className="btn blue"
+            onClick={handleGenerateInvite}
+            disabled={invitePending || (inviteInfo && secondsLeft > 0)}
+          >
+            {invitePending
+              ? "Generating..."
+              : inviteInfo && secondsLeft > 0
+                ? "Invite Code Active"
+                : "Create Carer Invite Code"}
+          </button>
+          {inviteInfo && (
+            <div style={{ marginTop: "0.7em" }}>
+              <span
+                style={{ display: "inline-flex", alignItems: "center", gap: 8 }}
+              >
+                <code style={{ fontSize: "1.1em" }}>{inviteInfo.code}</code>
+                <button
+                  className="btn"
+                  style={{
+                    fontSize: "0.9em",
+                    padding: "0.2em 0.7em",
+                    minWidth: 0,
+                    height: "2em",
+                    lineHeight: 1,
+                  }}
+                  onClick={handdleCopy}
+                  title="Copy to Clipboard"
+                >
+                  {copied ? "Copied!" : "Copy"}
+                </button>
+              </span>
+              <div style={{ marginTop: 8 }}>
+                Expires in:{" "}
+                <span>
+                  {secondsLeft > 0
+                    ? `${Math.floor(secondsLeft / 60)}:${(secondsLeft % 60)
+                        .toString()
+                        .padStart(2, "0")}`
+                    : "Expired"}
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+        <p>
+          Share this code with a carer. It can be used once and will expire in 5
+          minutes.
+        </p>
+      </Card>
 
       {/* <Card
         title={`About ${siteConfig.name}`}

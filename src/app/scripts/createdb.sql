@@ -154,3 +154,14 @@ INSERT INTO fluidentries(patientId, userId, createdAt, millilitres, date, timeSt
 VALUES
     (1, 1, '2025-01-13 16:30', 200, '2025-01-13', 1000, 1030, 'Completed drink'),
     (1, 1, '2025-01-13 16:30', 200, '2025-01-13', 1060, null, 'In Progress Drink');
+
+-- Carer invite codes for linking carers to patients
+CREATE TABLE IF NOT EXISTS carerInvites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(32) NOT NULL UNIQUE,
+    patientId INT NOT NULL,
+    expiresAt DATETIME NOT NULL,
+    used BOOLEAN NOT NULL DEFAULT FALSE,
+    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (patientId) REFERENCES patients(patientId) ON DELETE CASCADE
+);
