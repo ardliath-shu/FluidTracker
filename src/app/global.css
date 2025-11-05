@@ -300,6 +300,10 @@ hr.mini {
   background-color: #ffffff20;
 }
 
+.card.dialog {
+  background-color: #f3f3f3;
+}
+
 .card.red,
 .stat-box.red {
   border-top: 6px solid #e74c3c !important;
@@ -445,56 +449,56 @@ i.pink {
   font-weight: 500;
   box-shadow: 0 2px 2px 0 #00000030;
 }
-.btn:hover {
+.btn:hover, .btn:focus {
   background: #b3b3b3;
   box-shadow: none;
 }
 .btn.red {
   background-color: #e74c3c;
 }
-.btn.red:hover {
+.btn.red:hover, .btn.red:focus {
   background-color: #ab392c;
 }
 
 .btn.blue {
   background-color: #45a1de;
 }
-.btn.blue:hover {
+.btn.blue:hover, .btn.blue:focus {
   background-color: #78bbe8;
 }
 
 .btn.green {
   background-color: #2ecc71;
 }
-.btn.green:hover {
+.btn.green:hover, .btn.green:focus {
   background-color: #24a35b;
 }
 
 .btn.yellow {
   background-color: #f1c40f;
 }
-.btn.yellow:hover {
+.btn.yellow:hover, .btn.yellow:focus {
   background-color: #c8a20e;
 }
 
 .btn.purple {
   background-color: #9b59b6;
 }
-.btn.purple:hover {
+.btn.purple:hover, .btn.purple:focus {
   background-color: #7a3d99;
 }
 
 .btn.orange {
   background-color: #e67e22;
 }
-.btn.orange:hover {
+.btn.orange:hover, .btn.orange:focus {
   background-color: #b3611a;
 }
 
 .btn.pink {
   background-color: #ff69b4;
 }
-.btn.pink:hover {
+.btn.pink:hover, .btn.pink:focus {
   background-color: #cc568f;
 }
 
@@ -834,10 +838,6 @@ div:has(.card-dropdown) {
     background: #f3f3f3;
     z-index: 10;
 }
-.dark-mode .card-dropdown {
-    background: #2c3e50;
-}
-
 
 .barcode-manual-toggle {
   cursor: pointer;
@@ -858,6 +858,43 @@ div:has(.card-dropdown) {
 .row.sticky-header-dashboard .stat-box {
   background-color: #f3f4f5;
 }
-.dark-mode .row.sticky-header-dashboard .stat-box {
-  background-color: #2c3e50;
+
+
+/* Confirm Dialog  */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Toast/Alert Notifications */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%; /* center horizontally */
+  transform: translateX(-50%); /* adjust for element width */
+  min-width: 200px;
+  padding: 10px 16px;
+  border-radius: 4px;
+  color: white;
+  z-index: 2000;
+  text-align: center;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toast.info {
+  background: #2196f3;
+}
+
+.toast.success {
+  background: #2ecc71;
+}
+
+.toast.error {
+  background: #e74c3c;
 }
