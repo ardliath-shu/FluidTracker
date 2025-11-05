@@ -3,7 +3,7 @@ export default function ConfirmDialog({ open, message, onConfirm, onCancel }) {
 
   return (
     <div className="confirm-overlay">
-      <div className="card dialog blue">
+      <dialog className="card dialog blue">
         <p>{message}</p>
         <div className="col">
           <div className="row">
@@ -17,7 +17,7 @@ export default function ConfirmDialog({ open, message, onConfirm, onCancel }) {
             </button>
           </div>
         </div>
-      </div>
+      </dialog>
     </div>
   );
 }

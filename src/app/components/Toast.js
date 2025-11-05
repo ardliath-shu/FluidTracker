@@ -6,5 +6,5 @@ export default function Toast({ message, type = "info", onClose }) {
     return () => clearTimeout(timer);
   }, [onClose]);
 
-  return <div className={`toast ${type}`}>{message}</div>;
+  return <dialog className={`toast ${type}`}>{message}</dialog>;
 }
