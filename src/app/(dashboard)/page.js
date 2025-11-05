@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "@/app/lib/auth";
+import connection from "@/app/lib/connection";
 import DashboardClient from "./DashboardClient";
 import {
   fetchUser,
@@ -33,24 +34,37 @@ export default async function Home() {
   const userId = session.user.id;
   const userResult = await fetchUser(userId);
   const user = userResult[0];
-  const username = user["name"];
+  const name = user["name"];
 
-  var userPatients = await fetchPatients(userId);
+  // Fetch all patients associated with this user (as patient or carer)
+  let userPatients = await fetchPatients(userId);
 
-  if (userPatients.length == 0) {
-    const patientId = await createNewPatient(userId);
-    userPatients = await fetchPatients(userId);
+  // Only create a patient if the user has no patients AND no carer relationships
+  if (userPatients.length === 0) {
+    // Check if user is a carer (has any relationships as userId)
+    const [carerRelationships] = await connection.execute(
+      "SELECT * FROM relationships WHERE userId = ?",
+      [userId],
+    );
+    if (!carerRelationships.length) {
+      // Only create a patient if not a carer
+      const patientId = await createNewPatient(userId, name);
+      userPatients = await fetchPatients(userId);
+    }
   }
 
   const patients = userPatients;
+  const patient = patients[0];
 
+  if (!patient) {
+    // Handle gracefully
+    return <div>No patient found for this user.</div>;
+  }
   // Get the patient the user is managing
   //const patientId = 1; // For testing purposes
 
   // Get the patient who is linked to the user
-  const userPatient = await fetchPatient(userId);
-  const patientId = userPatient[0].patientId;
-  const patient = userPatient[0];
+  const patientId = patient.patientId;
   const fluidTarget = await getMyPatientCurrentFluidTarget(userId, patientId);
   patient.fluidTarget = fluidTarget.length ? fluidTarget[0].millilitres : 2500;
   const totalToday = await getTotalForToday(userId, patientId);
@@ -67,7 +81,7 @@ export default async function Home() {
   return (
     <DashboardClient
       userId={userId}
-      username={username}
+      username={name}
       patient={patient}
       patients={patients}
     />

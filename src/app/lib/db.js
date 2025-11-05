@@ -53,20 +53,22 @@ const fetchPatients = async (user_id) => {
 };
 export { fetchPatients };
 
-const createNewPatient = async (user_id) => {
+const createNewPatient = async (user_id, name) => {
   try {
     // TODO: Allow users to set first and last name
     const newPatientQuery = `
     INSERT INTO patients (userId, firstName, lastName, createdAt, updatedAt)
-    VALUES(?, 'TestFirstName', 'TestLastName', ?, ?)`;
+    VALUES(?, ?, '', ?, ?)`;
     const currentDate = new Date().toISOString().split("T")[0];
     var [rows] = await connection.execute(newPatientQuery, [
       user_id,
+      name,
       currentDate,
       currentDate,
     ]);
 
-    const getPatientIdQuery = "SELECT patientId FROM patients WHERE userId = ?";
+    const getPatientIdQuery =
+      "SELECT patientId FROM patients WHERE userId = ? ORDER BY patientId DESC LIMIT 1";
     [rows] = await connection.execute(getPatientIdQuery, [user_id]);
 
     const newRelationshipQuery = `
