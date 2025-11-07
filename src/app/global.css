@@ -395,8 +395,8 @@ hr.mini {
   border-bottom: 1px solid #00000030;
   padding-bottom: 0.4em;
 }
-.card-header:focus {
-  outline: 2px solid #3498db;
+.card-header:focus, button:focus {
+  outline: 2px solid #3498db50;
   outline-offset: 2px;
 }
 

@@ -38,6 +38,18 @@ export default function BackgroundMenu() {
       <div
         className={`sidebar-subitem ${showBgGrid ? "open" : ""}`}
         onClick={() => setShowBgGrid((s) => !s)}
+        onKeyDown={(e) => {
+          // Allow toggle with Enter or Space
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setShowBgGrid((s) => !s);
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-expanded={showBgGrid}
+        aria-controls="background-grid"
+        title="Toggle Background Selection"
       >
         <i
           className={`fa fa-fw fa-chevron-${showBgGrid ? "down" : "right"}`}
@@ -56,6 +68,15 @@ export default function BackgroundMenu() {
                 selected === bg.className ? "selected" : ""
               }`}
               onClick={() => handleSelect(bg.className)}
+              onKeyDown={(e) => {
+                // Allow selection with Enter or Space
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleSelect(bg.className);
+                }
+              }}
+              tabIndex={0}
+              role="button"
             >
               {bg.src ? (
                 <Image src={bg.src} alt={bg.name} width={100} height={60} />
