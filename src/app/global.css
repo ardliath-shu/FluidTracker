@@ -924,6 +924,7 @@ pre {
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  background-image: none !important;
 }
 
 .confirm-overlay dialog {
