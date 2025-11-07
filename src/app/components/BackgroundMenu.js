@@ -44,6 +44,9 @@ export default function BackgroundMenu() {
             e.preventDefault();
             setShowBgGrid((s) => !s);
           }
+          if (e.key === "Tab") {
+            setShowBgGrid(true);
+          }
         }}
         tabIndex={0}
         role="button"

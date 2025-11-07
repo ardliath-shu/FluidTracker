@@ -924,8 +924,6 @@ div:has(.card-dropdown) {
 .toast {
   position: fixed;
   bottom: 20px;
-  left: 50%; /* center horizontally */
-  transform: translateX(-50%); /* adjust for element width */
   min-width: 200px;
   padding: 10px 16px;
   border-radius: 4px;

@@ -32,6 +32,10 @@ const Card = forwardRef(
         e.preventDefault();
         handleToggle();
       }
+      // If tbl key is used to focus, open the card
+      if (e.key === "Tab" && collapsible) {
+        setIsOpen(true);
+      }
     };
 
     // Expose collapse() and expand() methods via ref
