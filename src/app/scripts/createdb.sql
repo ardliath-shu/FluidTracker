@@ -46,6 +46,8 @@ CREATE TABLE relationships (
     userId INT NOT NULL,
     patientId INT NOT NULL,
     notes VARCHAR(255) NULL,
+    -- Prevent duplicate carer->patient links
+    UNIQUE KEY uq_relationship_user_patient (userId, patientId),
     CONSTRAINT fk_relationships_patients FOREIGN KEY (patientId) REFERENCES patients(patientId),
     CONSTRAINT fk_relationships_users FOREIGN KEY (userId) REFERENCES user(id)
 );

@@ -109,9 +109,9 @@ export default function ExtraMenu({
       } else {
         setAddPatientSuccess("Patient added successfully.");
         setInviteCode("");
-        // Trigger a full refresh in the dashboard
-        if (onPatientChange) {
-          onPatientChange("refresh");
+        // Use the returned patient id to refresh the dashboard correctly
+        if (onPatientChange && res?.patientId) {
+          onPatientChange(res.patientId);
         }
       }
     } catch (err) {

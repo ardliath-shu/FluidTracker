@@ -32,19 +32,41 @@ export async function getPatientData(patientId) {
 
   const userId = session.user.id;
 
-  const patientResult = await fetchPatient(userId, patientId);
+  // Coerce id and fallback to first patient if invalid
+  let targetPatientId = Number(patientId);
+  if (!Number.isFinite(targetPatientId) || targetPatientId <= 0) {
+    const list = await fetchPatients(userId);
+    if (!list.length) {
+      throw new Error("Patient not found or access denied");
+    }
+    targetPatientId = list[0].patientId;
+  }
+
+  // Retry once to avoid a read-after-write race immediately after linking
+  let patientResult = await fetchPatient(userId, targetPatientId);
+  if (!patientResult || patientResult.length === 0) {
+    await new Promise((r) => setTimeout(r, 150));
+    patientResult = await fetchPatient(userId, targetPatientId);
+  }
+  if (!patientResult || patientResult.length === 0) {
+    throw new Error("Patient not found or access denied");
+  }
+
   const patient = patientResult[0];
-  const fluidTarget = await getMyPatientCurrentFluidTarget(userId, patientId);
+  const fluidTarget = await getMyPatientCurrentFluidTarget(
+    userId,
+    targetPatientId,
+  );
   patient.fluidTarget =
     fluidTarget.length > 0 ? fluidTarget[0].millilitres : 2500;
 
-  const totalToday = await getTotalForToday(userId, patientId);
+  const totalToday = await getTotalForToday(userId, targetPatientId);
   patient.totalToday = totalToday[0].totalMillilitres || 0;
-  patient.openDrinks = await getOpenDrinks(userId, patientId);
-  patient.drinksToday = await getDrinksForDate(userId, patientId, day);
+  patient.openDrinks = await getOpenDrinks(userId, targetPatientId);
+  patient.drinksToday = await getDrinksForDate(userId, targetPatientId, day);
   patient.typicalProgress = await getTypicalProgress(
     userId,
-    patientId,
+    targetPatientId,
     "2025-01-01",
     minutesSinceMidnight,
   );
@@ -71,8 +93,19 @@ export async function addPatientByInviteCode(inviteCode) {
   const invite = inviteRows[0];
 
   // Link this user to the patient
-  await connection.execute(
+  const [insertRes] = await connection.execute(
     `INSERT IGNORE INTO relationships (userId, patientId, notes) VALUES (?, ?, 'Carer linked via invite code')`,
+    [userId, invite.patientId],
+  );
+
+  // If nothing was inserted, the relationship already exists; do not consume the invite
+  if (!insertRes || insertRes.affectedRows === 0) {
+    return { error: "You already have access to this patient." };
+  }
+
+  // Ensure link is visible before reading
+  await connection.execute(
+    `SELECT 1 FROM relationships WHERE userId = ? AND patientId = ? LIMIT 1`,
     [userId, invite.patientId],
   );
 
@@ -81,7 +114,9 @@ export async function addPatientByInviteCode(inviteCode) {
     inviteCode,
   ]);
 
-  return { success: true };
+  // Return a full patient object so the client can refresh safely
+  const updatedPatient = await getPatientData(invite.patientId);
+  return updatedPatient;
 }
 
 // Log a new drink for a patient

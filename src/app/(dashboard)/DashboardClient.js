@@ -44,8 +44,10 @@ export default function DashboardClient({
   }
 
   const handlePatientChange = (newPatientId) => {
+    const id = Number(newPatientId);
+    if (!Number.isFinite(id) || id <= 0) return; // guard against accidental "refresh"/undefined
     startTransition(async () => {
-      const newPatient = await getPatientData(newPatientId);
+      const newPatient = await getPatientData(id);
       setCurrentPatient(newPatient);
       setFluidTarget(newPatient.fluidTarget);
       setFluidLeft(newPatient.fluidTarget - newPatient.totalToday);
