@@ -395,23 +395,42 @@ hr.mini {
   border-bottom: 1px solid #00000030;
   padding-bottom: 0.4em;
 }
-.card-header:focus, button:focus {
+.card-header:focus {
   outline: 2px solid #3498db50;
-  outline-offset: 2px;
 }
 
 .card-header i {
   opacity: 0.5;
 }
 
+.card:has(.card-header-collapsible[aria-expanded="false"]) {
+  padding: 0;
+}
 .card-header-collapsible {
+  padding: 0.8em 0.9em;
   cursor: pointer;
-  padding-bottom: 0;
   margin-bottom: 0;
   border: none;
 }
 .card-header-collapsible:focus {
   background-color: rgba(52, 152, 219, 0.1);
+  /* background-color: #ffffff30; */
+}
+.card-header-collapsible[aria-expanded="true"] {
+  padding: 0.1em 0;
+}
+
+div:has(.card-dropdown) {
+  position: relative;
+  min-height: 4em;
+}
+
+.card-dropdown {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #f3f3f3;
+    z-index: 10;
 }
 
 .card-body {
@@ -545,6 +564,10 @@ i.pink {
 }
 .btn.pink:hover, .btn.pink:focus {
   background-color: #cc568f;
+}
+
+button:focus {
+  background-color: #ffffff30;
 }
 
 /* Auth Layout */
@@ -869,19 +892,6 @@ pre {
   border: 2px solid #00000030;
   background-color: #00000030;
   padding: 0.2em 0.1em;
-}
-
-div:has(.card-dropdown) {
-  position: relative;
-  min-height: 4em;
-}
-
-.card-dropdown {
-    position: absolute;
-    left: 0;
-    right: 0;
-    background: #f3f3f3;
-    z-index: 10;
 }
 
 .barcode-manual-toggle {
