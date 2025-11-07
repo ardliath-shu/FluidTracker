@@ -278,7 +278,7 @@ main {
 main > div {
   padding: 1rem;
   flex: 1;
-  background: no-repeat center center fixed;
+  background: no-repeat center center;
   background-size: cover;
   max-height: 100%;
 }
