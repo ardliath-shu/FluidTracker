@@ -1,8 +1,8 @@
 "use client";
-
 import Link from "next/link";
 import { signOutAction } from "../actions/auth";
 import DarkModeToggle from "./DarkModeToggle";
+import BackgroundMenu from "@/app/components/BackgroundMenu";
 
 const prefix = "../../../../"; // Hack to return to home from nested cms/insert etc
 const links = [
@@ -34,6 +34,8 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
               <Link href={link.href}>
                 <i className={`fa fa-fw ${link.icon}`}></i> {link.name}
               </Link>
+              {/* Background dropdown under Settings */}
+              {link.name === "Settings" && <BackgroundMenu />}
             </li>
           ))}
         </ul>

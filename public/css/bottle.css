@@ -44,6 +44,7 @@
   transition: 1s;
   background: linear-gradient(#00000000 4.4vh, #0000ff 4.4vh);
   /* background: blue; */
+  opacity: 0.75;
 }
 
 #wavywaterline {
