@@ -395,6 +395,10 @@ hr.mini {
   border-bottom: 1px solid #00000030;
   padding-bottom: 0.4em;
 }
+.card-header:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
 
 .card-header i {
   opacity: 0.5;
@@ -405,6 +409,9 @@ hr.mini {
   padding-bottom: 0;
   margin-bottom: 0;
   border: none;
+}
+.card-header-collapsible:focus {
+  background-color: rgba(52, 152, 219, 0.1);
 }
 
 .card-body {

@@ -26,6 +26,14 @@ const Card = forwardRef(
       if (collapsible) setIsOpen((prev) => !prev);
     };
 
+    const handleKeyDown = (e) => {
+      // Allow toggle with Enter or Space
+      if ((e.key === "Enter" || e.key === " ") && collapsible) {
+        e.preventDefault();
+        handleToggle();
+      }
+    };
+
     // Expose collapse() and expand() methods via ref
     useImperativeHandle(ref, () => ({
       collapse: () => setIsOpen(false),
@@ -43,6 +51,11 @@ const Card = forwardRef(
               collapsible ? "card-header-collapsible" : ""
             }`}
             onClick={handleToggle}
+            onKeyDown={handleKeyDown}
+            tabIndex={collapsible ? 0 : undefined}
+            role={collapsible ? "button" : undefined}
+            aria-expanded={collapsible ? isOpen : undefined}
+            aria-controls={collapsible ? `${title}-body` : undefined}
             title={isOpen ? "Close Panel" : "Open Panel"}
           >
             {collapsible && (
