@@ -11,6 +11,11 @@
     min-height: calc(100vh - 50px);
   }
 
+  .auth-layout main {
+    margin-left: 0 ;
+    background-color: none;
+  }
+
   .sidebar h2 {
     display: none;
   }

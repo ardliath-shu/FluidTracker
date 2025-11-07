@@ -95,7 +95,7 @@ body.dark-mode {
   border-bottom-color: #ffffff20;
 }
 
-.dark-mode main {
+.dark-mode .main {
   background: #2c3e50;
 }
 
