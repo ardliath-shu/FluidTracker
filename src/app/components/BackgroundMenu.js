@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const backgrounds = [
-  { name: "School", className: "school", src: "/images/school_thumb.png" },
-  { name: "Office", className: "office", src: "/images/office_thumb.png" },
+  { name: "None", className: "no-bg", src: "" },
   {
     name: "Outdoors",
     className: "outdoors",
     src: "/images/outdoors_thumb.png",
   },
-  { name: "None", className: "no-bg", src: "" },
+  { name: "School", className: "school", src: "/images/school_thumb.png" },
+  { name: "Office", className: "office", src: "/images/office_thumb.png" },
 ];
 
 export default function BackgroundMenu() {
