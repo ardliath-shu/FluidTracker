@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useTransition } from "react";
 import { useConfirm } from "@/app/hooks/useConfirm";
 import { useToast } from "@/app/hooks/useToast";
@@ -6,7 +5,6 @@ import {
   generateCarerInviteAction,
   addPatientByInviteCode,
 } from "@/app/actions/patients";
-
 
 import AddDrinkForm from "./AddDrink";
 import Card from "./Card";
@@ -92,7 +90,6 @@ export default function ExtraMenu({
     }
   }
 
-
   // Add patient by invite code
   const [inviteCode, setInviteCode] = useState("");
   const [addPatientPending, setAddPatientPending] = useState(false);
@@ -155,114 +152,115 @@ export default function ExtraMenu({
           onUpdated={() => onPatientChange(patient.patientId)}
         />
 
-
-      {/* Carer Invite Code Section */}
-      {!isCarer ? (
-        // Show Invite a Carer card if not a carer
-        <Card
-          title="Invite a Carer"
-          icon="fa-user-plus"
-          colour="purple"
-          collapsible={true}
-          defaultOpen={false}
-        >
-          <div className="center">
-            <button
-              className="btn blue"
-              onClick={handleGenerateInvite}
-              disabled={invitePending || (inviteInfo && secondsLeft > 0)}
-            >
-              {invitePending
-                ? "Generating..."
-                : inviteInfo && secondsLeft > 0
-                  ? "Invite Code Active"
-                  : "Create Carer Invite Code"}
-            </button>
-            {inviteInfo && (
-              <div style={{ marginTop: "0.7em" }}>
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 8,
-                  }}
-                >
-                  <code style={{ fontSize: "1.1em" }}>{inviteInfo.code}</code>
-                  <button
-                    className="btn"
+        {/* Carer Invite Code Section */}
+        {!isCarer ? (
+          // Show Invite a Carer card if not a carer
+          <Card
+            title="Invite a Carer"
+            icon="fa-user-plus"
+            colour="purple"
+            collapsible={true}
+            defaultOpen={false}
+          >
+            <div className="center">
+              <button
+                className="btn blue"
+                onClick={handleGenerateInvite}
+                disabled={invitePending || (inviteInfo && secondsLeft > 0)}
+              >
+                {invitePending
+                  ? "Generating..."
+                  : inviteInfo && secondsLeft > 0
+                    ? "Invite Code Active"
+                    : "Create Carer Invite Code"}
+              </button>
+              {inviteInfo && (
+                <div style={{ marginTop: "0.7em" }}>
+                  <span
                     style={{
-                      fontSize: "0.9em",
-                      padding: "0.2em 0.7em",
-                      minWidth: 0,
-                      height: "2em",
-                      lineHeight: 1,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
                     }}
-                    onClick={handdleCopy}
-                    title="Copy to Clipboard"
                   >
-                    {copied ? "Copied!" : "Copy"}
-                  </button>
-                </span>
-                <div style={{ marginTop: 8 }}>
-                  Expires in:{" "}
-                  <span>
-                    {secondsLeft > 0
-                      ? `${Math.floor(secondsLeft / 60)}:${(secondsLeft % 60)
-                          .toString()
-                          .padStart(2, "0")}`
-                      : "Expired"}
+                    <code style={{ fontSize: "1.1em" }}>{inviteInfo.code}</code>
+                    <button
+                      className="btn"
+                      style={{
+                        fontSize: "0.9em",
+                        padding: "0.2em 0.7em",
+                        minWidth: 0,
+                        height: "2em",
+                        lineHeight: 1,
+                      }}
+                      onClick={handdleCopy}
+                      title="Copy to Clipboard"
+                    >
+                      {copied ? "Copied!" : "Copy"}
+                    </button>
                   </span>
+                  <div style={{ marginTop: 8 }}>
+                    Expires in:{" "}
+                    <span>
+                      {secondsLeft > 0
+                        ? `${Math.floor(secondsLeft / 60)}:${(secondsLeft % 60)
+                            .toString()
+                            .padStart(2, "0")}`
+                        : "Expired"}
+                    </span>
+                  </div>
                 </div>
+              )}
+            </div>
+            <p>
+              Share this code with a carer. It can be used once and will expire
+              in 5 minutes.
+            </p>
+          </Card>
+        ) : (
+          // Show Add Patient card if user is a carer
+          <Card
+            title="Add a Patient"
+            icon="fa-user-plus"
+            colour="purple"
+            collapsible={true}
+            defaultOpen={false}
+          >
+            <form className="center" onSubmit={handleAddPatient}>
+              <input
+                type="text"
+                placeholder="Enter Invite Code"
+                value={inviteCode}
+                onChange={(e) => setInviteCode(e.target.value)}
+                style={{ marginRight: 8 }}
+                required
+              />
+              <button
+                className="btn blue"
+                type="submit"
+                disabled={addPatientPending}
+              >
+                {addPatientPending ? "Adding..." : "Add Patient"}
+              </button>
+            </form>
+            {addPatientError && (
+              <div style={{ color: "red", marginTop: 8 }}>
+                {addPatientError}
               </div>
             )}
-          </div>
-          <p>
-            Share this code with a carer. It can be used once and will expire in
-            5 minutes.
-          </p>
-        </Card>
-      ) : (
-        // Show Add Patient card if user is a carer
-        <Card
-          title="Add a Patient"
-          icon="fa-user-plus"
-          colour="purple"
-          collapsible={true}
-          defaultOpen={false}
-        >
-          <form className="center" onSubmit={handleAddPatient}>
-            <input
-              type="text"
-              placeholder="Enter Invite Code"
-              value={inviteCode}
-              onChange={(e) => setInviteCode(e.target.value)}
-              style={{ marginRight: 8 }}
-              required
-            />
-            <button
-              className="btn blue"
-              type="submit"
-              disabled={addPatientPending}
-            >
-              {addPatientPending ? "Adding..." : "Add Patient"}
-            </button>
-          </form>
-          {addPatientError && (
-            <div style={{ color: "red", marginTop: 8 }}>{addPatientError}</div>
-          )}
-          {addPatientSuccess && (
-            <div style={{ color: "green", marginTop: 8 }}>
-              {addPatientSuccess}
-            </div>
-          )}
-          <p style={{ marginTop: 8 }}>
-            Enter an invite code provided by a patient or their carer to link to
-            their log.
-          </p>
-        </Card>
-      )}
+            {addPatientSuccess && (
+              <div style={{ color: "green", marginTop: 8 }}>
+                {addPatientSuccess}
+              </div>
+            )}
+            <p style={{ marginTop: 8 }}>
+              Enter an invite code provided by a patient or their carer to link
+              to their log.
+            </p>
+          </Card>
+        )}
 
-      {/* <Card
+        {/* <Card
         title={`About ${siteConfig.name}`}
         icon="fas fa-fw fa-droplet"
         colour="green"
