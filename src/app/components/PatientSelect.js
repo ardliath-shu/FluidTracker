@@ -16,6 +16,14 @@ export default function PatientSelect({
     cardRef.current?.collapse(); // collapse card after selection
   };
 
+  const handleKeyDown = (e, patientId) => {
+    // Allow toggle with Enter or Space
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleClick(patientId);
+    }
+  };
+
   return (
     <Card
       ref={cardRef}
@@ -30,7 +38,7 @@ export default function PatientSelect({
       defaultOpen={false}
       dropdown={true}
     >
-      <ul className="patient-list">
+      <ul className="patient-list" role="menu">
         {patients.map((p) => (
           <li
             key={p.patientId}
@@ -40,6 +48,9 @@ export default function PatientSelect({
                 : ""
             }`}
             onClick={() => handleClick(p.patientId)}
+            onKeyDown={(e) => handleKeyDown(e, p.patientId)}
+            tabIndex={0}
+            role="menuitem"
           >
             <span className="patient-name">
               <i className="fa fa-fw fa-user"></i> {p.firstName} {p.lastName}

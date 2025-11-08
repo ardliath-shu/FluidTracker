@@ -55,7 +55,7 @@ export default function Layout({ children }) {
           onClose={handleSidebarClose}
         />
 
-        <main className="main">{children}</main>
+        <main fetchPriority="high">{children}</main>
 
         {/* <ExtraMenu /> */}
       </div>

@@ -2,15 +2,20 @@
 
 import { useRef, useState } from "react";
 import { BrowserMultiFormatReader } from "@zxing/browser";
+import { useToast } from "@/app/hooks/useToast";
 
 export default function BarcodeScanner({ onDetected }) {
   const videoRef = useRef(null);
   const codeReaderRef = useRef(null);
   const [scanning, setScanning] = useState(false);
+  const { showToast, ToastContainer } = useToast();
 
   const startScanner = async () => {
     if (!navigator?.mediaDevices?.getUserMedia) {
-      alert("Camera access not supported or must be served over HTTPS.");
+      showToast(
+        "Camera access not supported or must be served over HTTPS.",
+        "error",
+      );
       return;
     }
 
@@ -33,7 +38,7 @@ export default function BarcodeScanner({ onDetected }) {
       );
     } catch (err) {
       console.error("Error starting scanner:", err);
-      alert("Failed to access camera");
+      showToast("Failed to access camera", "error");
       setScanning(false);
     }
   };
@@ -53,34 +58,37 @@ export default function BarcodeScanner({ onDetected }) {
   };
 
   return (
-    <div>
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        muted
-        style={{
-          width: "100%",
-          marginTop: "1rem",
-          display: scanning ? "block" : "none",
-        }}
-      />
+    <>
+      <div>
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          muted
+          style={{
+            width: "100%",
+            marginTop: "1rem",
+            display: scanning ? "block" : "none",
+          }}
+        />
 
-      {!scanning && (
-        <button className="btn w-100" onClick={startScanner}>
-          <i className="fa fa-barcode" /> Scan Barcode
-        </button>
-      )}
+        {!scanning && (
+          <button className="btn w-100" onClick={startScanner}>
+            <i className="fa fa-barcode" /> Scan Barcode
+          </button>
+        )}
 
-      {scanning && (
-        <button
-          className="btn red w-100"
-          onClick={stopScanner}
-          style={{ marginTop: "1rem" }}
-        >
-          <i className="fa fa-stop" /> Stop Scanning
-        </button>
-      )}
-    </div>
+        {scanning && (
+          <button
+            className="btn red w-100"
+            onClick={stopScanner}
+            style={{ marginTop: "1rem" }}
+          >
+            <i className="fa fa-stop" /> Stop Scanning
+          </button>
+        )}
+      </div>
+      <ToastContainer />
+    </>
   );
 }

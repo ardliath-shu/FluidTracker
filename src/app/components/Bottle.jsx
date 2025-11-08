@@ -17,6 +17,7 @@ const Bottle = ({ target, currentFluid }) => {
             src={bottleImage}
             alt="A water bottle."
             priority
+            fetchPriority="high"
           />
         </div>
       </div>

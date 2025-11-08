@@ -1,8 +1,8 @@
 "use client";
-
 import Link from "next/link";
 import { signOutAction } from "../actions/auth";
 import DarkModeToggle from "./DarkModeToggle";
+import BackgroundMenu from "@/app/components/BackgroundMenu";
 
 const prefix = "../../../../"; // Hack to return to home from nested cms/insert etc
 const links = [
@@ -31,9 +31,11 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
         <ul>
           {links.map((link) => (
             <li key={link.name}>
-              <Link href={link.href}>
+              <Link href={link.href} tabIndex={1}>
                 <i className={`fa fa-fw ${link.icon}`}></i> {link.name}
               </Link>
+              {/* Background dropdown under Settings */}
+              {link.name === "Settings" && <BackgroundMenu />}
             </li>
           ))}
         </ul>
@@ -45,7 +47,7 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
         <div>
           {/* Use a form to bind the server action */}
           <form action={signOutAction} style={{ flexGrow: "1" }}>
-            <button className="logout" type="submit">
+            <button className="logout" type="submit" tabIndex={2}>
               <i className="fa fa-fw fa-sign-out-alt"></i> Logout
             </button>
           </form>
