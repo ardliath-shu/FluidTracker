@@ -13,7 +13,7 @@
 
   .auth-layout main {
     margin-left: 0 ;
-    background-color: none;
+    min-height: 0;
   }
 
   .sidebar h2 {
