@@ -38,7 +38,7 @@ export default function PatientSelect({
       defaultOpen={false}
       dropdown={true}
     >
-      <ul className="patient-list">
+      <ul className="patient-list" role="menu">
         {patients.map((p) => (
           <li
             key={p.patientId}
@@ -50,7 +50,7 @@ export default function PatientSelect({
             onClick={() => handleClick(p.patientId)}
             onKeyDown={(e) => handleKeyDown(e, p.patientId)}
             tabIndex={0}
-            role="button"
+            role="menuitem"
           >
             <span className="patient-name">
               <i className="fa fa-fw fa-user"></i> {p.firstName} {p.lastName}

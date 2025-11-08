@@ -45,6 +45,9 @@ const Card = forwardRef(
       toggle: () => handleToggle(),
     }));
 
+    // Title with all spaces replaced for a -
+    const titleId = title ? `card-body-${title.replace(/\s+/g, "-")}` : null;
+
     return (
       <div
         className={`card ${dropdown || !collapsible || (collapsible && isOpen) ? colour : ""} ${dropdown ? "card-dropdown" : ""}`}
@@ -59,7 +62,7 @@ const Card = forwardRef(
             tabIndex={collapsible ? 0 : undefined}
             role={collapsible ? "button" : undefined}
             aria-expanded={collapsible ? isOpen : undefined}
-            aria-controls={collapsible ? `${title}-body` : undefined}
+            aria-controls={collapsible ? `${titleId}` : undefined}
             title={isOpen ? "Close Panel" : "Open Panel"}
           >
             {collapsible && (
@@ -78,6 +81,7 @@ const Card = forwardRef(
         )}
 
         <div
+          id={titleId}
           className={`card-body ${isOpen ? "open" : "collapsed"}`}
           onClick={() => onToggle?.(isOpen)}
         >

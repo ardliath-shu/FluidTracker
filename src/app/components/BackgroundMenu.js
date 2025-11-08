@@ -7,10 +7,10 @@ const backgrounds = [
   {
     name: "Outdoors",
     className: "outdoors",
-    src: "/images/outdoors_thumb.png",
+    src: "/images/outdoors_thumb.avif",
   },
-  { name: "School", className: "school", src: "/images/school_thumb.png" },
-  { name: "Office", className: "office", src: "/images/office_thumb.png" },
+  { name: "School", className: "school", src: "/images/school_thumb.avif" },
+  { name: "Office", className: "office", src: "/images/office_thumb.avif" },
 ];
 
 export default function BackgroundMenu() {
