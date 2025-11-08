@@ -26,6 +26,7 @@ export default function RegisterForm() {
     email: "",
     password: "",
     confirmPassword: "",
+    inviteCode: "",
   });
 
   useEffect(() => {
@@ -104,6 +105,18 @@ export default function RegisterForm() {
           onChange={handleChange}
         />
         <label htmlFor="confirmPassword">Confirm Password</label>
+      </div>
+      {/* Invite Code field for carer linking */}
+      <div className="form-floating">
+        <input
+          type="text"
+          id="inviteCode"
+          name="inviteCode"
+          placeholder="Invite Code (optional)"
+          value={form.inviteCode}
+          onChange={handleChange}
+        />
+        <label htmlFor="inviteCode">Invite Code (optional)</label>
       </div>
       <SubmitButton />
     </form>
