@@ -71,7 +71,7 @@ const Card = forwardRef(
             <div className="card-title">
               {icon && (
                 <i
-                  className={`fa fa-fw ${icon}`}
+                  className={`fa fa-fw ${icon} ${dropdown || !collapsible || (collapsible && isOpen) ? colour : ""}`}
                   style={{ marginRight: "0.5rem" }}
                 ></i>
               )}

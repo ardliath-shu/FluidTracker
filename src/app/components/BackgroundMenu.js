@@ -48,16 +48,13 @@ export default function BackgroundMenu() {
             setShowBgGrid(true);
           }
         }}
-        tabIndex={0}
+        tabIndex={1}
         role="button"
         aria-expanded={showBgGrid}
         aria-controls="background-grid"
         title="Toggle Background Selection"
       >
-        <i
-          className={`fa fa-fw fa-chevron-${showBgGrid ? "down" : "right"}`}
-          aria-hidden="true"
-        ></i>
+        <i className={`fa fa-fw fa-chevron-right`} aria-hidden="true"></i>
         <span>Background</span>
       </div>
 
@@ -78,7 +75,7 @@ export default function BackgroundMenu() {
                   handleSelect(bg.className);
                 }
               }}
-              tabIndex={0}
+              tabIndex={1}
               role="button"
             >
               {bg.src ? (

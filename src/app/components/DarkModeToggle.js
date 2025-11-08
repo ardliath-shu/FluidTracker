@@ -28,6 +28,7 @@ export default function DarkModeToggle() {
         type="button"
         onClick={handleToggleDarkMode}
         title="Toggle dark mode."
+        tabIndex={1}
       >
         {darkMode ? (
           <i className="fa-solid fa-sun"></i>
