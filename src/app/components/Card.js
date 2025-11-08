@@ -50,7 +50,7 @@ const Card = forwardRef(
 
     return (
       <div
-        className={`card ${dropdown || !collapsible || (collapsible && isOpen) ? colour : ""} ${dropdown ? "card-dropdown" : ""}`}
+        className={`card ${dropdown || !collapsible || (collapsible && isOpen) ? colour : ""} ${collapsible ? "card-collapsible" : ""} ${dropdown ? "card-dropdown" : ""}`}
       >
         {title && (
           <div
