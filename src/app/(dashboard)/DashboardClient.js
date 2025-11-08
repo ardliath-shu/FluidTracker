@@ -14,6 +14,7 @@ export default function DashboardClient({
   username,
   patient,
   patients,
+  isCarer,
 }) {
   // Set target to default or patient's existing target
   let defaultFluidTarget = 2500; // ml
@@ -43,8 +44,10 @@ export default function DashboardClient({
   }
 
   const handlePatientChange = (newPatientId) => {
+    const id = Number(newPatientId);
+    if (!Number.isFinite(id) || id <= 0) return; // guard against accidental "refresh"/undefined
     startTransition(async () => {
-      const newPatient = await getPatientData(newPatientId);
+      const newPatient = await getPatientData(id);
       setCurrentPatient(newPatient);
       setFluidTarget(newPatient.fluidTarget);
       setFluidLeft(newPatient.fluidTarget - newPatient.totalToday);
@@ -89,7 +92,7 @@ export default function DashboardClient({
         <section>
           <div className="row sticky-header-dashboard">
             {/* If user has multiple patients, show patient switcher */}
-            {patients.length > 1 && (
+            {patients.length > 0 && (
               <div className="col">
                 <PatientSelect
                   patients={patients}
@@ -160,6 +163,7 @@ export default function DashboardClient({
         userId={userId}
         patient={currentPatient}
         onPatientChange={handlePatientChange}
+        isCarer={isCarer}
       />
     </>
   );
