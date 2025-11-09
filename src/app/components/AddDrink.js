@@ -115,16 +115,18 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
         defaultOpen={isOpen}
       >
         <form onSubmit={handleSubmit}>
-          {/* Scanner */}
-          <BarcodeScanner onDetected={(code) => fetchProduct(code)} />
           {/* Toggle manual barcode input */}
           {!showBarcodeInput && (
-            <div
-              className="barcode-manual-toggle"
-              onClick={() => setShowBarcodeInput(true)}
-            >
-              Enter barcode manually
-            </div>
+            <>
+              {/* Scanner */}
+              <BarcodeScanner onDetected={(code) => fetchProduct(code)} />
+              <div
+                className="barcode-manual-toggle"
+                onClick={() => setShowBarcodeInput(true)}
+              >
+                Enter barcode manually
+              </div>
+            </>
           )}
 
           {/* Manual barcode input row */}
@@ -151,7 +153,7 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
                     disabled={isFetching}
                   >
                     <i className="fa-solid fa-magnifying-glass"></i>{" "}
-                    {isFetching ? "..." : ""}
+                    {isFetching ? "Searching..." : "Search"}
                   </button>
                 </div>
               </div>

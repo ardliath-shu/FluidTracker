@@ -88,11 +88,11 @@ export default function DashboardClient({
 
   return (
     <>
-      <div>
+      <div fetchPriority="high">
         <section>
           <div className="row sticky-header-dashboard">
             {/* If user has multiple patients, show patient switcher */}
-            {patients.length > 0 && (
+            {patients.length > 1 && (
               <div className="col">
                 <PatientSelect
                   patients={patients}

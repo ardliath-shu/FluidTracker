@@ -49,45 +49,22 @@ export default function CarerInviteCard({ patient }) {
       defaultOpen={false}
     >
       <div className="center">
-        <button
-          className="btn blue"
-          onClick={handleGenerateInvite}
-          disabled={invitePending || (inviteInfo && secondsLeft > 0)}
-        >
-          {invitePending
-            ? "Generating..."
-            : inviteInfo && secondsLeft > 0
-              ? "Invite Code Active"
-              : "Create Carer Invite Code"}
-        </button>
-
-        {inviteInfo && (
-          <div style={{ marginTop: "0.7em" }}>
-            <span
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-              }}
-            >
-              <code style={{ fontSize: "1.1em" }}>{inviteInfo.code}</code>
-              <button
-                className="btn"
-                style={{
-                  fontSize: "0.9em",
-                  padding: "0.2em 0.7em",
-                  minWidth: 0,
-                  height: "2em",
-                  lineHeight: 1,
-                }}
-                onClick={handleCopy}
-                title="Copy to Clipboard"
-              >
-                {copied ? "Copied!" : "Copy"}
-              </button>
-            </span>
-            <div style={{ marginTop: 8 }}>
-              Expires in:{" "}
+        {!inviteInfo || secondsLeft < 1 ? (
+          <button
+            className="btn blue"
+            onClick={handleGenerateInvite}
+            disabled={invitePending || (inviteInfo && secondsLeft > 0)}
+          >
+            {invitePending
+              ? "Generating..."
+              : inviteInfo && secondsLeft > 0
+                ? "Invite Code Active"
+                : "Create Carer Invite Code"}
+          </button>
+        ) : (
+          <div>
+            <div>
+              Invite Code Expires in:{" "}
               <span>
                 {secondsLeft > 0
                   ? `${Math.floor(secondsLeft / 60)}:${(secondsLeft % 60)
@@ -96,10 +73,20 @@ export default function CarerInviteCard({ patient }) {
                   : "Expired"}
               </span>
             </div>
+            <pre>{inviteInfo.code}</pre>
+            <button
+              className="btn small"
+              onClick={handleCopy}
+              title="Copy to Clipboard"
+            >
+              {copied ? "Copied!" : "Copy"}
+            </button>
+            <br />
           </div>
         )}
       </div>
-
+      <br />
+      <hr />
       <p>
         Share this code with a carer. It can be used once and will expire in 5
         minutes.
