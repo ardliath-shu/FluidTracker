@@ -49,21 +49,19 @@ export default function CarerInviteCard({ patient }) {
       defaultOpen={false}
     >
       <div className="center">
-        
         {!inviteInfo || secondsLeft < 1 ? (
-            <button
+          <button
             className="btn blue"
             onClick={handleGenerateInvite}
             disabled={invitePending || (inviteInfo && secondsLeft > 0)}
-            >
+          >
             {invitePending
-                ? "Generating..."
-                : inviteInfo && secondsLeft > 0
+              ? "Generating..."
+              : inviteInfo && secondsLeft > 0
                 ? "Invite Code Active"
                 : "Create Carer Invite Code"}
-            </button>
+          </button>
         ) : (
-
           <div>
             <div>
               Invite Code Expires in:{" "}
@@ -77,11 +75,11 @@ export default function CarerInviteCard({ patient }) {
             </div>
             <pre>{inviteInfo.code}</pre>
             <button
-            className="btn small"
-            onClick={handleCopy}
-            title="Copy to Clipboard"
+              className="btn small"
+              onClick={handleCopy}
+              title="Copy to Clipboard"
             >
-            {copied ? "Copied!" : "Copy"}
+              {copied ? "Copied!" : "Copy"}
             </button>
             <br />
           </div>
