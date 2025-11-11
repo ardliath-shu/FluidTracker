@@ -46,7 +46,7 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
         <hr />
         <div>
           {/* Use a form to bind the server action */}
-          <form action={signOutAction} style={{ flexGrow: "1" }}>
+          <form action={signOutAction}>
             <button className="logout" type="submit" tabIndex={0}>
               <i className="fa fa-fw fa-sign-out-alt"></i> Logout
             </button>

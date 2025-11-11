@@ -65,11 +65,7 @@ export default function BarcodeScanner({ onDetected }) {
           autoPlay
           playsInline
           muted
-          style={{
-            width: "100%",
-            marginTop: "1rem",
-            display: scanning ? "block" : "none",
-          }}
+          className={`barcode-scanner ${scanning ? 'scanning' : ''}`}
         />
 
         {!scanning && (
@@ -82,7 +78,6 @@ export default function BarcodeScanner({ onDetected }) {
           <button
             className="btn red w-100"
             onClick={stopScanner}
-            style={{ marginTop: "1rem" }}
           >
             <i className="fa fa-stop" /> Stop Scanning
           </button>

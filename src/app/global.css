@@ -178,6 +178,10 @@ button:hover {
   align-items: center;
 }
 
+.sidebar-bottom form {
+  flex-grow: 1;
+}
+
 .sidebar-bottom .logout {
   width: 100%;
   text-align: start;
@@ -315,6 +319,16 @@ main h2 {
   margin: 0.5em 0;
 }
 
+/* Barcode Scanner Window */
+.barcode-scanner {
+  width: 100%;
+  margin-top: 1rem;
+  display: none;
+}
+  .barcode-scanner.scanning {
+    display: block;
+  }
+
 /* Additional Utility Classes */
 hr {
   border: none;
@@ -350,7 +364,6 @@ hr.mini {
 .card.red,
 .stat-box.red {
   border-top: 6px solid #e74c3c !important;
-  padding-top: 0.75em;
 }
 
 .card.blue,
@@ -381,11 +394,6 @@ hr.mini {
 .card.pink,
 .stat-box.pink {
   border-top: 6px solid #ff69b4 !important;
-}
-
-.card-body p {
-  margin: 0 0 0.4em 0;
-  font-size: 0.9em;
 }
 
 .card-header {
@@ -420,6 +428,10 @@ hr.mini {
   padding: 0.8em 0.9em;
 }
 
+.card-title i {
+  margin-right: 0.5rem;
+}
+
 div:has(.card-dropdown) {
   position: relative;
   min-height: 4em;
@@ -449,14 +461,20 @@ div:has(.card-dropdown) {
   padding: 0 1em 1em 1em;
 }
 
-.card-body hr {
-  margin: 0 0 1em 0;
-}
 .card-body.open > hr + ul {
   margin-top: -1em;
 }
 .card-body.open  ul {
   margin-top: 0em;
+}
+
+.card-body p {
+  margin: 0 0 0.4em 0;
+  font-size: 0.9em;
+}
+
+.card-body hr {
+  margin: 0 0 1em 0;
 }
 
 .card-toggle{
@@ -596,6 +614,15 @@ button:focus {
   text-align: center;
   color: #3498db;
   font-size: 2.5em;
+}
+
+.alert {
+  color: #b00020;
+  margin: 8px 0 !important;
+}
+
+.alert.info {
+  color: #0d6efd;
 }
 
 /* Form Control Styling */
@@ -758,6 +785,9 @@ pre {
 .center {
   text-align: center;
   margin: auto;
+}
+p.center {
+  margin-top: 0.5em;
 }
 
 .no-margin {

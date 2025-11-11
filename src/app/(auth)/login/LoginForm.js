@@ -36,7 +36,7 @@ export default function LoginForm() {
         <div
           role="alert"
           aria-live="polite"
-          style={{ color: "#b00020", marginBottom: 8 }}
+          className="alert"
         >
           {state.error}
         </div>
