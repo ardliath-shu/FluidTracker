@@ -31,7 +31,7 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
         <ul>
           {links.map((link) => (
             <li key={link.name}>
-              <Link href={link.href} tabIndex={1}>
+              <Link href={link.href} tabIndex={0}>
                 <i className={`fa fa-fw ${link.icon}`}></i> {link.name}
               </Link>
               {/* Background dropdown under Settings */}
@@ -47,7 +47,7 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
         <div>
           {/* Use a form to bind the server action */}
           <form action={signOutAction} style={{ flexGrow: "1" }}>
-            <button className="logout" type="submit" tabIndex={2}>
+            <button className="logout" type="submit" tabIndex={0}>
               <i className="fa fa-fw fa-sign-out-alt"></i> Logout
             </button>
           </form>
