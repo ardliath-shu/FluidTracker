@@ -8,6 +8,7 @@ const Bottle = ({ target, currentFluid }) => {
   if (currentFluid < 0) {
     currentFluid = 0;
   }
+
   return (
     <div>
       <div className="bottlecontainer">
@@ -20,7 +21,7 @@ const Bottle = ({ target, currentFluid }) => {
             priority
             fetchPriority="high"
           />
-          <BottleScale target={target=target} />
+          <BottleScale target={(target = target)} />
         </div>
       </div>
     </div>
