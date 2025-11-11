@@ -227,7 +227,7 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
               name="action"
               title="Add Finished Drink"
               value="finished"
-              className="btn green"
+              className="btn blue"
               disabled={isSubmitting}
             >
               {isSubmitting ? (
