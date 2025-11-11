@@ -209,7 +209,7 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
           <div className="center">
             <button
               type="submit"
-              className="btn blue"
+              className="btn green"
               disabled={isSubmitting}
               title="Add Drink"
             >
