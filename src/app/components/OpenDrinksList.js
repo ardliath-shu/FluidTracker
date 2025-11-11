@@ -66,25 +66,26 @@ export default function OpenDrinksList({
           {patient.openDrinks.map((drink) => (
             <li key={drink.fluidEntryId} className="open-drink-item">
               <button
-                className="finish-btn btn green"
+                className="finish-btn btn blue"
                 onClick={() => handleFinishDrink(drink.fluidEntryId)}
                 disabled={isPending}
                 title="Mark Drink as Finished"
               >
                 {isPending ? "..." : <i className="fa-solid fa-check"></i>}
               </button>
+              <button
+                className="finish-btn btn red"
+                onClick={() => handleRemoveDrink(drink.fluidEntryId)}
+                disabled={isPending}
+                title="Remove Drink"
+              >
+                {isPending ? "..." : <i className="fa-solid fa-times"></i>}
+              </button>
               <div>
                 {drink.note} ({drink.millilitres}ml)
                 <br />
                 <span>
                   Started at {formatMinutesSinceMidnight(drink.timeStarted)}
-                </span>
-                <span
-                  className="remove-link"
-                  onClick={() => handleRemoveDrink(drink.fluidEntryId)}
-                  title="Remove Drink"
-                >
-                  Remove Drink
                 </span>
               </div>
             </li>

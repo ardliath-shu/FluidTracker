@@ -25,15 +25,31 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="1.13875"
-     inkscape:cx="296.37761"
-     inkscape:cy="161.1416"
-     inkscape:window-width="1182"
-     inkscape:window-height="1303"
-     inkscape:window-x="3600"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="Calque_2" />
+     inkscape:zoom="3.2208714"
+     inkscape:cx="248.06951"
+     inkscape:cy="319.32352"
+     inkscape:window-width="2560"
+     inkscape:window-height="1411"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Calque_2"
+     showgrid="false">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.125"
+       spacingy="0.125"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="false" />
+  </sodipodi:namedview>
   <title
      id="title1" />
   <g
@@ -45,7 +61,21 @@
        id="path1"
        sodipodi:nodetypes="cssccssccccsscccccccccccccc" />
     <path
-       d="m 40.17,37.33 a 1.5,1.5 0 0 0 -1.5,1.5 v 32.34 a 1.5,1.5 0 0 0 3,0 V 38.83 a 1.5,1.5 0 0 0 -1.5,-1.5 z"
-       id="path2" />
+       d="m 38.92,34.08 c -0.828427,0 -1.5,0.671573 -1.5,1.5 v 47.34 c 0,1.999999 3,1.999999 3,0 V 35.58 c 0,-0.828427 -0.671573,-1.5 -1.5,-1.5 z"
+       id="path2"
+       sodipodi:nodetypes="ssssss"
+       style="fill:#000000;fill-opacity:1" />
+    <path
+       d="m 45.51748,59.5 c 0,-0.828427 -0.421573,-1 -1.25,-1 h -3.59 c -1.999999,0 -1.999999,2 0,2 h 3.59 c 0.828427,0 1.25,-0.171573 1.25,-1 z"
+       id="path3"
+       sodipodi:nodetypes="ssssss" />
+    <path
+       d="m 45.512524,75.249829 c 0,-0.828427 -0.421573,-1 -1.25,-1 h -3.59 c -1.999999,0 -1.999999,2 0,2 h 3.59 c 0.828427,0 1.25,-0.171573 1.25,-1 z"
+       id="path3-1"
+       sodipodi:nodetypes="ssssss" />
+    <path
+       d="m 45.523125,43.741052 c 0,-0.828427 -0.421573,-1 -1.25,-1 h -3.59 c -1.999999,0 -1.999999,2 0,2 h 3.59 c 0.828427,0 1.25,-0.171573 1.25,-1 z"
+       id="path3-5"
+       sodipodi:nodetypes="ssssss" />
   </g>
 </svg>
