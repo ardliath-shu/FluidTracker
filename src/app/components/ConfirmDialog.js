@@ -7,7 +7,7 @@ export default function ConfirmDialog({ open, message, onConfirm, onCancel }) {
         <p>{message}</p>
         <div className="col">
           <div className="row">
-            <button className="btn green w-100" onClick={onConfirm}>
+            <button className="btn blue w-100" onClick={onConfirm}>
               <i className="fas fa-check"></i> OK
             </button>
           </div>

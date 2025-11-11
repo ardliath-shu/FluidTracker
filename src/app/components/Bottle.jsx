@@ -2,11 +2,13 @@ import Image from "next/image";
 import BottleWaterLevel from "./BottleWaterLevel";
 import "../../../public/css/bottle.css";
 import bottleImage from "../../../public/images/bottle.svg";
+import BottleScale from "./BottleScale";
 
 const Bottle = ({ target, currentFluid }) => {
   if (currentFluid < 0) {
     currentFluid = 0;
   }
+
   return (
     <div>
       <div className="bottlecontainer">
@@ -19,6 +21,7 @@ const Bottle = ({ target, currentFluid }) => {
             priority
             fetchPriority="high"
           />
+          <BottleScale target={(target = target)} />
         </div>
       </div>
     </div>
