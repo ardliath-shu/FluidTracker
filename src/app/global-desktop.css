@@ -68,10 +68,10 @@
 
 @media (min-width: 1279px) {
 
-
   .row,
   .row-sm {
     display: flex;
+    flex-direction: row;
     gap: 1rem;
     /* margin-bottom: 1rem; */
   }
@@ -79,6 +79,11 @@
   .row .col,
   .row-sm .col {
     flex: 1;
+  }
+
+  .important {
+    order: 0;    
+    margin-bottom: 0;
   }
 
 }
