@@ -58,7 +58,7 @@ export default function AddPatientCard({ onPatientChange }) {
         </div>
       )}
       {success && (
-        <div style={{ color: "green", marginTop: 8, textAlign: "center" }}>
+        <div style={{ color: "blue", marginTop: 8, textAlign: "center" }}>
           {success}
         </div>
       )}

@@ -209,7 +209,7 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
           <div className="center">
             <button
               type="submit"
-              className="btn blue"
+              className="btn green"
               disabled={isSubmitting}
               title="Add Drink"
             >
@@ -227,7 +227,7 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
               name="action"
               title="Add Finished Drink"
               value="finished"
-              className="btn green"
+              className="btn blue"
               disabled={isSubmitting}
             >
               {isSubmitting ? (

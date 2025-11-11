@@ -48,7 +48,7 @@ export default function BackgroundMenu() {
             setShowBgGrid(true);
           }
         }}
-        tabIndex={1}
+        tabIndex={0}
         role="button"
         aria-expanded={showBgGrid}
         aria-controls="background-grid"
@@ -63,7 +63,7 @@ export default function BackgroundMenu() {
           {backgrounds.map((bg) => (
             <div
               key={bg.name}
-              title={bg.name}
+              title={bg.name == "None" ? "" : bg.name}
               className={`background-thumb ${
                 selected === bg.className ? "selected" : ""
               }`}
@@ -75,7 +75,7 @@ export default function BackgroundMenu() {
                   handleSelect(bg.className);
                 }
               }}
-              tabIndex={1}
+              tabIndex={0}
               role="button"
             >
               {bg.src ? (

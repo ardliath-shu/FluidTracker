@@ -1,6 +1,5 @@
+/* Bottle Stylings */
 .bottlecontainer {
-  /* display: flex;
-  flex-direction: row; */
   display: block;
 }
 
@@ -9,13 +8,8 @@
   flex-direction: column;
   position: relative;
   height: 60vh;
-  width: 32vh;
+  width: 28vh;
   margin: auto;
-  /* background: lightcyan; */
-  /* outline: 2%; */
-  /* outline-color: black; */
-  /* outline-style: solid; */
-  /* border-radius: 2%; */
 }
 
 #bottleimage {
@@ -24,15 +18,60 @@
   width: 100%;
 }
 
+/* Bottle Scale Stylings (the measuring stick) */
+.bottlescale {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+/* bottlewaterscale + padding-top + padding-bottom = 100% */
+.bottlewaterscale {
+  display: flex;
+  flex-direction: column;
+  height: 62%;
+  width: 100%;
+  justify-content: center;
+  align-items: end;
+}
+
+.bottlescale .padding-top {
+  height: 25%;
+}
+
+.bottlescale .padding-bottom {
+  height: 13%;
+}
+
+.bottlescale .scaletext {
+  height: calc(100%/3);
+  padding-top: calc(100%/6);
+  padding-right: 10%;
+  font-size: xx-large;
+}
+
+.bottlescale .scaletext span {
+  border-width: thin;
+  border-style: solid;
+  border-radius: 10%;
+  border-color: black;
+  background-color: #ffffffa0;
+}
+
+.dark-mode .bottlescale .scaletext span {
+  background-color: #00000060;
+}
+
+/* Water Stylings */
 .water {
   display: flex;
   flex-direction: column;
   height: 53vh;
-  width: 78%;
+  width: 82%;
   margin-top: auto;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 4%; 
+  margin-bottom: 4%;
   overflow: visible;
 }
 
@@ -43,42 +82,38 @@
   margin-bottom: 3%;
   transition: 1s;
   background: linear-gradient(#00000000 4.4vh, #0000ff 4.4vh);
-  /* background: blue; */
   opacity: 0.75;
 }
 
 #wavywaterline {
-  height: 5.7vh;
+  height: 7.1vh;
   width: 220%;
   margin-left: -45%;
 }
 
-.fluidbutton {
-  height: 20%;
-  width: 5%;
-  margin: auto 0;
-  padding: 2%;
-  margin-right: 5%;
-}
-
-p {
-  text-align: center;
-}
-
-
 /* If screen bigger than 991px */
 @media (min-width: 992px) {
   #bottle {
-    height: 75vh;
+    height: 80vh;
+    width: 36vh;
+  }
+
+  /* Adjust the top and bottom padding a bit to keep the scale text centred. */
+  .bottlescale .padding-top {
+    height: 28%;
+  }
+
+  .bottlescale .padding-bottom {
+    height: 10%;
   }
 
   .water {
-    height: 64vh;
+    height: 70vh;
     width: 84%;
-    margin-bottom: 6%; 
+    margin-bottom: 6%;
   }
 
   #wavywaterline {
-    height: 5.4vh;
+    height: 6.5vh;
   }
 }

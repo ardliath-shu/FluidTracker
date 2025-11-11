@@ -233,7 +233,6 @@ button:hover {
   cursor: pointer;
   top: 60px;
   left: 0px;
-  font-size: 0.6em;
   border-radius: 0 0.5em 0.5em 0;
 }
 
@@ -868,7 +867,7 @@ pre {
 }
 
 .trends-list li .percent {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   white-space: nowrap;
 }
 
@@ -883,7 +882,7 @@ pre {
   /* display: flex; */
   align-items: center;
   padding: 0.5em 0;
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-weight: 600;
   border-bottom: 1px solid #00000040;
 }
@@ -926,7 +925,7 @@ pre {
 
 .finished-drinks li {
   padding: 0.5em 0;
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-weight: 600;
   border-bottom: 1px solid #00000040;
 }
@@ -970,8 +969,7 @@ pre {
   cursor: pointer;
   text-align: center;
   font-size: 0.8em;
-  margin: 0.5em ;
-  text-decoration: underline;
+  margin: 0.5em;
 }
 .barcode-manual-toggle:hover {
   opacity: 0.8;
