@@ -50,11 +50,7 @@ export default function RegisterForm() {
   return (
     <form action={formAction} className="form" noValidate>
       {state?.error && (
-        <div
-          role="alert"
-          aria-live="polite"
-          className="alert"
-        >
+        <div role="alert" aria-live="polite" className="alert">
           {state.error}
         </div>
       )}

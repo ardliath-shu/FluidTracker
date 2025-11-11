@@ -51,16 +51,8 @@ export default function AddPatientCard({ onPatientChange }) {
         </button>
       </form>
 
-      {error && (
-        <div className="alert center">
-          {error}
-        </div>
-      )}
-      {success && (
-        <div className="alert info center">
-          {success}
-        </div>
-      )}
+      {error && <div className="alert center">{error}</div>}
+      {success && <div className="alert info center">{success}</div>}
       <p className="center">
         Enter an invite code provided by a patient or their carer to link to
         their log.
