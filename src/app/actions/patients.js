@@ -9,7 +9,7 @@ import {
   getTypicalProgress,
   logNewDrink,
   finishOpenDrink,
-  removeOpenDrink,
+  removeDrink,
   setNewPatientFluidTarget,
 } from "@/app/lib/db";
 import { auth } from "@/app/lib/auth";
@@ -208,7 +208,7 @@ export async function updatePatientFluidTarget(patientId, newTarget) {
 }
 
 // Remove an open drink for a patient
-export async function removeOpenDrinkAction(fluidEntryId, patientId) {
+export async function removeDrinkAction(fluidEntryId, patientId) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -217,7 +217,7 @@ export async function removeOpenDrinkAction(fluidEntryId, patientId) {
 
   const userId = session.user.id;
 
-  await removeOpenDrink(userId, patientId, fluidEntryId);
+  await removeDrink(userId, patientId, fluidEntryId);
 
   // Return updated patient stats
   const updatedPatient = await getPatientData(patientId);

@@ -39,7 +39,12 @@ export default function ExtraMenu({
         />
 
         {/* Finished Drinks List */}
-        <FinishedDrinksList patient={patient} />
+        <FinishedDrinksList
+          patient={patient}
+          onPatientChange={onPatientChange}
+          confirm={confirm}
+          showToast={showToast}
+        />
 
         {/* Stats and Daily Trends */}
         <StatsTrends userId={userId} patient={patient} />

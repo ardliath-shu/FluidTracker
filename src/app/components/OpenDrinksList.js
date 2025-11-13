@@ -4,7 +4,7 @@ import { useTransition } from "react";
 import { formatMinutesSinceMidnight } from "@/app/lib/utils";
 import {
   finishOpenDrinkAction,
-  removeOpenDrinkAction,
+  removeDrinkAction,
 } from "@/app/actions/patients";
 import Card from "./Card";
 
@@ -33,7 +33,7 @@ export default function OpenDrinksList({
 
     try {
       startTransition(async () => {
-        const updatedPatient = await removeOpenDrinkAction(
+        const updatedPatient = await removeDrinkAction(
           fluidEntryId,
           patient.patientId,
         );

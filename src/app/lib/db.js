@@ -229,7 +229,7 @@ WHERE
   ]);
 };
 
-const removeOpenDrink = async (user_id, patient_id, fluidEntryId) => {
+const removeDrink = async (user_id, patient_id, fluidEntryId) => {
   try {
     const deleteQuery = `
       DELETE e
@@ -239,7 +239,7 @@ const removeOpenDrink = async (user_id, patient_id, fluidEntryId) => {
       WHERE e.fluidEntryId = ?
         AND r.patientId = ?
         AND r.userId = ?
-        AND e.timeEnded IS NULL; -- Only delete open drinks
+        -- AND e.timeEnded IS NULL; -- Only delete open drinks
     `;
 
     const [result] = await connection.execute(deleteQuery, [
@@ -312,6 +312,6 @@ export {
   getMyPatientCurrentFluidTarget,
   setNewPatientFluidTarget,
   finishOpenDrink,
-  removeOpenDrink,
+  removeDrink,
   getTypicalProgress,
 };
