@@ -33,11 +33,7 @@ export default function LoginForm() {
   return (
     <form className="form" action={formAction} noValidate>
       {state?.error && (
-        <div
-          role="alert"
-          aria-live="polite"
-          style={{ color: "#b00020", marginBottom: 8 }}
-        >
+        <div role="alert" aria-live="polite" className="alert">
           {state.error}
         </div>
       )}

@@ -103,7 +103,7 @@ export default function DashboardClient({
               </div>
             )}
 
-            <div className="stats-list-dashboard col">
+            <div className="stats-list-dashboard col important">
               <ul className="stats-list">
                 <li className={`stat-box ${colourIndicator}`}>
                   <span className="stat-value">

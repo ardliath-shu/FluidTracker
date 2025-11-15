@@ -6,7 +6,7 @@ import BackgroundMenu from "@/app/components/BackgroundMenu";
 
 const prefix = "../../../../"; // Hack to return to home from nested cms/insert etc
 const links = [
-  { name: "Dashboard", icon: "fa-tachometer-alt", href: prefix },
+  { name: "Dashboard", icon: "fa-bottle-water", href: prefix },
   { name: "Profile", icon: "fa-user", href: "#" },
   { name: "Settings", icon: "fa-cog", href: "#" },
   // { name: "Elements", icon: "fa-th", href: prefix + "elements" },
@@ -46,7 +46,7 @@ export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
         <hr />
         <div>
           {/* Use a form to bind the server action */}
-          <form action={signOutAction} style={{ flexGrow: "1" }}>
+          <form action={signOutAction}>
             <button className="logout" type="submit" tabIndex={0}>
               <i className="fa fa-fw fa-sign-out-alt"></i> Logout
             </button>

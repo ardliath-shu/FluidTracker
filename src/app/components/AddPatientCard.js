@@ -44,7 +44,6 @@ export default function AddPatientCard({ onPatientChange }) {
           placeholder="Enter Invite Code"
           value={inviteCode}
           onChange={(e) => setInviteCode(e.target.value)}
-          style={{ marginRight: 8 }}
           required
         />
         <button className="btn blue" type="submit" disabled={pending}>
@@ -52,18 +51,9 @@ export default function AddPatientCard({ onPatientChange }) {
         </button>
       </form>
 
-      {error && (
-        <div style={{ color: "red", marginTop: 8, textAlign: "center" }}>
-          {error}
-        </div>
-      )}
-      {success && (
-        <div style={{ color: "blue", marginTop: 8, textAlign: "center" }}>
-          {success}
-        </div>
-      )}
-
-      <p style={{ marginTop: 8 }}>
+      {error && <div className="alert center">{error}</div>}
+      {success && <div className="alert info center">{success}</div>}
+      <p className="center">
         Enter an invite code provided by a patient or their carer to link to
         their log.
       </p>

@@ -12,7 +12,16 @@ export default function Navbar({ onToggleSidebar }) {
         </Link>
       </h1>
 
-      <button className="burger" onClick={onToggleSidebar}>
+      <button
+        className="burger"
+        onClick={onToggleSidebar}
+        onKeyDown={(e) => {
+          // Allow toggle with Enter or Space
+          if (e.key === "Tab") {
+            onToggleSidebar();
+          }
+        }}
+      >
         &#9776; {/* burger menu icon */}
       </button>
     </nav>
