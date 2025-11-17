@@ -7,10 +7,12 @@ import { useToast } from "@/app/hooks/useToast";
 export default function BarcodeScanner({ onDetected }) {
   const videoRef = useRef(null);
   const codeReaderRef = useRef(null);
+  const lastCodeRef = useRef(null);
   const [scanning, setScanning] = useState(false);
   const { showToast, ToastContainer } = useToast();
 
   const startScanner = async () => {
+    lastCodeRef.current = null;
     if (!navigator?.mediaDevices?.getUserMedia) {
       showToast(
         "Camera access not supported or must be served over HTTPS.",
@@ -29,6 +31,10 @@ export default function BarcodeScanner({ onDetected }) {
         videoRef.current,
         (result) => {
           if (result) {
+            if (result.getText() === lastCodeRef.current) {
+              return;
+            }
+            lastCodeRef.current = result.getText();
             onDetected(result.getText());
 
             // Stop after successul scan
