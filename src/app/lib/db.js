@@ -90,8 +90,7 @@ export { isUserCarer };
 const createNewPatient = async (user_id, name) => {
   try {
     // TODO: Allow users to set first and last name
-    const newPatientQuery =
-    `
+    const newPatientQuery = `
       INSERT INTO patients (userId, firstName, lastName, createdAt, updatedAt)
       VALUES(?, ?, '', ?, ?)
     `;

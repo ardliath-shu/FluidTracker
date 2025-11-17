@@ -14,7 +14,7 @@ export default function DashboardClient({
 }) {
   // Set target to default or patient's existing target
   let defaultFluidTarget = 2500; // ml
-  
+
   if (patient.fluidTarget) {
     defaultFluidTarget = patient.fluidTarget;
   }

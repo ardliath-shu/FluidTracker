@@ -49,7 +49,7 @@ export default async function Home() {
       "SELECT * FROM relationships WHERE userId = ?",
       [userId],
     );
-    
+
     if (!carerRelationships.length) {
       // Only create a patient if not a carer
       await createNewPatient(userId, name);

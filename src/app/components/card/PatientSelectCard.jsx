@@ -42,10 +42,11 @@ export default function PatientSelect({
         {patients.map((p) => (
           <li
             key={p.patientId}
-            className={`patient-item ${Number(currentPatient.userId) === Number(p.userId)
+            className={`patient-item ${
+              Number(currentPatient.userId) === Number(p.userId)
                 ? "selected"
                 : ""
-              }`}
+            }`}
             onClick={() => handleClick(p.patientId)}
             onKeyDown={(e) => handleKeyDown(e, p.patientId)}
             tabIndex={0}

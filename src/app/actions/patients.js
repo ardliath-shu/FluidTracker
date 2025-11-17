@@ -91,7 +91,8 @@ export async function addPatientByInviteCode(inviteCode) {
   const userId = session.user.id;
 
   // Validate invite code and get patientId
-  const [inviteRows] = await connection.execute(`
+  const [inviteRows] = await connection.execute(
+    `
       SELECT *
       FROM carerInvites
       WHERE code = ?
@@ -109,7 +110,8 @@ export async function addPatientByInviteCode(inviteCode) {
   const invite = inviteRows[0];
 
   // Link this user to the patient
-  const [insertRes] = await connection.execute(`
+  const [insertRes] = await connection.execute(
+    `
       INSERT IGNORE INTO relationships (userId, patientId, notes)
       VALUES (?, ?, 'Carer linked via invite code')
     `,
@@ -122,7 +124,8 @@ export async function addPatientByInviteCode(inviteCode) {
   }
 
   // Ensure link is visible before reading
-  await connection.execute(`
+  await connection.execute(
+    `
       SELECT 1
       FROM relationships
       WHERE userId = ?
@@ -133,12 +136,13 @@ export async function addPatientByInviteCode(inviteCode) {
   );
 
   // Mark invite code as used
-  await connection.execute(`
+  await connection.execute(
+    `
       UPDATE carerInvites
       SET used = 1
       WHERE code = ?
     `,
-    [inviteCode,]
+    [inviteCode],
   );
 
   // Return a full patient object so the client can refresh safely
@@ -256,7 +260,8 @@ export async function generateCarerInviteAction(patientId) {
   if (!session) throw new Error("Not authenticated");
 
   // Check for existing, unexpired, unused code
-  const [rows] = await connection.execute(`
+  const [rows] = await connection.execute(
+    `
       SELECT code, expiresAt
       FROM carerInvites
       WHERE patientId = ?
@@ -283,7 +288,8 @@ export async function generateCarerInviteAction(patientId) {
     .replace("T", " ");
 
   // Store in DB
-  await connection.execute(`
+  await connection.execute(
+    `
       INSERT INTO carerInvites (code, patientId, expiresAt)
       VALUES (?, ?, ?)
     `,

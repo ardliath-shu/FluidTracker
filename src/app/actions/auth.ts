@@ -44,7 +44,8 @@ export async function signUpAction(
 
     if (inviteCode) {
       // Look up the code
-      const [rowsRaw] = await connection.execute(`
+      const [rowsRaw] = await connection.execute(
+        `
           SELECT *
           FROM carerInvites
           WHERE code = ?
@@ -63,7 +64,8 @@ export async function signUpAction(
       const invite = rows[0];
 
       // Link the new user as a carer for the patient
-      await connection.execute(`
+      await connection.execute(
+        `
           INSERT INTO relationships (userId, patientId, notes)
           VALUES (?, ?, ?)
         `,
@@ -71,7 +73,8 @@ export async function signUpAction(
       );
 
       // Mark the invite as used
-      await connection.execute(`
+      await connection.execute(
+        `
           UPDATE carerInvites
           SET used = TRUE
           WHERE code = ?
