@@ -18,6 +18,7 @@
   width: 100%;
 }
 
+
 /* Bottle Scale Stylings (the measuring stick) */
 .bottlescale {
   position: absolute;
@@ -62,6 +63,7 @@
   background-color: #00000060;
 }
 
+
 /* Water Stylings */
 .water {
   display: flex;
@@ -90,6 +92,7 @@
   width: 220%;
   margin-left: -45%;
 }
+
 
 /* If screen bigger than 991px */
 @media (min-width: 992px) {
