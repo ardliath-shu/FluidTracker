@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect, useTransition } from "react";
 import Card from "./Card";
 import { generateCarerInviteAction } from "@/app/actions/patients";

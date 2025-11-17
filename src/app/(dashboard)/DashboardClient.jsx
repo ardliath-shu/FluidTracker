@@ -2,9 +2,9 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { getPatientData } from "@/app/actions/patients";
-import Bottle from "@/app/components/Bottle";
+import Bottle from "@/app/components/bottle/Bottle";
 import ExtraMenu from "@/app/components/ExtraMenu";
-import PatientSelect from "@/app/components/PatientSelect";
+import PatientSelect from "@/app/components/card/PatientSelectCard";
 
 export default function DashboardClient({
   userId,
@@ -14,6 +14,7 @@ export default function DashboardClient({
 }) {
   // Set target to default or patient's existing target
   let defaultFluidTarget = 2500; // ml
+  
   if (patient.fluidTarget) {
     defaultFluidTarget = patient.fluidTarget;
   }
@@ -34,7 +35,9 @@ export default function DashboardClient({
 
   const handlePatientChange = (newPatientId) => {
     const id = Number(newPatientId);
+
     if (!Number.isFinite(id) || id <= 0 || isPending) return; // guard against accidental "refresh"/undefined
+
     startTransition(async () => {
       const newPatient = await getPatientData(id);
       setCurrentPatient(newPatient);
@@ -46,6 +49,7 @@ export default function DashboardClient({
   const handleSetFluidLeft = (amount) => {
     const newFluidLeft = fluidLeft + amount;
     alert(newFluidLeft);
+
     if (newFluidLeft > fluidTarget) {
       setFluidLeft(fluidTarget);
     } else if (newFluidLeft < 0) {
@@ -57,6 +61,7 @@ export default function DashboardClient({
 
   // Change colour from red, orange, yellow, green based on % reached
   let colourIndicator = "red";
+
   if (currentPatient.totalToday >= fluidTarget * 0.75) {
     colourIndicator = "green";
   } else if (currentPatient.totalToday >= fluidTarget * 0.5) {

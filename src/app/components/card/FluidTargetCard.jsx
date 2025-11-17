@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useTransition, useRef } from "react";
 import { updatePatientFluidTarget } from "@/app/actions/patients";
-import Card from "@/app/components/Card";
+import Card from "@/app/components/card/Card";
 
 const FluidTargetForm = ({ currentTarget, patientId, onUpdated }) => {
   const [isPending, startTransition] = useTransition();

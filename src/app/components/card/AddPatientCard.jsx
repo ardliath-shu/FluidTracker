@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import Card from "./Card";
 import { addPatientByInviteCode } from "@/app/actions/patients";

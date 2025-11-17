@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 import Navbar from "./Navbar";
@@ -26,13 +27,6 @@ export default function Layout({ children }) {
     }
   };
 
-  // Handle dark-mode based on local storage
-  //   if (typeof window !== "undefined") {
-  //     const isDarkMode = localStorage.getItem("dark-mode") === "true";
-  //     document.body.classList.toggle("dark-mode", isDarkMode);
-  //   }
-  // Fix as above causes hydration issues - move to useEffect in Navbar or Sidebar if needed
-
   return (
     <>
       <Navbar
@@ -54,13 +48,11 @@ export default function Layout({ children }) {
           isCollapsed={isSidebarCollapsed}
           onClose={handleSidebarClose}
         />
-
         <main fetchPriority="high">{children}</main>
-
-        {/* <ExtraMenu /> */}
       </div>
 
       {/* Floating reopen button (desktop only) */}
+      {/* &#9776 is the burger menu icon */}
       {isDesktop && isSidebarCollapsed && (
         <button className="show-sidebar-btn" onClick={handleSidebarReopen}>
           &#9776;

@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { logNewDrinkAction } from "@/app/actions/patients";
 import { useToast } from "@/app/hooks/useToast";
 import BarcodeScanner from "@/app/components/BarcodeScanner";
-import Card from "@/app/components/Card";
+import Card from "@/app/components/card/Card";
 
 export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
   const cardRef = useRef(null);

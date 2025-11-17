@@ -1,7 +1,6 @@
 import Image from "next/image";
 import wavyWaterLine from "../../../public/images/wavy-water-line.svg";
 
-// TODO: add toggle for reduced animations
 import "../../../public/css/water-animation.css";
 
 const BottleWaterLevel = ({ levelPercent }) => {

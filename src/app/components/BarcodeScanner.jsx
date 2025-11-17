@@ -47,13 +47,16 @@ export default function BarcodeScanner({ onDetected }) {
     if (typeof codeReaderRef.current?.reset === "function") {
       codeReaderRef.current.reset();
     }
+
     // Stop all media tracks to fully release the camera
     const video = videoRef.current;
+
     if (video && video.srcObject) {
       const stream = video.srcObject;
       stream.getTracks().forEach((track) => track.stop()); // This turns off the camera
       video.srcObject = null;
     }
+
     setScanning(false);
   };
 

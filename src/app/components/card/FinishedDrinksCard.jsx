@@ -42,9 +42,9 @@ export default function FinishedDrinksList({
       title={
         finishedDrinksCount > 0
           ? "" +
-            finishedDrinksCount +
-            " Finished Drink" +
-            (finishedDrinksCount > 1 ? "s" : "")
+          finishedDrinksCount +
+          " Finished Drink" +
+          (finishedDrinksCount > 1 ? "s" : "")
           : "No Finished Drinks"
       }
       icon="fa-check"

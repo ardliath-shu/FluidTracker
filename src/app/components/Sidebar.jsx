@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { signOutAction } from "../actions/auth";
 import DarkModeToggle from "./DarkModeToggle";
@@ -9,8 +10,6 @@ const links = [
   { name: "Dashboard", icon: "fa-bottle-water", href: prefix },
   { name: "Profile", icon: "fa-user", href: "#" },
   { name: "Settings", icon: "fa-cog", href: "#" },
-  // { name: "Elements", icon: "fa-th", href: prefix + "elements" },
-  // { name: "Generic Page", icon: "fa-file", href: prefix + "generic" },
 ];
 
 export default function Sidebar({ isOpen, isCollapsed, onClose, onReopen }) {
