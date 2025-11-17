@@ -29,7 +29,10 @@ export default function OpenDrinksList({
 
   async function handleRemoveDrink(fluidEntryId) {
     const ok = await confirm?.("Are you sure you want to remove this drink?");
-    if (!ok) return;
+
+    if (!ok) {
+      return;
+    }
 
     try {
       startTransition(async () => {

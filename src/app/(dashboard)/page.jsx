@@ -5,7 +5,6 @@ import connection from "@/app/lib/connection";
 import DashboardClient from "./DashboardClient";
 import {
   fetchUser,
-  fetchPatient,
   fetchPatients,
   createNewPatient,
   getMyPatientCurrentFluidTarget,
@@ -50,9 +49,10 @@ export default async function Home() {
       "SELECT * FROM relationships WHERE userId = ?",
       [userId],
     );
+
     if (!carerRelationships.length) {
       // Only create a patient if not a carer
-      const patientId = await createNewPatient(userId, name);
+      await createNewPatient(userId, name);
       userPatients = await fetchPatients(userId);
     }
   }
@@ -64,8 +64,6 @@ export default async function Home() {
     // Handle gracefully
     return <div>No patient found for this user.</div>;
   }
-  // Get the patient the user is managing
-  //const patientId = 1; // For testing purposes
 
   // Get the patient who is linked to the user
   const patientId = patient.patientId;

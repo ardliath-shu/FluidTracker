@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import Card from "@/app/components/Card";
+import Card from "@/app/components/card/Card";
 
 export default function PatientSelect({
   patients,

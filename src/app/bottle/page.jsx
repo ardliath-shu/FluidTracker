@@ -2,16 +2,14 @@
 
 import { useState } from "react";
 import { siteConfig } from "@/app/lib/site.config";
-import Bottle from "@/app/components/Bottle";
-import FluidTargetForm from "@/app/components/FluidTargetForm";
+import Bottle from "@/app/components/bottle/Bottle";
+import FluidTargetForm from "@/app/components/card/FluidTargetCard";
 
 const BottlePage = () => {
   const defaultFluidTarget = 2500; // ml
   const [fluidTarget, setFluidTarget] = useState(defaultFluidTarget);
   const [fluidLeft, setFluidLeft] = useState(defaultFluidTarget);
   const [allowTargetChange, setAllowTargetChange] = useState(true);
-
-  // TODO: get fluidTarget from db.
 
   const handleSetAllowTargetChange = (state) => {
     setAllowTargetChange(state);

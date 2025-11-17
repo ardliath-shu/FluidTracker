@@ -30,10 +30,17 @@ export async function signUpAction(
   const name = (formData.get("name") as string)?.trim();
   const inviteCode = (formData.get("inviteCode") as string)?.trim();
 
-  if (!email) return { error: "Email is required." };
-  if (password.length < 8)
+  if (!email) {
+    return { error: "Email is required." };
+  }
+
+  if (password.length < 8) {
     return { error: "Password must be at least 8 characters." };
-  if (password !== confirmPassword) return { error: "Passwords do not match." };
+  }
+
+  if (password !== confirmPassword) {
+    return { error: "Passwords do not match." };
+  }
 
   try {
     const { user } = await auth.api.signUpEmail({
@@ -43,24 +50,40 @@ export async function signUpAction(
     if (inviteCode) {
       // Look up the code
       const [rowsRaw] = await connection.execute(
-        `SELECT * FROM carerInvites WHERE code = ? AND used = 0 AND expiresAt > NOW() LIMIT 1`,
+        `
+          SELECT *
+          FROM carerInvites
+          WHERE code = ?
+            AND used = 0
+            AND expiresAt > NOW()
+          LIMIT 1
+        `,
         [inviteCode],
       );
       const rows = rowsRaw as any[];
+
       if (rows.length === 0) {
         return { error: "Invalid or expired invite code." };
       }
+
       const invite = rows[0];
 
       // Link the new user as a carer for the patient
       await connection.execute(
-        `INSERT INTO relationships (userId, patientId, notes) VALUES (?, ?, ?)`,
+        `
+          INSERT INTO relationships (userId, patientId, notes)
+          VALUES (?, ?, ?)
+        `,
         [user.id, invite.patientId, "Invited as carer"],
       );
 
       // Mark the invite as used
       await connection.execute(
-        `UPDATE carerInvites SET used = TRUE WHERE code = ?`,
+        `
+          UPDATE carerInvites
+          SET used = TRUE
+          WHERE code = ?
+        `,
         [inviteCode],
       );
     }
@@ -78,7 +101,9 @@ export async function signInAction(
   const email = (formData.get("email") as string)?.trim();
   const password = (formData.get("password") as string) || "";
 
-  if (!email || !password) return { error: "Email and password are required." };
+  if (!email || !password) {
+    return { error: "Email and password are required." };
+  }
 
   try {
     await auth.api.signInEmail({

@@ -42,7 +42,6 @@
 
   .extra {
     width: 350px;
-    /* border-left: 1px solid #ccc; */
     border-top: none;
     max-height: calc(100vh - 82px); 
     /* Hide overflow but allow scrolling and hide scrollbar */
@@ -67,13 +66,11 @@
 }
 
 @media (min-width: 1279px) {
-
   .row,
   .row-sm {
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    /* margin-bottom: 1rem; */
   }
 
   .row .col,
@@ -85,5 +82,4 @@
     order: 0;    
     margin-bottom: 0;
   }
-
 }

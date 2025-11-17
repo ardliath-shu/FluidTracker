@@ -1,5 +1,4 @@
 import { siteConfig } from "@/app/lib/site.config";
-import DarkModeToggle from "../components/DarkModeToggle";
 
 export default function AuthLayout({ children }) {
   return (

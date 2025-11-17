@@ -4,13 +4,15 @@ import { useState, useRef } from "react";
 import { logNewDrinkAction } from "@/app/actions/patients";
 import { useToast } from "@/app/hooks/useToast";
 import BarcodeScanner from "@/app/components/BarcodeScanner";
-import Card from "@/app/components/Card";
+import Card from "@/app/components/card/Card";
 
 export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
   const cardRef = useRef(null);
   const [barcode, setBarcode] = useState("");
   const [drinkName, setDrinkName] = useState("");
   const [quantity, setQuantity] = useState("");
+  // Currently unused but could be useful in future updates.
+  // eslint-disable-next-line no-unused-vars
   const [ingredients, setIngredients] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -21,7 +23,10 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
 
   // Fetch product by barcode (scan or manual)
   async function fetchProduct(code) {
-    if (!code || code === lastScannedRef.current) return;
+    if (!code || code === lastScannedRef.current) {
+      return;
+    }
+
     lastScannedRef.current = code;
     setIsFetching(true);
 
@@ -42,8 +47,13 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
         if (match) {
           let val = parseFloat(match[1]);
           const unit = match[2]?.toLowerCase();
-          if (unit === "l") val *= 1000;
-          else if (unit === "cl") val *= 10;
+
+          if (unit === "l") {
+            val *= 1000;
+          } else if (unit === "cl") {
+            val *= 10;
+          }
+
           setQuantity(val);
         } else {
           setQuantity("");
@@ -199,12 +209,6 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
               </div>
             </div>
           </div>
-
-          {/* {ingredients && (
-          <div className="ingredients-preview">
-            <small>{ingredients}</small>
-          </div>
-        )} */}
 
           <div className="center">
             <button

@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect, useTransition } from "react";
 import Card from "./Card";
 import { generateCarerInviteAction } from "@/app/actions/patients";
@@ -30,13 +31,17 @@ export default function CarerInviteCard({ patient }) {
   }
 
   useEffect(() => {
-    if (!inviteInfo?.expiresAt) return;
+    if (!inviteInfo?.expiresAt) {
+      return;
+    }
+
     const interval = setInterval(() => {
       const diff = Math.floor(
         (new Date(inviteInfo.expiresAt).getTime() - Date.now()) / 1000,
       );
       setSecondsLeft(diff > 0 ? diff : 0);
     }, 1000);
+
     return () => clearInterval(interval);
   }, [inviteInfo]);
 

@@ -2,6 +2,7 @@
 
 import {
   fetchPatient,
+  fetchPatients,
   getMyPatientCurrentFluidTarget,
   getTotalForToday,
   getOpenDrinks,
@@ -22,7 +23,10 @@ export async function getPatientData(patientId) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  if (!session) throw new Error("Not authenticated");
+
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const now = new Date();
   const hours = now.getHours();
@@ -34,20 +38,25 @@ export async function getPatientData(patientId) {
 
   // Coerce id and fallback to first patient if invalid
   let targetPatientId = Number(patientId);
+
   if (!Number.isFinite(targetPatientId) || targetPatientId <= 0) {
     const list = await fetchPatients(userId);
+
     if (!list.length) {
       throw new Error("Patient not found or access denied");
     }
+
     targetPatientId = list[0].patientId;
   }
 
   // Retry once to avoid a read-after-write race immediately after linking
   let patientResult = await fetchPatient(userId, targetPatientId);
+
   if (!patientResult || patientResult.length === 0) {
     await new Promise((r) => setTimeout(r, 150));
     patientResult = await fetchPatient(userId, targetPatientId);
   }
+
   if (!patientResult || patientResult.length === 0) {
     throw new Error("Patient not found or access denied");
   }
@@ -78,23 +87,38 @@ export async function addPatientByInviteCode(inviteCode) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  if (!session) throw new Error("Not authenticated");
+
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const userId = session.user.id;
 
   // Validate invite code and get patientId
   const [inviteRows] = await connection.execute(
-    `SELECT * FROM carerInvites WHERE code = ? AND used = 0 AND expiresAt > NOW() LIMIT 1`,
+    `
+      SELECT *
+      FROM carerInvites
+      WHERE code = ?
+        AND used = 0
+        AND expiresAt > NOW()
+      LIMIT 1
+    `,
     [inviteCode],
   );
+
   if (!inviteRows.length) {
     return { error: "Invalid or expired invite code." };
   }
+
   const invite = inviteRows[0];
 
   // Link this user to the patient
   const [insertRes] = await connection.execute(
-    `INSERT IGNORE INTO relationships (userId, patientId, notes) VALUES (?, ?, 'Carer linked via invite code')`,
+    `
+      INSERT IGNORE INTO relationships (userId, patientId, notes)
+      VALUES (?, ?, 'Carer linked via invite code')
+    `,
     [userId, invite.patientId],
   );
 
@@ -105,14 +129,25 @@ export async function addPatientByInviteCode(inviteCode) {
 
   // Ensure link is visible before reading
   await connection.execute(
-    `SELECT 1 FROM relationships WHERE userId = ? AND patientId = ? LIMIT 1`,
+    `
+      SELECT 1
+      FROM relationships
+      WHERE userId = ?
+        AND patientId = ?
+      LIMIT 1
+    `,
     [userId, invite.patientId],
   );
 
   // Mark invite code as used
-  await connection.execute(`UPDATE carerInvites SET used = 1 WHERE code = ?`, [
-    inviteCode,
-  ]);
+  await connection.execute(
+    `
+      UPDATE carerInvites
+      SET used = 1
+      WHERE code = ?
+    `,
+    [inviteCode],
+  );
 
   // Return a full patient object so the client can refresh safely
   const updatedPatient = await getPatientData(invite.patientId);
@@ -130,7 +165,9 @@ export async function logNewDrinkAction(
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Not authenticated");
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const userId = session.user.id;
 
@@ -141,6 +178,7 @@ export async function logNewDrinkAction(
   const day = now.toISOString().split("T")[0];
 
   let finishTime = null;
+
   if (actionType === "finished") {
     finishTime = minutesSinceMidnight;
   }
@@ -165,14 +203,15 @@ export async function finishOpenDrinkAction(fluidEntryId, patientId) {
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Not authenticated");
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const userId = session.user.id;
   const now = new Date();
   const hours = now.getHours();
   const minutes = now.getMinutes();
   const minutesSinceMidnight = hours * 60 + minutes;
-  const day = now.toISOString().split("T")[0];
 
   // Run the DB function to mark drink as finished
   await finishOpenDrink(minutesSinceMidnight, userId, patientId, fluidEntryId);
@@ -189,13 +228,12 @@ export async function updatePatientFluidTarget(patientId, newTarget) {
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Not authenticated");
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const userId = session.user.id;
   const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const minutesSinceMidnight = hours * 60 + minutes;
   const day = now.toISOString().split("T")[0];
 
   const changeDate = day; // YYYY-MM-DD
@@ -213,7 +251,9 @@ export async function removeDrinkAction(fluidEntryId, patientId) {
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Not authenticated");
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const userId = session.user.id;
 
@@ -228,13 +268,25 @@ export async function generateCarerInviteAction(patientId) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  if (!session) throw new Error("Not authenticated");
+
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   // Check for existing, unexpired, unused code
   const [rows] = await connection.execute(
-    `SELECT code, expiresAt FROM carerInvites WHERE patientId = ? AND used = FALSE AND expiresAt > NOW() ORDER BY expiresAt DESC LIMIT 1`,
+    `
+      SELECT code, expiresAt
+      FROM carerInvites
+      WHERE patientId = ?
+        AND used = FALSE
+        AND expiresAt > NOW()
+      ORDER BY expiresAt DESC
+      LIMIT 1
+    `,
     [patientId],
   );
+
   if (rows.length > 0) {
     // Return the existing code and expiry
     return { code: rows[0].code, expiresAt: rows[0].expiresAt };
@@ -251,7 +303,10 @@ export async function generateCarerInviteAction(patientId) {
 
   // Store in DB
   await connection.execute(
-    `INSERT INTO carerInvites (code, patientId, expiresAt) VALUES (?, ?, ?)`,
+    `
+      INSERT INTO carerInvites (code, patientId, expiresAt)
+      VALUES (?, ?, ?)
+    `,
     [code, patientId, expiresAt],
   );
 

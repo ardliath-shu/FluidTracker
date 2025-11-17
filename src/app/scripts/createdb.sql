@@ -157,6 +157,7 @@ VALUES
     (1, 1, '2025-01-13 16:30', 200, '2025-01-13', 1000, 1030, 'Completed drink'),
     (1, 1, '2025-01-13 16:30', 200, '2025-01-13', 1060, null, 'In Progress Drink');
 
+
 -- Carer invite codes for linking carers to patients
 CREATE TABLE IF NOT EXISTS carerInvites (
     id INT AUTO_INCREMENT PRIMARY KEY,

@@ -2,22 +2,19 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { getPatientData } from "@/app/actions/patients";
-import AddDrinkForm from "@/app/components/AddDrink";
-import Bottle from "@/app/components/Bottle";
-import Card from "@/app/components/Card";
+import Bottle from "@/app/components/bottle/Bottle";
 import ExtraMenu from "@/app/components/ExtraMenu";
-import FluidTargetForm from "@/app/components/FluidTargetForm";
-import PatientSelect from "@/app/components/PatientSelect";
+import PatientSelect from "@/app/components/card/PatientSelectCard";
 
 export default function DashboardClient({
   userId,
-  username,
   patient,
   patients,
   isCarer,
 }) {
   // Set target to default or patient's existing target
   let defaultFluidTarget = 2500; // ml
+
   if (patient.fluidTarget) {
     defaultFluidTarget = patient.fluidTarget;
   }
@@ -25,27 +22,24 @@ export default function DashboardClient({
   const [currentPatient, setCurrentPatient] = useState(patient);
   const [fluidTarget, setFluidTarget] = useState(defaultFluidTarget);
   const [fluidLeft, setFluidLeft] = useState(fluidTarget - patient.totalToday);
-  //const [allowTargetChange, setAllowTargetChange] = useState(true);
   const [isPending, startTransition] = useTransition();
 
   const [selectedPatientId, setSelectedPatientId] = useState(patient.patientId);
 
   useEffect(() => {
-    if (patient?.patientId && patient.patientId !== selectedPatientId) {
+    if (patient?.patientId !== selectedPatientId) {
+      // TODO: potential infinite loop here if there's bad data in the db
       setSelectedPatientId(patient.patientId);
     }
   }, [patient, selectedPatientId]);
 
-  // Handle patient selection change
-  function handleSelectPatient(e) {
-    const newId = Number(e.target.value);
-    setSelectedPatientId(newId);
-    handlePatientChange(newId);
-  }
-
   const handlePatientChange = (newPatientId) => {
     const id = Number(newPatientId);
-    if (!Number.isFinite(id) || id <= 0) return; // guard against accidental "refresh"/undefined
+
+    if (!Number.isFinite(id) || id <= 0 || isPending) {
+      return;
+    } // guard against accidental "refresh"/undefined
+
     startTransition(async () => {
       const newPatient = await getPatientData(id);
       setCurrentPatient(newPatient);
@@ -54,19 +48,10 @@ export default function DashboardClient({
     });
   };
 
-  // const handleSetAllowTargetChange = (state) => {
-  //   setAllowTargetChange(state);
-  //   setFluidLeft(fluidTarget);
-  // };
-
-  const handleSetFluidTarget = (target) => {
-    setFluidTarget(target);
-    setFluidLeft(target - (currentPatient.totalToday || 0));
-  };
-
   const handleSetFluidLeft = (amount) => {
     const newFluidLeft = fluidLeft + amount;
     alert(newFluidLeft);
+
     if (newFluidLeft > fluidTarget) {
       setFluidLeft(fluidTarget);
     } else if (newFluidLeft < 0) {
@@ -78,6 +63,7 @@ export default function DashboardClient({
 
   // Change colour from red, orange, yellow, green based on % reached
   let colourIndicator = "red";
+
   if (currentPatient.totalToday >= fluidTarget * 0.75) {
     colourIndicator = "green";
   } else if (currentPatient.totalToday >= fluidTarget * 0.5) {
@@ -121,10 +107,6 @@ export default function DashboardClient({
                   </span>
                   <span className="stat-label">Complete</span>
                 </li>
-                {/* <li className="stat-box">
-                    <span className="stat-value">{Math.round(currentPatient.totalToday)}ml</span>
-                    <span className="stat-label">Consumed</span>
-                  </li> */}
 
                 {currentPatient.totalToday <= currentPatient.fluidTarget ? (
                   <li className={`stat-box ${colourIndicator}`}>

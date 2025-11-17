@@ -1,7 +1,7 @@
 import Image from "next/image";
 import BottleWaterLevel from "./BottleWaterLevel";
-import "../../../public/css/bottle.css";
-import bottleImage from "../../../public/images/bottle.svg";
+import "../../../../public/css/bottle.css";
+import bottleImage from "../../../../public/images/bottle.svg";
 import BottleScale from "./BottleScale";
 
 const Bottle = ({ target, currentFluid }) => {

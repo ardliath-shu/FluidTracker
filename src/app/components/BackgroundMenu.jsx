@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
@@ -20,15 +21,24 @@ export default function BackgroundMenu() {
   // Load the saved background from localStorage and apply it on load
   useEffect(() => {
     const stored = localStorage.getItem("backgroundClass") || "";
+    // No actual risk as the dependency list is empty, ignore.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelected(stored);
     const main = document.querySelector("main");
-    if (main) main.className = stored;
+
+    if (main) {
+      main.className = stored;
+    }
   }, []);
 
   // Handle new background selection
   const handleSelect = (bgClass) => {
     const main = document.querySelector("main");
-    if (main) main.className = bgClass;
+
+    if (main) {
+      main.className = bgClass;
+    }
+
     localStorage.setItem("backgroundClass", bgClass); // persist it
     setSelected(bgClass);
   };

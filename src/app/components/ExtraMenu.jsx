@@ -1,14 +1,13 @@
 import { useConfirm } from "@/app/hooks/useConfirm";
 import { useToast } from "@/app/hooks/useToast";
 
-import AddDrinkForm from "./AddDrink";
-import AddPatientCard from "./AddPatientCard";
-import Card from "./Card";
-import CarerInviteCard from "./CarerInviteCard";
-import FinishedDrinksList from "./FinishedDrinksList";
-import FluidTargetForm from "./FluidTargetForm";
-import OpenDrinksList from "./OpenDrinksList";
-import StatsTrends from "./StatsTrends";
+import AddDrinkForm from "./card/AddDrinkCard";
+import AddPatientCard from "./card/AddPatientCard";
+import CarerInviteCard from "./card/CarerInviteCard";
+import FinishedDrinksList from "./card/FinishedDrinksCard";
+import FluidTargetForm from "./card/FluidTargetCard";
+import OpenDrinksList from "./card/OpenDrinksCard";
+import StatsTrends from "./card/StatsTrendsCard";
 
 export default function ExtraMenu({
   userId,
@@ -62,16 +61,6 @@ export default function ExtraMenu({
         ) : (
           <AddPatientCard onPatientChange={onPatientChange} />
         )}
-
-        {/* <Card
-          title={`About ${siteConfig.name}`}
-          icon="fas fa-fw fa-droplet"
-          colour="green"
-        >
-          <p>
-            {siteConfig.name} is {siteConfig.description.toLowerCase()}.
-          </p>
-        </Card> */}
       </aside>
       <ConfirmDialog />
       <ToastContainer />
