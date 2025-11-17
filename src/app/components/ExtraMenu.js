@@ -3,7 +3,6 @@ import { useToast } from "@/app/hooks/useToast";
 
 import AddDrinkForm from "./AddDrink";
 import AddPatientCard from "./AddPatientCard";
-import Card from "./Card";
 import CarerInviteCard from "./CarerInviteCard";
 import FinishedDrinksList from "./FinishedDrinksList";
 import FluidTargetForm from "./FluidTargetForm";
@@ -62,16 +61,6 @@ export default function ExtraMenu({
         ) : (
           <AddPatientCard onPatientChange={onPatientChange} />
         )}
-
-        {/* <Card
-          title={`About ${siteConfig.name}`}
-          icon="fas fa-fw fa-droplet"
-          colour="green"
-        >
-          <p>
-            {siteConfig.name} is {siteConfig.description.toLowerCase()}.
-          </p>
-        </Card> */}
       </aside>
       <ConfirmDialog />
       <ToastContainer />

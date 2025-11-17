@@ -20,6 +20,8 @@ export default function BackgroundMenu() {
   // Load the saved background from localStorage and apply it on load
   useEffect(() => {
     const stored = localStorage.getItem("backgroundClass") || "";
+    // No actual risk as the dependency list is empty, ignore.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelected(stored);
     const main = document.querySelector("main");
     if (main) main.className = stored;

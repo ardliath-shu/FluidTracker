@@ -27,7 +27,7 @@ export default function BarcodeScanner({ onDetected }) {
       await codeReader.decodeFromVideoDevice(
         null,
         videoRef.current,
-        (result, error) => {
+        (result) => {
           if (result) {
             onDetected(result.getText());
 

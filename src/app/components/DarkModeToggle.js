@@ -19,6 +19,8 @@ export default function DarkModeToggle() {
   useEffect(() => {
     const isDarkMode = localStorage.getItem("dark-mode") === "true";
     document.body.classList.toggle("dark-mode", isDarkMode);
+    // No actual risk as the dependency list is empty, ignore.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDarkMode(isDarkMode);
   }, []);
 

@@ -1,4 +1,3 @@
-import mysql from "mysql2/promise";
 import connection from "./connection";
 
 const fetchUser = async (user_id) => {
@@ -136,11 +135,7 @@ WHERE
   AND r.patientId = ?
   AND r.userId = ?`;
 
-    const [updateRows] = await connection.execute(updateQuery, [
-      change_date,
-      patient_id,
-      user_id,
-    ]);
+    await connection.execute(updateQuery, [change_date, patient_id, user_id]);
 
     const insertQuery = `INSERT INTO fluidtracker.fluidtargets (patientId, userId, effectiveFrom, isActive, millilitres, createdAt)
 SELECT r.patientId, r.userId, ?, 1, ?, NOW()
@@ -148,7 +143,7 @@ FROM fluidtracker.relationships AS r
 WHERE r.patientId = ?
   AND r.userId = ?;`;
 
-    const [insertRows] = await connection.execute(insertQuery, [
+    await connection.execute(insertQuery, [
       change_date,
       target,
       patient_id,
@@ -178,7 +173,7 @@ FROM fluidtracker.relationships AS r
 WHERE r.patientId = ?
   AND r.userId = ?;`;
 
-  const [insertRows] = await connection.execute(insertQuery, [
+  await connection.execute(insertQuery, [
     millilitres,
     startDate,
     startTime,
@@ -221,7 +216,7 @@ WHERE
   AND e.timeEnded IS NULL
   AND e.fluidEntryId = ?`;
 
-  const [updateRows] = await connection.execute(updateQuery, [
+  await connection.execute(updateQuery, [
     time_ended,
     patient_id,
     user_id,

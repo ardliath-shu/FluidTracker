@@ -5,7 +5,6 @@ import connection from "@/app/lib/connection";
 import DashboardClient from "./DashboardClient";
 import {
   fetchUser,
-  fetchPatient,
   fetchPatients,
   createNewPatient,
   getMyPatientCurrentFluidTarget,
@@ -52,7 +51,7 @@ export default async function Home() {
     );
     if (!carerRelationships.length) {
       // Only create a patient if not a carer
-      const patientId = await createNewPatient(userId, name);
+      await createNewPatient(userId, name);
       userPatients = await fetchPatients(userId);
     }
   }

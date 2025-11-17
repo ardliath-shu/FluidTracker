@@ -11,6 +11,8 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
   const [barcode, setBarcode] = useState("");
   const [drinkName, setDrinkName] = useState("");
   const [quantity, setQuantity] = useState("");
+  // Currently unused but could be useful in future updates.
+  // eslint-disable-next-line no-unused-vars
   const [ingredients, setIngredients] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -199,12 +201,6 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
               </div>
             </div>
           </div>
-
-          {/* {ingredients && (
-          <div className="ingredients-preview">
-            <small>{ingredients}</small>
-          </div>
-        )} */}
 
           <div className="center">
             <button

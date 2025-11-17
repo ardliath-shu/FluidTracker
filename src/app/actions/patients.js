@@ -2,6 +2,7 @@
 
 import {
   fetchPatient,
+  fetchPatients,
   getMyPatientCurrentFluidTarget,
   getTotalForToday,
   getOpenDrinks,
@@ -172,7 +173,6 @@ export async function finishOpenDrinkAction(fluidEntryId, patientId) {
   const hours = now.getHours();
   const minutes = now.getMinutes();
   const minutesSinceMidnight = hours * 60 + minutes;
-  const day = now.toISOString().split("T")[0];
 
   // Run the DB function to mark drink as finished
   await finishOpenDrink(minutesSinceMidnight, userId, patientId, fluidEntryId);
@@ -193,9 +193,6 @@ export async function updatePatientFluidTarget(patientId, newTarget) {
 
   const userId = session.user.id;
   const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const minutesSinceMidnight = hours * 60 + minutes;
   const day = now.toISOString().split("T")[0];
 
   const changeDate = day; // YYYY-MM-DD

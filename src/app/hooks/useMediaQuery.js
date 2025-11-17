@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 
 export function useMediaQuery(query) {
@@ -6,6 +7,8 @@ export function useMediaQuery(query) {
 
   useEffect(() => {
     const media = window.matchMedia(query);
+    // No actual risk, ignore.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMatches(media.matches);
 
     const listener = (e) => setMatches(e.matches);
