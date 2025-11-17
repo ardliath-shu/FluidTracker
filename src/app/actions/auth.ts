@@ -31,8 +31,10 @@ export async function signUpAction(
   const inviteCode = (formData.get("inviteCode") as string)?.trim();
 
   if (!email) return { error: "Email is required." };
+
   if (password.length < 8)
     return { error: "Password must be at least 8 characters." };
+
   if (password !== confirmPassword) return { error: "Passwords do not match." };
 
   try {
@@ -42,25 +44,38 @@ export async function signUpAction(
 
     if (inviteCode) {
       // Look up the code
-      const [rowsRaw] = await connection.execute(
-        `SELECT * FROM carerInvites WHERE code = ? AND used = 0 AND expiresAt > NOW() LIMIT 1`,
+      const [rowsRaw] = await connection.execute(`
+          SELECT *
+          FROM carerInvites
+          WHERE code = ?
+            AND used = 0
+            AND expiresAt > NOW()
+          LIMIT 1
+        `,
         [inviteCode],
       );
       const rows = rowsRaw as any[];
+
       if (rows.length === 0) {
         return { error: "Invalid or expired invite code." };
       }
+
       const invite = rows[0];
 
       // Link the new user as a carer for the patient
-      await connection.execute(
-        `INSERT INTO relationships (userId, patientId, notes) VALUES (?, ?, ?)`,
+      await connection.execute(`
+          INSERT INTO relationships (userId, patientId, notes)
+          VALUES (?, ?, ?)
+        `,
         [user.id, invite.patientId, "Invited as carer"],
       );
 
       // Mark the invite as used
-      await connection.execute(
-        `UPDATE carerInvites SET used = TRUE WHERE code = ?`,
+      await connection.execute(`
+          UPDATE carerInvites
+          SET used = TRUE
+          WHERE code = ?
+        `,
         [inviteCode],
       );
     }
