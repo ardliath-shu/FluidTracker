@@ -13,8 +13,9 @@ const eslintConfig = defineConfig([
   ]),
   {
     rules: {
-      "no-unused-vars": "warn",
-      "no-undef": "warn",
+      "no-unused-vars": "error",
+      "no-undef": "error",
+      curly: "error",
       // Override to just warn instead of error.
       "react-hooks/set-state-in-effect": "warn",
     },

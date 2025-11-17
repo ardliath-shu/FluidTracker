@@ -36,7 +36,9 @@ export default function DashboardClient({
   const handlePatientChange = (newPatientId) => {
     const id = Number(newPatientId);
 
-    if (!Number.isFinite(id) || id <= 0 || isPending) return; // guard against accidental "refresh"/undefined
+    if (!Number.isFinite(id) || id <= 0 || isPending) {
+      return;
+    } // guard against accidental "refresh"/undefined
 
     startTransition(async () => {
       const newPatient = await getPatientData(id);

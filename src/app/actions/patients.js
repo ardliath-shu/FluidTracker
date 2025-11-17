@@ -24,7 +24,9 @@ export async function getPatientData(patientId) {
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Not authenticated");
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const now = new Date();
   const hours = now.getHours();
@@ -86,7 +88,9 @@ export async function addPatientByInviteCode(inviteCode) {
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Not authenticated");
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const userId = session.user.id;
 
@@ -161,7 +165,9 @@ export async function logNewDrinkAction(
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Not authenticated");
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const userId = session.user.id;
 
@@ -197,7 +203,9 @@ export async function finishOpenDrinkAction(fluidEntryId, patientId) {
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Not authenticated");
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const userId = session.user.id;
   const now = new Date();
@@ -220,7 +228,9 @@ export async function updatePatientFluidTarget(patientId, newTarget) {
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Not authenticated");
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const userId = session.user.id;
   const now = new Date();
@@ -241,7 +251,9 @@ export async function removeDrinkAction(fluidEntryId, patientId) {
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Not authenticated");
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const userId = session.user.id;
 
@@ -257,7 +269,9 @@ export async function generateCarerInviteAction(patientId) {
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Not authenticated");
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   // Check for existing, unexpired, unused code
   const [rows] = await connection.execute(

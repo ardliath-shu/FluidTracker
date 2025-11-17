@@ -1,5 +1,7 @@
 export default function ConfirmDialog({ open, message, onConfirm, onCancel }) {
-  if (!open) return null;
+  if (!open) {
+    return null;
+  }
 
   return (
     <div className="confirm-overlay">

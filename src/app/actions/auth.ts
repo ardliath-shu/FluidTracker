@@ -30,12 +30,17 @@ export async function signUpAction(
   const name = (formData.get("name") as string)?.trim();
   const inviteCode = (formData.get("inviteCode") as string)?.trim();
 
-  if (!email) return { error: "Email is required." };
+  if (!email) {
+    return { error: "Email is required." };
+  }
 
-  if (password.length < 8)
+  if (password.length < 8) {
     return { error: "Password must be at least 8 characters." };
+  }
 
-  if (password !== confirmPassword) return { error: "Passwords do not match." };
+  if (password !== confirmPassword) {
+    return { error: "Passwords do not match." };
+  }
 
   try {
     const { user } = await auth.api.signUpEmail({
@@ -96,7 +101,9 @@ export async function signInAction(
   const email = (formData.get("email") as string)?.trim();
   const password = (formData.get("password") as string) || "";
 
-  if (!email || !password) return { error: "Email and password are required." };
+  if (!email || !password) {
+    return { error: "Email and password are required." };
+  }
 
   try {
     await auth.api.signInEmail({

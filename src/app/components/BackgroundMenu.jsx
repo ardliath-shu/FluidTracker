@@ -25,13 +25,20 @@ export default function BackgroundMenu() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelected(stored);
     const main = document.querySelector("main");
-    if (main) main.className = stored;
+
+    if (main) {
+      main.className = stored;
+    }
   }, []);
 
   // Handle new background selection
   const handleSelect = (bgClass) => {
     const main = document.querySelector("main");
-    if (main) main.className = bgClass;
+
+    if (main) {
+      main.className = bgClass;
+    }
+
     localStorage.setItem("backgroundClass", bgClass); // persist it
     setSelected(bgClass);
   };

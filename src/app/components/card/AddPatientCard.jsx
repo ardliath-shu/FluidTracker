@@ -18,11 +18,16 @@ export default function AddPatientCard({ onPatientChange }) {
 
     try {
       const res = await addPatientByInviteCode(inviteCode);
-      if (res.error) setError(res.error);
-      else {
+
+      if (res.error) {
+        setError(res.error);
+      } else {
         setSuccess("Patient added successfully.");
         setInviteCode("");
-        if (onPatientChange && res.patientId) onPatientChange(res.patientId);
+
+        if (onPatientChange && res.patientId) {
+          onPatientChange(res.patientId);
+        }
       }
     } catch {
       setError("Failed to add patient.");

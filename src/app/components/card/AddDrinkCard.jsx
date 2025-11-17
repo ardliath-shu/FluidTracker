@@ -23,7 +23,10 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
 
   // Fetch product by barcode (scan or manual)
   async function fetchProduct(code) {
-    if (!code || code === lastScannedRef.current) return;
+    if (!code || code === lastScannedRef.current) {
+      return;
+    }
+
     lastScannedRef.current = code;
     setIsFetching(true);
 
@@ -44,8 +47,13 @@ export default function AddDrinkForm({ isOpen, patient, onPatientUpdated }) {
         if (match) {
           let val = parseFloat(match[1]);
           const unit = match[2]?.toLowerCase();
-          if (unit === "l") val *= 1000;
-          else if (unit === "cl") val *= 10;
+
+          if (unit === "l") {
+            val *= 1000;
+          } else if (unit === "cl") {
+            val *= 10;
+          }
+
           setQuantity(val);
         } else {
           setQuantity("");

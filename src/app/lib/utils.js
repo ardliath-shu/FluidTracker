@@ -1,5 +1,7 @@
 export function formatMinutesSinceMidnight(minutes) {
-  if (minutes == null || isNaN(minutes)) return "Unknown";
+  if (minutes == null || isNaN(minutes)) {
+    return "Unknown";
+  }
 
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
