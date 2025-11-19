@@ -133,3 +133,15 @@ body.dark-mode {
   color: #ffdede;
   text-decoration: underline;
 }
+
+.dark-mode .toast.info {
+  background: #2e2eff;
+}
+
+.dark-mode .toast.success {
+  background: #006600;
+}
+
+.dark-mode .toast.error {
+  background: #a82315;
+}

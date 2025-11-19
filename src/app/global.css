@@ -619,7 +619,7 @@ div:has(.card-dropdown) {
 }
 
 .card-body {
-  transition: max-height 0.3s ease, opacity 0.3s ease;
+  transition: max-height 0.3s ease;
 }
 
 .card-body.collapsed {
@@ -962,10 +962,11 @@ i.pink {
 
 .trends-list li .progress-bar {
   flex: 1;
-  height: 6px;
+  height: 12px;
   background: #c7c7c7;
   border-radius: 999px;
-  overflow: hidden;
+  overflow: hidden;  
+  margin-bottom: 0.5em;
 }
 
 .trends-list li .progress {
@@ -995,10 +996,6 @@ i.pink {
   border-bottom: 1px solid #00000040;
 }
 
-.open-drink-item div {
-  margin-left: 0.5em;
-}
-
 .open-drink-item div span {
   font-size: 0.85em;
   opacity: 0.75;
@@ -1019,8 +1016,9 @@ i.pink {
 
 .finish-btn {
   float: right;
-  margin-top: -0.1em;
-  padding: 0.4em 0.5em;
+  margin-top: 0.2em;
+  padding: 0.2em 0.4em;
+  border-radius: 1em;
 }
 
 
@@ -1029,7 +1027,7 @@ i.pink {
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #00000030 #b1b2b530;
